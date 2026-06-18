@@ -1,0 +1,99 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #F6F7F9;
+  --foreground: #1A202C;
+}
+
+.dark {
+  --background: #0a0f1e;
+  --foreground: #e2e8f0;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans, Arial, Helvetica, sans-serif);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Global keyboard focus ring — visible only when navigating by keyboard */
+:focus-visible {
+  outline: 2px solid #3563E9;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Remove default focus ring for mouse users */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Entrance animations — CSS replacements for framer-motion */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.3); }
+}
+
+.animate-fade-in-up    { animation: fadeInUp   0.4s ease-out both; }
+.animate-fade-in       { animation: fadeIn     0.3s ease-out both; }
+.animate-fade-in-down  { animation: fadeInDown 0.2s ease-out both; }
+.animate-fade-in-left  { animation: fadeInLeft  0.5s ease-out both; }
+.animate-fade-in-right { animation: fadeInRight 0.6s ease-out both; }
+.animate-heartbeat     { animation: heartbeat  0.3s ease-out; }
+.animate-page-in       { animation: fadeInUp   0.25s ease-out both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up, .animate-fade-in, .animate-fade-in-down,
+  .animate-fade-in-left, .animate-fade-in-right, .animate-page-in {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Screen-reader-only utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
