@@ -1,9 +1,8 @@
 "use client";
 
-import HeroBanner from "@/components/HeroBanner";
+import HomeHero from "@/components/HomeHero";
 import PopularCars from "@/components/PopularCars";
 import RecommendationCars from "@/components/RecommendationCars";
-import SearchForm from "@/components/SearchForm";
 import { CarGridSkeleton } from "@/components/CarCardSkeleton";
 import { useAllVehiclesQuery } from "@/lib/query/hooks";
 
@@ -18,26 +17,27 @@ export default function HomePageClient() {
     .slice(0, 8);
 
   return (
-    <main className="flex w-full flex-col gap-8 px-6 py-8">
-      <HeroBanner />
-      <SearchForm />
+    <div className="w-full min-w-0 max-w-full px-4 py-4 sm:px-6 sm:py-5">
+      <div className="mx-auto flex w-full min-w-0 max-w-6xl flex-col gap-8 lg:gap-10">
+        <HomeHero />
 
-      {isPending ? (
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
-          <CarGridSkeleton count={4} />
-        </div>
-      ) : isError ? (
-        <p className="text-center text-sm text-gray-500 dark:text-gray-400">
-          Could not load vehicles. Please refresh the page.
-        </p>
-      ) : (
-        <>
-          {featured.length > 0 ? <PopularCars vehicles={featured} /> : null}
-          {recommendations.length > 0 ? (
-            <RecommendationCars vehicles={recommendations} />
-          ) : null}
-        </>
-      )}
-    </main>
+        {isPending ? (
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 xl:grid-cols-4">
+            <CarGridSkeleton count={4} />
+          </div>
+        ) : isError ? (
+          <p className="text-center text-sm text-gray-500 dark:text-gray-400">
+            Could not load vehicles. Please refresh the page.
+          </p>
+        ) : (
+          <>
+            {featured.length > 0 ? <PopularCars vehicles={featured} /> : null}
+            {recommendations.length > 0 ? (
+              <RecommendationCars vehicles={recommendations} />
+            ) : null}
+          </>
+        )}
+      </div>
+    </div>
   );
 }

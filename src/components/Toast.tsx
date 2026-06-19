@@ -1,5 +1,6 @@
 "use client";
 
+import { CheckCircle2, XCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { subscribe, ToastItem } from "@/lib/toast";
 
@@ -11,19 +12,24 @@ export default function ToastContainer() {
   if (!toasts.length) return null;
 
   return (
-    <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none">
+    <div className="pointer-events-none fixed bottom-4 right-4 z-50 flex max-w-[min(320px,calc(100vw-2rem))] flex-col gap-2">
       {toasts.map((t) => (
         <div
           key={t.id}
-          className={`animate-fade-in-down flex items-center gap-2 px-4 py-3 rounded-lg shadow-lg text-sm font-medium text-white max-w-[320px] ${
+          className={`animate-fade-in-down flex items-start gap-2 rounded-lg px-4 py-3 text-sm font-medium shadow-lg ${
             t.type === "success"
-              ? "bg-[#3563E9]"
+              ? "border border-green-200 bg-green-600 text-white dark:border-green-800 dark:bg-green-700"
               : t.type === "error"
-              ? "bg-red-500"
-              : "bg-gray-800"
+                ? "border border-red-200 bg-red-600 text-white dark:border-red-900 dark:bg-red-700"
+                : "bg-gray-800 text-white dark:bg-gray-700"
           }`}
         >
-          {t.icon && <span>{t.icon}</span>}
+          {t.type === "success" ? (
+            <CheckCircle2 size={18} className="mt-0.5 shrink-0" aria-hidden="true" />
+          ) : t.type === "error" ? (
+            <XCircle size={18} className="mt-0.5 shrink-0" aria-hidden="true" />
+          ) : null}
+          {t.icon ? <span>{t.icon}</span> : null}
           <span>{t.message}</span>
         </div>
       ))}

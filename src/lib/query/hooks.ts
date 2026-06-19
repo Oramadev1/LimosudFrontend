@@ -1,6 +1,8 @@
 "use client";
 
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+
+import { useLockedMutation } from "@/lib/use-locked-mutation";
 
 import {
   createReservation,
@@ -49,7 +51,7 @@ export function useLookupsQuery() {
 }
 
 export function useCreateReservationMutation() {
-  return useMutation({
+  return useLockedMutation({
     mutationFn: (payload: CreateReservationPayload) => createReservation(payload),
   });
 }

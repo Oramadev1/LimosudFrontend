@@ -14,18 +14,7 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   compress: true,
   async redirects() {
-    return [
-      {
-        source: "/vehicles",
-        destination: "/cars",
-        permanent: true,
-      },
-      {
-        source: "/vehicles/:slug",
-        destination: "/cars/:slug",
-        permanent: true,
-      },
-    ];
+    return [];
   },
   turbopack: {
     root: import.meta.dirname,

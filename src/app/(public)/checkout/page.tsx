@@ -1,26 +1,36 @@
 import { redirect } from "next/navigation";
 
-import CheckoutPageClient from "@/components/CheckoutPageClient";
-import { createMetadata } from "@/lib/seo/metadata";
+import { routes } from "@/config/routes";
+import {
+  defaultRentalSearchValues,
+  rentalSearchFromQuery,
+  rentalSearchToQuery,
+} from "@/lib/rental-search";
 
-export const metadata = createMetadata({
-  title: "Checkout",
-  description:
-    "Complete your car rental booking. Fill in your billing and rental details to confirm your reservation.",
-  path: "/checkout",
-  noIndex: true,
-});
-
-type CheckoutPageProps = {
-  searchParams: Promise<{ slug?: string }>;
+type LegacyCheckoutPageProps = {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 };
 
-export default async function CheckoutPage({ searchParams }: CheckoutPageProps) {
-  const { slug } = await searchParams;
+export default async function LegacyCheckoutPage({ searchParams }: LegacyCheckoutPageProps) {
+  const params = await searchParams;
+  const slug = typeof params.slug === "string" ? params.slug : undefined;
 
   if (!slug) {
-    redirect("/cars");
+    redirect(routes.vehicles);
   }
 
-  return <CheckoutPageClient slug={slug} />;
+  const incoming = new URLSearchParams();
+  for (const [key, value] of Object.entries(params)) {
+    if (key === "slug" || typeof value !== "string") {
+      continue;
+    }
+    incoming.set(key, value);
+  }
+
+  const query = rentalSearchToQuery({
+    ...defaultRentalSearchValues(),
+    ...rentalSearchFromQuery(incoming),
+  }).toString();
+
+  redirect(query ? routes.book(slug, query) : routes.book(slug));
 }

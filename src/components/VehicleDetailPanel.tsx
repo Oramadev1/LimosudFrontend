@@ -3,7 +3,9 @@
 import { useMemo, useState } from "react";
 
 import StorageImage from "@/components/StorageImage";
+import { VehicleAvailabilityBadge } from "@/components/VehicleAvailabilityBadge";
 import { formatCurrency } from "@/lib/format";
+import { getVehicleAvailabilityInfo } from "@/lib/vehicle-availability";
 import { vehiclePhotoUrl } from "@/lib/images";
 import {
   getVehicleCategoryLabel,
@@ -39,6 +41,7 @@ export default function VehicleDetailPanel({ vehicle }: { vehicle: Vehicle }) {
 
   const heroImage = images[activeThumb] ?? images[0];
   const price = parseFloat(vehicle.daily_price);
+  const availability = getVehicleAvailabilityInfo(vehicle);
 
   return (
     <div className="flex flex-col gap-6 lg:flex-row">
@@ -89,12 +92,20 @@ export default function VehicleDetailPanel({ vehicle }: { vehicle: Vehicle }) {
 
       <div className="flex flex-1 flex-col gap-4 rounded-[10px] border border-transparent bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-            {vehicle.name}
-          </h1>
+          <div className="flex flex-wrap items-center gap-3">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+              {vehicle.name}
+            </h1>
+            <VehicleAvailabilityBadge vehicle={vehicle} />
+          </div>
           <p className="mt-1 text-xs text-gray-400">
             {getVehicleCategoryLabel(vehicle)}
           </p>
+          {!availability.rentable ? (
+            <p className="mt-2 text-sm font-medium text-red-500">
+              This vehicle is not available for new bookings right now.
+            </p>
+          ) : null}
         </div>
 
         <p className="text-sm leading-relaxed text-gray-400">
@@ -136,7 +147,7 @@ export default function VehicleDetailPanel({ vehicle }: { vehicle: Vehicle }) {
             </span>
             <span className="text-sm text-gray-400"> / day</span>
           </div>
-          <RentNowButton slug={vehicle.slug} large />
+          <RentNowButton slug={vehicle.slug} large disabled={!availability.rentable} />
         </div>
       </div>
     </div>

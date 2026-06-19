@@ -12,12 +12,49 @@ import FilterSidebar, {
 } from "@/components/FilterSidebar";
 import SearchForm from "@/components/SearchForm";
 import { CarGridSkeleton } from "@/components/CarCardSkeleton";
+import { formatDateTime, combineDatetime } from "@/lib/format";
+import { rentalSearchFromQuery } from "@/lib/rental-search";
 import {
   getMaxVehiclePrice,
   type VehicleFilterState,
 } from "@/lib/vehicle-catalog";
 import { useAllVehiclesQuery } from "@/lib/query/hooks";
 import type { Vehicle } from "@/types/api";
+
+function RentalSummary() {
+  const searchParams = useSearchParams();
+  const rental = rentalSearchFromQuery(searchParams);
+
+  const summary = useMemo(() => {
+    if (!rental.pickupDate || !rental.pickupTime || !rental.dropoffDate || !rental.dropoffTime) {
+      return null;
+    }
+
+    const start = combineDatetime(rental.pickupDate, rental.pickupTime);
+    const end = combineDatetime(rental.dropoffDate, rental.dropoffTime);
+
+    if (!start || !end) {
+      return null;
+    }
+
+    return {
+      start: formatDateTime(start.replace(" ", "T")),
+      end: formatDateTime(end.replace(" ", "T")),
+    };
+  }, [rental.dropoffDate, rental.dropoffTime, rental.pickupDate, rental.pickupTime]);
+
+  if (!summary) {
+    return null;
+  }
+
+  return (
+    <p className="rounded-lg border border-blue-100 bg-blue-50 px-4 py-3 text-sm text-blue-900 dark:border-blue-900/40 dark:bg-blue-950/30 dark:text-blue-100">
+      Showing cars for your rental period:{" "}
+      <span className="font-semibold">{summary.start}</span> to{" "}
+      <span className="font-semibold">{summary.end}</span>
+    </p>
+  );
+}
 
 function CarsContent({ vehicles }: { vehicles: Vehicle[] }) {
   const maxPrice = getMaxVehiclePrice(vehicles);
@@ -39,11 +76,17 @@ function CarsContent({ vehicles }: { vehicles: Vehicle[] }) {
   );
 
   return (
-    <div className="flex w-full flex-col gap-6 px-6 py-8 lg:flex-row lg:items-start">
+    <div className="flex w-full min-w-0 max-w-full flex-col gap-6 px-4 py-4 sm:px-6 sm:py-6 lg:flex-row lg:items-start">
       <FilterSidebar vehicles={vehicles} filters={filters} onChange={setFilters} />
 
       <div className="flex w-full min-w-0 flex-1 flex-col gap-6">
-        <SearchForm />
+        <Suspense fallback={<div className="h-40 animate-pulse rounded-2xl bg-white dark:bg-gray-900" />}>
+          <SearchForm />
+        </Suspense>
+
+        <Suspense fallback={null}>
+          <RentalSummary />
+        </Suspense>
 
         {q ? (
           <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -114,7 +157,7 @@ export default function CarsCatalog() {
 
   if (isPending) {
     return (
-      <div className="flex w-full flex-col gap-6 px-6 py-8 lg:flex-row lg:items-start">
+      <div className="flex w-full min-w-0 max-w-full flex-col gap-6 px-4 py-4 sm:px-6 sm:py-6 lg:flex-row lg:items-start">
         <div className="h-64 w-full shrink-0 animate-pulse rounded-[10px] bg-white lg:w-[260px] dark:bg-gray-900" />
         <div className="grid w-full flex-1 grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
           <CarGridSkeleton count={6} />
@@ -138,7 +181,7 @@ export default function CarsCatalog() {
   return (
     <Suspense
       fallback={
-        <div className="flex w-full flex-col gap-6 px-6 py-8 lg:flex-row lg:items-start">
+        <div className="flex w-full min-w-0 max-w-full flex-col gap-6 px-4 py-4 sm:px-6 sm:py-6 lg:flex-row lg:items-start">
           <div className="h-64 w-full shrink-0 animate-pulse rounded-[10px] bg-white lg:w-[260px] dark:bg-gray-900" />
           <div className="grid w-full flex-1 grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
             {[...Array(6)].map((_, index) => (

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+
+import { routes } from "@/config/routes";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
@@ -29,10 +31,10 @@ export default function NotFound() {
               Go to Home
             </Link>
             <Link
-              href="/cars"
+              href={routes.vehicles}
               className="border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors text-gray-700 dark:text-gray-300 font-semibold px-6 py-3 rounded-[4px] inline-block"
             >
-              Browse Cars
+              Browse fleet
             </Link>
           </div>
         </div>

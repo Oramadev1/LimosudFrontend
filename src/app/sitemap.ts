@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 
+import { routes } from "@/config/routes";
 import { siteConfig } from "@/config/site";
 import { getVehicles } from "@/lib/api/public";
 
@@ -10,7 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const vehiclesPage = await getVehicles(1);
     const vehicleRoutes: MetadataRoute.Sitemap = vehiclesPage.data.map(
       (vehicle) => ({
-        url: `${siteConfig.url}/cars/${vehicle.slug}`,
+        url: `${siteConfig.url}${routes.vehicle(vehicle.slug)}`,
         lastModified,
         changeFrequency: "weekly",
         priority: 0.8,
@@ -25,7 +26,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 1,
       },
       {
-        url: `${siteConfig.url}/cars`,
+        url: `${siteConfig.url}${routes.vehicles}`,
         lastModified,
         changeFrequency: "daily",
         priority: 0.9,

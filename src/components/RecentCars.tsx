@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { routes } from "@/config/routes";
 import CarCard from "@/components/CarCard";
 import type { Vehicle } from "@/types/api";
 
@@ -16,7 +17,7 @@ function CarSection({
     <section>
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-sm font-medium text-gray-400">{title}</h2>
-        <Link href="/cars" className="text-sm font-semibold text-[#3563E9] hover:underline">
+        <Link href={routes.vehicles} className="text-sm font-semibold text-[#3563E9] hover:underline">
           View All
         </Link>
       </div>

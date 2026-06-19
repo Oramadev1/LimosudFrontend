@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { notFound } from "next/navigation";
 
 import CheckoutForm from "@/components/CheckoutForm";
@@ -54,7 +54,9 @@ export default function CheckoutPageClient({ slug }: { slug: string }) {
 
   return (
     <div className="w-full px-6 py-8">
-      <CheckoutForm vehicle={vehicle} locations={locations} />
+      <Suspense fallback={<CheckoutSkeleton />}>
+        <CheckoutForm vehicle={vehicle} locations={locations} />
+      </Suspense>
     </div>
   );
 }

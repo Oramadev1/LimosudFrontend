@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ShieldCheck, ChevronDown, CheckCircle2 } from "lucide-react";
+import { ShieldCheck, ChevronDown, CheckCircle2, AlertCircle } from "lucide-react";
 
 import StorageImage from "@/components/StorageImage";
 
@@ -14,6 +14,7 @@ import {
   billingSchema,
   rentalSchema,
   confirmSchema,
+  isRentalPeriodValid,
   type BillingData,
   type RentalData,
   type ConfirmData,
@@ -24,13 +25,52 @@ import {
   formatCurrency,
 } from "@/lib/format";
 import { getVehicleImageUrl } from "@/lib/images";
+import { routes } from "@/config/routes";
+import { estimateRentalTotal, pricePerDayForRental } from "@/lib/rental-pricing";
+import { rentalSearchFromQuery } from "@/lib/rental-search";
 import { toast } from "@/lib/toast";
-import {
-  getVehicleCategoryLabel,
-  getVehicleDailyPrice,
-} from "@/lib/vehicle-catalog";
+import { useSubmitLock } from "@/lib/use-submit-lock";
+import { getVehicleCategoryLabel } from "@/lib/vehicle-catalog";
 import { useCreateReservationMutation } from "@/lib/query/hooks";
-import type { Location, Vehicle } from "@/types/api";
+import type { ApiValidationError, Location, Vehicle } from "@/types/api";
+
+function applyApiValidationErrors(
+  body: ApiValidationError,
+  billing: ReturnType<typeof useForm<BillingData>>,
+  rental: ReturnType<typeof useForm<RentalData>>,
+) {
+  const fieldMap: Record<string, { form: "billing" | "rental"; field: string }> = {
+    "customer.full_name": { form: "billing", field: "name" },
+    "customer.phone": { form: "billing", field: "phone" },
+    "customer.nationality": { form: "billing", field: "nationality" },
+    "customer.email": { form: "billing", field: "email" },
+    pickup_location_id: { form: "rental", field: "pickupCity" },
+    dropoff_location_id: { form: "rental", field: "dropoffCity" },
+    start_datetime: { form: "rental", field: "pickupDate" },
+    end_datetime: { form: "rental", field: "dropoffDate" },
+  };
+
+  for (const [key, messages] of Object.entries(body.errors)) {
+    const message = messages[0];
+    if (!message) continue;
+
+    const mapping = fieldMap[key];
+    if (mapping?.form === "billing") {
+      billing.setError(mapping.field as keyof BillingData, { type: "server", message });
+    } else if (mapping?.form === "rental") {
+      rental.setError(mapping.field as keyof RentalData, { type: "server", message });
+    }
+  }
+}
+
+function FormErrorBanner({ message }: { message: string }) {
+  return (
+    <div className="animate-fade-in-down flex items-start gap-3 rounded-[10px] border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-900/50 dark:bg-red-950/40 dark:text-red-300">
+      <AlertCircle size={18} className="mt-0.5 shrink-0" />
+      <p>{message}</p>
+    </div>
+  );
+}
 
 function FieldError({ msg }: { msg?: string }) {
   if (!msg) return null;
@@ -202,34 +242,60 @@ type CheckoutFormProps = {
 
 export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) {
   const router = useRouter();
-  const dailyPrice = getVehicleDailyPrice(vehicle);
+  const searchParams = useSearchParams();
   const imageUrl = getVehicleImageUrl(vehicle);
   const categoryLabel = getVehicleCategoryLabel(vehicle);
 
   const [step1Done, setStep1Done] = useState(false);
   const [step2Done, setStep2Done] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const createReservationMutation = useCreateReservationMutation();
-  const submitting = createReservationMutation.isPending;
+  const { runOnce, busy: submitBusy } = useSubmitLock();
+  const submitting = submitBusy || createReservationMutation.isPending;
 
   const billing = useForm<BillingData>({
     resolver: zodResolver(billingSchema),
-    mode: "onBlur",
+    mode: "onTouched",
   });
   const rental = useForm<RentalData>({
     resolver: zodResolver(rentalSchema),
-    mode: "onBlur",
+    mode: "onTouched",
   });
   const confirm = useForm<ConfirmData>({
     resolver: zodResolver(confirmSchema),
-    mode: "onBlur",
+    mode: "onTouched",
   });
 
+  useEffect(() => {
+    const rentalParams = rentalSearchFromQuery(searchParams);
+    const firstLocationId = locations[0] ? String(locations[0].id) : "";
+
+    rental.reset({
+      pickupCity: rentalParams.pickupLocationId || firstLocationId,
+      dropoffCity: rentalParams.dropoffLocationId || rentalParams.pickupLocationId || firstLocationId,
+      pickupDate: rentalParams.pickupDate || "",
+      pickupTime: rentalParams.pickupTime || "",
+      dropoffDate: rentalParams.dropoffDate || "",
+      dropoffTime: rentalParams.dropoffTime || "",
+    });
+  }, [locations, rental, searchParams]);
+
   const pickupDate = rental.watch("pickupDate") ?? "";
+  const pickupTime = rental.watch("pickupTime") ?? "";
   const dropoffDate = rental.watch("dropoffDate") ?? "";
-  const days = daysBetween(pickupDate, dropoffDate);
-  const subtotal = dailyPrice * days;
+  const dropoffTime = rental.watch("dropoffTime") ?? "";
+  const pickupCity = rental.watch("pickupCity") ?? "";
+  const dropoffCity = rental.watch("dropoffCity") ?? "";
+  const rentalPeriodValid = isRentalPeriodValid(pickupDate, pickupTime, dropoffDate, dropoffTime);
+  const days = rentalPeriodValid ? daysBetween(pickupDate, dropoffDate) : 0;
+  const pickupLocation = locations.find((location) => String(location.id) === pickupCity);
+  const dropoffLocation = locations.find((location) => String(location.id) === dropoffCity);
+  const pricePerDay = pricePerDayForRental(vehicle, Math.max(days, 1));
+  const pricing = estimateRentalTotal(vehicle, Math.max(days, 1), pickupLocation, dropoffLocation);
 
   async function handleSubmit() {
+    setSubmitError(null);
+
     const [billingOk, rentalOk, confirmOk] = await Promise.all([
       billing.trigger(),
       rental.trigger(),
@@ -237,15 +303,33 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
     ]);
 
     if (!billingOk) {
-      toast.error("Fill in Billing Info correctly");
+      const parsed = billingSchema.safeParse(billing.getValues());
+      const message = parsed.success
+        ? "Please complete billing information."
+        : parsed.error.issues[0]?.message ?? "Please complete billing information.";
+      setSubmitError(message);
+      toast.error(message);
+      document.getElementById("checkout-billing")?.scrollIntoView({ behavior: "smooth", block: "start" });
       return;
     }
     if (!rentalOk) {
-      toast.error("Fill in Rental Info correctly");
+      const parsed = rentalSchema.safeParse(rental.getValues());
+      const message = parsed.success
+        ? "Please complete rental dates and locations."
+        : parsed.error.issues[0]?.message ?? "Please complete rental dates and locations.";
+      setSubmitError(message);
+      toast.error(message);
+      document.getElementById("checkout-rental")?.scrollIntoView({ behavior: "smooth", block: "start" });
       return;
     }
     if (!confirmOk) {
-      toast.error("Please agree to the terms");
+      const parsed = confirmSchema.safeParse(confirm.getValues());
+      const message = parsed.success
+        ? "Please agree to the terms and conditions."
+        : parsed.error.issues[0]?.message ?? "Please agree to the terms and conditions.";
+      setSubmitError(message);
+      toast.error(message);
+      document.getElementById("checkout-confirm")?.scrollIntoView({ behavior: "smooth", block: "start" });
       return;
     }
 
@@ -254,54 +338,78 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
     const startDatetime = combineDatetime(rentalData.pickupDate, rentalData.pickupTime);
     const endDatetime = combineDatetime(rentalData.dropoffDate, rentalData.dropoffTime);
 
-    try {
-      const availability = await checkVehicleAvailability(
-        vehicle.id,
-        startDatetime,
-        endDatetime,
-      );
+    await runOnce(async () => {
+      try {
+        const availability = await checkVehicleAvailability(
+          vehicle.id,
+          startDatetime,
+          endDatetime,
+        );
 
-      if (!availability.available) {
-        toast.error("Vehicle is not available for the selected period.");
-        return;
+        if (!availability.available) {
+          const message = "This vehicle is not available for the selected dates. Please choose different dates.";
+          setSubmitError(message);
+          toast.error(message);
+          document.getElementById("checkout-rental")?.scrollIntoView({ behavior: "smooth", block: "start" });
+          return;
+        }
+
+        const response = await createReservationMutation.mutateAsync({
+          customer: {
+            full_name: billingData.name,
+            nationality: billingData.nationality,
+            phone: billingData.phone,
+            email: billingData.email || undefined,
+          },
+          vehicle_id: vehicle.id,
+          pickup_location_id: Number(rentalData.pickupCity),
+          dropoff_location_id: Number(rentalData.dropoffCity),
+          start_datetime: startDatetime,
+          end_datetime: endDatetime,
+          customer_notes: billingData.address
+            ? `Address: ${billingData.address}, ${billingData.city}`
+            : undefined,
+        });
+
+        if (!response) {
+          return;
+        }
+
+        toast.success(
+          `Reservation ${response.data.reservation_number} submitted — ${formatCurrency(response.data.total_price)}`,
+          { duration: 5000 },
+        );
+        router.push(routes.vehicle(vehicle.slug));
+      } catch (error) {
+        const validationBody = error instanceof ApiError ? error.body : error;
+
+        if (isValidationError(validationBody)) {
+          applyApiValidationErrors(validationBody, billing, rental);
+          const messages = Object.values(validationBody.errors).flat();
+          const message = messages[0] ?? validationBody.message ?? "Please correct the highlighted fields.";
+          setSubmitError(message);
+          toast.error(message, { duration: 5000 });
+
+          if (validationBody.errors.end_datetime || validationBody.errors.start_datetime) {
+            document.getElementById("checkout-rental")?.scrollIntoView({ behavior: "smooth", block: "start" });
+          } else if (Object.keys(validationBody.errors).some((key) => key.startsWith("customer."))) {
+            document.getElementById("checkout-billing")?.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        } else {
+          const message = error instanceof ApiError ? error.message : "Request failed. Please try again.";
+          setSubmitError(message);
+          toast.error(message);
+        }
       }
-
-      const response = await createReservationMutation.mutateAsync({
-        customer: {
-          full_name: billingData.name,
-          nationality: billingData.nationality,
-          phone: billingData.phone,
-          email: billingData.email || undefined,
-        },
-        vehicle_id: vehicle.id,
-        pickup_location_id: Number(rentalData.pickupCity),
-        dropoff_location_id: Number(rentalData.dropoffCity),
-        start_datetime: startDatetime,
-        end_datetime: endDatetime,
-        customer_notes: billingData.address
-          ? `Address: ${billingData.address}, ${billingData.city}`
-          : undefined,
-      });
-
-      toast.success(
-        `Reservation ${response.data.reservation_number} submitted — ${formatCurrency(response.data.total_price)}`,
-        { duration: 5000 },
-      );
-      router.push(`/cars/${vehicle.slug}`);
-    } catch (error) {
-      const validationBody = error instanceof ApiError ? error.body : error;
-
-      if (isValidationError(validationBody)) {
-        toast.error("Please correct the validation errors.");
-      } else {
-        toast.error("Request failed. Please retry.");
-      }
-    }
+    });
   }
 
   return (
     <div className="flex flex-col items-start gap-6 lg:flex-row">
       <div className="flex min-w-0 flex-1 flex-col gap-6">
+        {submitError ? <FormErrorBanner message={submitError} /> : null}
+
+        <div id="checkout-billing">
         <SectionCard
           step="Step 1 of 3"
           title="Billing Info"
@@ -350,7 +458,9 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
             />
           </div>
         </SectionCard>
+        </div>
 
+        <div id="checkout-rental">
         <SectionCard
           step="Step 2 of 3"
           title="Rental Info"
@@ -426,14 +536,23 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
               />
             </div>
 
-            {days > 1 ? (
+            {!rentalPeriodValid && pickupDate && dropoffDate && pickupTime && dropoffTime ? (
+              <p className="flex items-start gap-2 text-xs font-medium text-red-500">
+                <AlertCircle size={14} className="mt-0.5 shrink-0" />
+                Drop-off must be after pick-up date and time.
+              </p>
+            ) : null}
+
+            {rentalPeriodValid && days > 1 ? (
               <p className="text-xs font-semibold text-[#3563E9]">
-                {days} days × {formatCurrency(dailyPrice)}/day = {formatCurrency(subtotal)}
+                {days} days × {formatCurrency(pricePerDay)}/day = {formatCurrency(pricing.rentalSubtotal)}
               </p>
             ) : null}
           </div>
         </SectionCard>
+        </div>
 
+        <div id="checkout-confirm">
         <SectionCard
           step="Step 3 of 3"
           title="Confirmation"
@@ -482,6 +601,7 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
             </div>
           </div>
         </SectionCard>
+        </div>
       </div>
 
       <div className="flex w-full shrink-0 flex-col gap-6 rounded-[10px] border border-transparent bg-white p-6 dark:border-gray-800 dark:bg-gray-900 lg:sticky lg:top-6 lg:w-[340px]">
@@ -521,25 +641,46 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
         <div className="border-t border-gray-100 dark:border-gray-800" />
 
         <div className="flex flex-col gap-3 text-sm">
+          {!rentalPeriodValid && pickupDate && dropoffDate ? (
+            <p className="rounded-[8px] bg-red-50 px-3 py-2 text-xs font-medium text-red-600">
+              Drop-off must be after pick-up before you can submit.
+            </p>
+          ) : null}
           <div className="flex justify-between">
             <span className="text-gray-400">
-              {days} day{days > 1 ? "s" : ""} × {formatCurrency(dailyPrice)}/day
+              {Math.max(days, 1)} day{days > 1 ? "s" : ""} × {formatCurrency(pricePerDay)}/day
             </span>
             <span className="font-semibold text-gray-900 dark:text-white">
-              {formatCurrency(subtotal)}
+              {formatCurrency(pricing.rentalSubtotal)}
             </span>
           </div>
+          {pricing.deliveryFee > 0 ? (
+            <div className="flex justify-between">
+              <span className="text-gray-400">Delivery fees</span>
+              <span className="font-semibold text-gray-900 dark:text-white">
+                {formatCurrency(pricing.deliveryFee)}
+              </span>
+            </div>
+          ) : null}
+          {pricing.depositAmount > 0 ? (
+            <div className="flex justify-between">
+              <span className="text-gray-400">Deposit</span>
+              <span className="font-semibold text-gray-900 dark:text-white">
+                {formatCurrency(pricing.depositAmount)}
+              </span>
+            </div>
+          ) : null}
         </div>
 
         <div className="flex items-center justify-between">
           <div>
             <p className="font-bold text-gray-900 dark:text-white">Estimated Total</p>
             <p className="mt-0.5 text-xs text-gray-400">
-              Final price is calculated when your reservation is submitted
+              Includes rental, delivery, and deposit when locations are selected
             </p>
           </div>
           <span className="text-2xl font-bold text-gray-900 dark:text-white">
-            {formatCurrency(subtotal)}
+            {formatCurrency(pricing.estimatedTotal)}
           </span>
         </div>
       </div>

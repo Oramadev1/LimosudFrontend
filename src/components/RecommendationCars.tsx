@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { routes } from "@/config/routes";
 import type { Vehicle } from "@/types/api";
 
 import CarCard from "./CarCard";
@@ -19,7 +20,7 @@ export default function RecommendationCars({
       </div>
       <div className="mt-8 flex justify-center">
         <Link
-          href="/cars"
+          href={routes.vehicles}
           className="rounded-[4px] bg-[#3563E9] px-8 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#2a52c9]"
         >
           Show more car

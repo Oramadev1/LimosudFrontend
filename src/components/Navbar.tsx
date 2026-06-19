@@ -1,113 +1,77 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import { siteConfig } from "@/config/site";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { BrandLogo } from "@/components/BrandLogo";
 import { useTheme } from "@/components/ThemeProvider";
-import { Menu, Moon, Search, SlidersHorizontal, Sun, X } from "lucide-react";
+import { routes } from "@/config/routes";
+import { useSubmitLock } from "@/lib/use-submit-lock";
+import { Moon, Search, Sun } from "lucide-react";
 
 export default function Navbar() {
-  const [mobileOpen, setMobileOpen] = useState(false);
   const [query, setQuery] = useState("");
   const { theme, setTheme } = useTheme();
   const router = useRouter();
+  const { runOnce, busy } = useSubmitLock();
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
-    const q = query.trim();
-    if (q) router.push(`/cars?q=${encodeURIComponent(q)}`);
-    else router.push("/cars");
-    setMobileOpen(false);
-  }
 
-  function toggleTheme() {
-    setTheme(theme === "dark" ? "light" : "dark");
+    void runOnce(async () => {
+      const q = query.trim();
+      if (q) router.push(`${routes.vehicles}?q=${encodeURIComponent(q)}`);
+      else router.push(routes.vehicles);
+    });
   }
-
-  const themeButton = (
-    <button
-      onClick={toggleTheme}
-      className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-100 text-gray-500 transition-colors hover:bg-gray-200 dark:bg-gray-800 dark:text-yellow-400 dark:hover:bg-gray-700"
-      aria-label="Toggle dark mode"
-    >
-      {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
-    </button>
-  );
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white px-6 py-4 transition-colors duration-300 dark:border-gray-800 dark:bg-gray-900">
-      <div className="flex items-center justify-between gap-6">
-        <Link
-          href="/"
-          className="shrink-0 text-xl font-bold tracking-wide text-[#3563E9] transition-opacity hover:opacity-80 sm:text-2xl"
-        >
-          {siteConfig.brand}
-        </Link>
+    <nav className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white dark:border-gray-800 dark:bg-gray-900">
+      <div className="mx-auto w-full max-w-6xl px-4 py-3 sm:px-6 sm:py-4">
+        <div className="flex min-w-0 items-center gap-3">
+          <BrandLogo href={routes.home} height={42} className="min-w-0" />
 
-        <form
-          role="search"
-          onSubmit={handleSearch}
-          className="hidden w-full max-w-[492px] items-center gap-3 rounded-full border border-gray-200 bg-white px-4 py-2 transition-colors md:flex dark:border-gray-700 dark:bg-gray-800"
-        >
-          <button type="submit" aria-label="Search" className="shrink-0">
-            <Search
-              className="text-gray-400 transition-colors hover:text-[#3563E9]"
-              size={20}
-              aria-hidden="true"
-            />
-          </button>
-          <input
-            type="search"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder="Search something here"
-            aria-label="Search cars"
-            className="flex-1 bg-transparent text-sm text-gray-500 outline-none placeholder:text-gray-300 dark:text-gray-300 dark:placeholder:text-gray-500"
-          />
-          <SlidersHorizontal className="shrink-0 text-gray-400" size={20} aria-hidden="true" />
-        </form>
-
-        <div className="hidden shrink-0 md:flex">{themeButton}</div>
-
-        <div className="flex items-center gap-3 md:hidden">
-          {themeButton}
-          <button
-            aria-label={mobileOpen ? "Close menu" : "Open menu"}
-            aria-expanded={mobileOpen}
-            aria-controls="mobile-menu"
-            className="text-gray-500 transition-colors hover:text-[#3563E9]"
-            onClick={() => setMobileOpen(!mobileOpen)}
-          >
-            {mobileOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
-          </button>
-        </div>
-      </div>
-
-      {mobileOpen ? (
-        <div id="mobile-menu" className="mt-4 md:hidden">
           <form
+            role="search"
             onSubmit={handleSearch}
-            className="flex items-center gap-3 rounded-full border border-gray-200 bg-white px-4 py-2 dark:border-gray-700 dark:bg-gray-800"
+            className="ml-auto hidden min-w-0 max-w-[240px] flex-1 items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-3 py-2 md:flex dark:border-gray-700 dark:bg-gray-800"
           >
-            <button type="submit" aria-label="Search" className="shrink-0">
-              <Search
-                className="text-gray-400 transition-colors hover:text-[#3563E9]"
-                size={18}
-                aria-hidden="true"
-              />
-            </button>
+            <Search size={16} className="shrink-0 text-gray-400" aria-hidden="true" />
             <input
               type="search"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-              placeholder="Search something here"
-              aria-label="Search cars"
-              className="flex-1 bg-transparent text-sm text-gray-500 outline-none dark:text-gray-300"
+              placeholder="Search vehicles"
+              aria-label="Search vehicles"
+              className="min-w-0 flex-1 bg-transparent text-sm text-gray-700 outline-none placeholder:text-gray-400 dark:text-gray-200"
             />
           </form>
+
+          <button
+            type="button"
+            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            className="ml-auto flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gray-100 text-gray-500 transition-colors hover:bg-gray-200 md:ml-0 dark:bg-gray-800 dark:text-yellow-400 dark:hover:bg-gray-700"
+            aria-label="Toggle dark mode"
+          >
+            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
         </div>
-      ) : null}
+
+        <form
+          role="search"
+          onSubmit={handleSearch}
+          className="mt-3 flex min-w-0 items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-3 py-2 md:hidden dark:border-gray-700 dark:bg-gray-800"
+        >
+          <Search size={16} className="shrink-0 text-gray-400" aria-hidden="true" />
+          <input
+            type="search"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Search vehicles"
+            aria-label="Search vehicles"
+            className="min-w-0 flex-1 bg-transparent text-sm text-gray-700 outline-none placeholder:text-gray-400 dark:text-gray-200"
+          />
+        </form>
+      </div>
     </nav>
   );
 }

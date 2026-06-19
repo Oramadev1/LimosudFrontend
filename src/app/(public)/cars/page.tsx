@@ -1,12 +1,7 @@
-import CarsCatalog from "@/components/CarsCatalog";
-import { createMetadata } from "@/lib/seo/metadata";
+import { redirect } from "next/navigation";
 
-export const metadata = createMetadata({
-  title: "Browse Cars",
-  description: "Browse the Limosud Cars rental fleet.",
-  path: "/cars",
-});
+import { routes } from "@/config/routes";
 
-export default function CarsPage() {
-  return <CarsCatalog />;
+export default function LegacyCarsPage() {
+  redirect(routes.vehicles);
 }

@@ -1,7 +1,10 @@
 import Link from "next/link";
 
 import StorageImage from "@/components/StorageImage";
+import { VehicleAvailabilityBadge } from "@/components/VehicleAvailabilityBadge";
+import { routes } from "@/config/routes";
 import { formatCurrency } from "@/lib/format";
+import { getVehicleAvailabilityInfo } from "@/lib/vehicle-availability";
 import {
   getVehicleCategoryLabel,
   getVehicleFuelLabel,
@@ -25,16 +28,21 @@ export default function CarCard({
 }: CarCardProps) {
   const image = vehicleCardImage(vehicle);
   const price = parseFloat(vehicle.daily_price);
+  const availability = getVehicleAvailabilityInfo(vehicle);
 
   return (
     <div
       style={{ animationDelay: `${index * 0.07}s` }}
       data-testid="car-card"
-      className="animate-fade-in-up flex cursor-pointer flex-col gap-4 rounded-[10px] border border-transparent bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(53,99,233,0.12)] dark:border-gray-800 dark:bg-gray-900"
+      className={`animate-fade-in-up flex flex-col gap-4 rounded-[10px] border bg-white p-5 transition-all duration-300 dark:border-gray-800 dark:bg-gray-900 ${
+        availability.rentable
+          ? "cursor-pointer border-transparent hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(53,99,233,0.12)]"
+          : "border-gray-100 opacity-95"
+      }`}
     >
-      <div className="flex items-start justify-between">
+      <div className="flex items-start justify-between gap-3">
         <Link
-          href={`/cars/${vehicle.slug}`}
+          href={routes.vehicle(vehicle.slug)}
           className="min-w-0 hover:underline"
         >
           <h3 className="truncate text-base font-bold text-gray-900 dark:text-white">
@@ -44,10 +52,11 @@ export default function CarCard({
             {getVehicleCategoryLabel(vehicle)}
           </span>
         </Link>
+        <VehicleAvailabilityBadge vehicle={vehicle} />
       </div>
 
       <Link
-        href={`/cars/${vehicle.slug}`}
+        href={routes.vehicle(vehicle.slug)}
         className="relative block h-[120px] w-full overflow-hidden"
       >
         {image ? (
@@ -78,7 +87,7 @@ export default function CarCard({
             <span className="text-xs font-normal text-gray-400">/day</span>
           </div>
         </div>
-        <RentNowButton slug={vehicle.slug} />
+        <RentNowButton slug={vehicle.slug} disabled={!availability.rentable} />
       </div>
     </div>
   );

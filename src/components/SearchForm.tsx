@@ -1,180 +1,321 @@
 "use client";
 
-import { useState } from "react";
-import { ArrowLeftRight, ChevronDown, MapPin } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { ArrowRight, Calendar, MapPin } from "lucide-react";
 
-const cities = ["Karachi", "Lahore", "Islamabad", "Peshawar", "Quetta", "Multan", "Faisalabad", "Rawalpindi"];
-const timeSlots = [
-  "08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM",
-  "01:00 PM", "02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM", "06:00 PM",
-];
+import { useLocationsQuery } from "@/lib/query/hooks";
+import {
+  buildVehiclesSearchUrl,
+  defaultRentalSearchValues,
+  fromDatetimeLocal,
+  isRentalSearchComplete,
+  isRentalSearchPeriodValid,
+  rentalSearchFromQuery,
+  toDatetimeLocal,
+  type RentalSearchValues,
+} from "@/lib/rental-search";
+import { useSubmitLock } from "@/lib/use-submit-lock";
+import type { Location } from "@/types/api";
 
-interface SectionState { city: string; date: string; time: string }
+type SearchFormProps = {
+  id?: string;
+  className?: string;
+  variant?: "default" | "embedded";
+};
 
-type DropdownKey = "pu-city" | "pu-date" | "pu-time" | "do-city" | "do-date" | "do-time";
+function mergeSearchValues(
+  locations: Location[],
+  overrides?: Partial<RentalSearchValues>,
+): RentalSearchValues {
+  const defaults = defaultRentalSearchValues();
+  const firstLocationId = locations[0] ? String(locations[0].id) : "";
 
-function PickDropSection({
-  label, dotColor, prefix, state, onChange, openDropdown, setOpenDropdown,
-}: {
-  label: string;
-  dotColor: string;
-  prefix: "pu" | "do";
-  state: SectionState;
-  onChange: (next: SectionState) => void;
-  openDropdown: DropdownKey | null;
-  setOpenDropdown: (k: DropdownKey | null) => void;
-}) {
-  const key = (field: string) => `${prefix}-${field}` as DropdownKey;
-  const isOpen = (field: string) => openDropdown === key(field);
-  const toggle = (field: string) => setOpenDropdown(isOpen(field) ? null : key(field));
+  return {
+    ...defaults,
+    pickupLocationId: firstLocationId,
+    dropoffLocationId: firstLocationId,
+    ...overrides,
+  };
+}
 
+function FieldLabel({ children }: { children: string }) {
   return (
-    <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:gap-4 flex-1 min-w-0 w-full">
-      {/* Label */}
-      <div className="flex items-center gap-2 shrink-0">
-        <div className={`w-3.5 h-3.5 rounded-full border-4 ${dotColor}`} />
-        <span className="font-semibold text-sm text-gray-900 dark:text-white whitespace-nowrap">{label}</span>
-      </div>
-
-      {/* Fields */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 flex-1 min-w-0">
-
-        {/* City */}
-        <div className="relative col-span-2 sm:col-span-1">
-          <button
-            type="button"
-            onClick={() => toggle("city")}
-            className="w-full min-w-0 flex items-center gap-2 border border-gray-200 dark:border-gray-700 rounded-[4px] px-3 py-2 hover:border-[#3563E9] transition-colors bg-white dark:bg-gray-800 overflow-hidden"
-          >
-            <MapPin size={14} className="text-gray-400 shrink-0" />
-            <span className="text-xs text-gray-400 dark:text-gray-400 flex-1 text-left truncate">
-              {state.city || "Select your city"}
-            </span>
-            <ChevronDown size={14} className={`text-gray-400 shrink-0 transition-transform ${isOpen("city") ? "rotate-180" : ""}`} />
-          </button>
-          {isOpen("city") && (
-            <ul className="absolute top-full left-0 mt-1 w-44 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700 rounded-lg shadow-lg z-30 overflow-hidden max-h-48 overflow-y-auto">
-              {cities.map((c) => (
-                <li key={c}>
-                  <button
-                    type="button"
-                    onClick={() => { onChange({ ...state, city: c }); setOpenDropdown(null); }}
-                    className={`w-full text-left px-4 py-2 text-sm hover:bg-blue-50 dark:hover:bg-gray-800 transition-colors ${state.city === c ? "text-[#3563E9] font-semibold" : "text-gray-700 dark:text-gray-300"}`}
-                  >
-                    {c}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-
-        {/* Date */}
-        <div className="relative">
-          <button
-            type="button"
-            onClick={() => toggle("date")}
-            className="w-full min-w-0 flex items-center gap-2 border border-gray-200 dark:border-gray-700 rounded-[4px] px-3 py-2 hover:border-[#3563E9] transition-colors bg-white dark:bg-gray-800 overflow-hidden"
-          >
-            <span className="text-xs text-gray-400 flex-1 text-left truncate">
-              {state.date || "Select your date"}
-            </span>
-            <ChevronDown size={14} className={`text-gray-400 shrink-0 transition-transform ${isOpen("date") ? "rotate-180" : ""}`} />
-          </button>
-          {isOpen("date") && (
-            <div className="absolute top-full left-0 mt-1 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700 rounded-lg shadow-lg z-30 p-3">
-              <input
-                type="date"
-                value={state.date}
-                min={new Date().toISOString().split("T")[0]}
-                onChange={(e) => { onChange({ ...state, date: e.target.value }); setOpenDropdown(null); }}
-                className="text-sm text-gray-700 dark:text-gray-200 bg-transparent outline-none [color-scheme:light] dark:[color-scheme:dark]"
-              />
-            </div>
-          )}
-        </div>
-
-        {/* Time */}
-        <div className="relative">
-          <button
-            type="button"
-            onClick={() => toggle("time")}
-            className="w-full min-w-0 flex items-center gap-2 border border-gray-200 dark:border-gray-700 rounded-[4px] px-3 py-2 hover:border-[#3563E9] transition-colors bg-white dark:bg-gray-800 overflow-hidden"
-          >
-            <span className="text-xs text-gray-400 flex-1 text-left truncate">
-              {state.time || "Select your time"}
-            </span>
-            <ChevronDown size={14} className={`text-gray-400 shrink-0 transition-transform ${isOpen("time") ? "rotate-180" : ""}`} />
-          </button>
-          {isOpen("time") && (
-            <ul className="absolute top-full left-0 mt-1 w-36 bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-700 rounded-lg shadow-lg z-30 overflow-hidden max-h-48 overflow-y-auto">
-              {timeSlots.map((t) => (
-                <li key={t}>
-                  <button
-                    type="button"
-                    onClick={() => { onChange({ ...state, time: t }); setOpenDropdown(null); }}
-                    className={`w-full text-left px-4 py-2 text-sm hover:bg-blue-50 dark:hover:bg-gray-800 transition-colors ${state.time === t ? "text-[#3563E9] font-semibold" : "text-gray-700 dark:text-gray-300"}`}
-                  >
-                    {t}
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-
-      </div>
-    </div>
+    <label className="mb-1.5 block text-[13px] font-medium text-slate-600 dark:text-slate-300">
+      {children}
+    </label>
   );
 }
 
-export default function SearchForm() {
-  const [pickUp, setPickUp] = useState<SectionState>({ city: "", date: "", time: "" });
-  const [dropOff, setDropOff] = useState<SectionState>({ city: "", date: "", time: "" });
-  const [openDropdown, setOpenDropdown] = useState<DropdownKey | null>(null);
+export default function SearchForm({
+  id = "book",
+  className = "",
+  variant = "default",
+}: SearchFormProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { data: locations = [], isPending, isError } = useLocationsQuery();
+  const embedded = variant === "embedded";
 
-  function handleSwap() {
-    setPickUp(dropOff);
-    setDropOff(pickUp);
+  const initialValues = useMemo(
+    () => mergeSearchValues(locations, rentalSearchFromQuery(searchParams)),
+    [locations, searchParams],
+  );
+
+  const [pickupLocationId, setPickupLocationId] = useState(initialValues.pickupLocationId);
+  const [dropoffLocationId, setDropoffLocationId] = useState(initialValues.dropoffLocationId);
+  const [sameLocation, setSameLocation] = useState(
+    initialValues.pickupLocationId === initialValues.dropoffLocationId,
+  );
+  const [pickupDatetime, setPickupDatetime] = useState(
+    toDatetimeLocal(initialValues.pickupDate, initialValues.pickupTime),
+  );
+  const [dropoffDatetime, setDropoffDatetime] = useState(
+    toDatetimeLocal(initialValues.dropoffDate, initialValues.dropoffTime),
+  );
+  const [error, setError] = useState<string | null>(null);
+  const { runOnce, busy } = useSubmitLock();
+
+  useEffect(() => {
+    if (!locations.length) {
+      return;
+    }
+
+    const merged = mergeSearchValues(locations, rentalSearchFromQuery(searchParams));
+    setPickupLocationId(merged.pickupLocationId);
+    setDropoffLocationId(merged.dropoffLocationId);
+    setSameLocation(merged.pickupLocationId === merged.dropoffLocationId);
+    setPickupDatetime(toDatetimeLocal(merged.pickupDate, merged.pickupTime));
+    setDropoffDatetime(toDatetimeLocal(merged.dropoffDate, merged.dropoffTime));
+  }, [locations, searchParams]);
+
+  useEffect(() => {
+    if (sameLocation) {
+      setDropoffLocationId(pickupLocationId);
+    }
+  }, [sameLocation, pickupLocationId]);
+
+  const minPickupDatetime = useMemo(() => {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    return now.toISOString().slice(0, 16);
+  }, []);
+
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    void runOnce(async () => {
+      setError(null);
+
+      const pickup = fromDatetimeLocal(pickupDatetime);
+      const dropoff = fromDatetimeLocal(dropoffDatetime);
+      const values: RentalSearchValues = {
+        pickupLocationId,
+        dropoffLocationId: sameLocation ? pickupLocationId : dropoffLocationId,
+        pickupDate: pickup.date,
+        pickupTime: pickup.time,
+        dropoffDate: dropoff.date,
+        dropoffTime: dropoff.time,
+      };
+
+      if (!isRentalSearchComplete(values)) {
+        setError("Please choose locations and rental dates.");
+        return;
+      }
+
+      if (!isRentalSearchPeriodValid(values)) {
+        setError("Drop-off must be after pick-up.");
+        return;
+      }
+
+      router.push(buildVehiclesSearchUrl(values));
+    });
   }
 
+  const fieldClass =
+    "booking-field w-full min-w-0 max-w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10 dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:border-slate-400";
+
+  const shellClass = embedded
+    ? ""
+    : "rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm sm:p-5 lg:p-6 dark:border-slate-800 dark:bg-slate-950";
+
+  const submitClass =
+    "inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 dark:disabled:bg-slate-700 dark:disabled:text-slate-400";
+
   return (
-    <>
-      {/* Backdrop to close dropdowns */}
-      {openDropdown && (
-        <div className="fixed inset-0 z-20" onClick={() => setOpenDropdown(null)} />
-      )}
+    <section id={id} className={`min-w-0 max-w-full ${shellClass} ${className}`.trim()}>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        {!embedded ? (
+          <div>
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white">Search fleet</h2>
+            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+              Set your trip details to see available vehicles.
+            </p>
+          </div>
+        ) : (
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+              Step 1
+            </p>
+            <h2 className="mt-1 text-lg font-bold text-slate-900 dark:text-white">
+              When &amp; where?
+            </h2>
+            <label className="mt-3 inline-flex cursor-pointer items-center gap-2.5 text-sm text-slate-600 dark:text-slate-300">
+              <button
+                type="button"
+                role="switch"
+                aria-checked={sameLocation}
+                aria-label="Same drop-off as pick-up"
+                onClick={() => setSameLocation((value) => !value)}
+                className={`relative inline-flex h-7 w-12 shrink-0 items-center rounded-full transition-colors ${
+                  sameLocation ? "bg-slate-900 dark:bg-amber-500" : "bg-slate-300 dark:bg-slate-600"
+                }`}
+              >
+                <span
+                  className={`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform ${
+                    sameLocation ? "translate-x-6" : "translate-x-1"
+                  }`}
+                />
+              </button>
+              Same drop-off as pick-up
+            </label>
+          </div>
+        )}
 
-      <div className="relative z-30 bg-white dark:bg-gray-900 rounded-[10px] p-5 flex flex-col lg:flex-row lg:items-center gap-4 shadow-sm transition-colors duration-300">
-        <PickDropSection
-          label="Pick - Up"
-          dotColor="border-[#3563E9] bg-[#3563E9]"
-          prefix="pu"
-          state={pickUp}
-          onChange={setPickUp}
-          openDropdown={openDropdown}
-          setOpenDropdown={setOpenDropdown}
-        />
+        {!embedded ? (
+          <label className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+            <input
+              type="checkbox"
+              checked={sameLocation}
+              onChange={(event) => setSameLocation(event.target.checked)}
+              className="h-4 w-4 rounded border-slate-300 text-slate-900 focus:ring-slate-900"
+            />
+            Return to same location
+          </label>
+        ) : null}
 
-        <button
-          type="button"
-          aria-label="Swap pick-up and drop-off"
-          onClick={handleSwap}
-          className="w-10 h-10 rounded-[4px] bg-[#3563E9] hover:bg-[#2a52c9] transition-colors flex items-center justify-center shrink-0 self-center lg:self-auto"
+        {isError ? (
+          <p className="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+            Could not load locations. Please refresh and try again.
+          </p>
+        ) : null}
+
+        {!isPending && locations.length === 0 ? (
+          <p className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900">
+            No pick-up locations are available yet. Contact the agency to book.
+          </p>
+        ) : null}
+
+        <div
+          className={
+            embedded
+              ? "grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:items-end"
+              : "grid grid-cols-1 gap-3.5 sm:grid-cols-2 xl:grid-cols-12 xl:items-end xl:gap-3"
+          }
         >
-          <ArrowLeftRight size={18} className="text-white" aria-hidden="true" />
-        </button>
+          <div className={embedded ? "min-w-0" : "min-w-0 sm:col-span-2 xl:col-span-4"}>
+            <FieldLabel>Pick-up location</FieldLabel>
+            <div className="relative">
+              <MapPin
+                size={16}
+                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+                aria-hidden="true"
+              />
+              <select
+                value={pickupLocationId}
+                onChange={(event) => setPickupLocationId(event.target.value)}
+                disabled={isPending || locations.length === 0}
+                className={`${fieldClass} pl-9`}
+                required
+              >
+                {isPending ? <option value="">Loading...</option> : null}
+                {locations.map((location) => (
+                  <option key={location.id} value={String(location.id)}>
+                    {location.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
 
-        <PickDropSection
-          label="Drop - Off"
-          dotColor="border-[#54A6D4] bg-[#54A6D4]"
-          prefix="do"
-          state={dropOff}
-          onChange={setDropOff}
-          openDropdown={openDropdown}
-          setOpenDropdown={setOpenDropdown}
-        />
-      </div>
-    </>
+          <div className={embedded ? "min-w-0" : "min-w-0 xl:col-span-3"}>
+            <FieldLabel>Pick-up date</FieldLabel>
+            <div className="relative">
+              <Calendar
+                size={16}
+                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+                aria-hidden="true"
+              />
+              <input
+                type="datetime-local"
+                value={pickupDatetime}
+                min={minPickupDatetime}
+                onChange={(event) => setPickupDatetime(event.target.value)}
+                className={`${fieldClass} pl-9`}
+                required
+              />
+            </div>
+          </div>
+
+          <div className={embedded ? "min-w-0" : "min-w-0 xl:col-span-3"}>
+            <FieldLabel>Drop-off date</FieldLabel>
+            <div className="relative">
+              <Calendar
+                size={16}
+                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+                aria-hidden="true"
+              />
+              <input
+                type="datetime-local"
+                value={dropoffDatetime}
+                min={pickupDatetime || minPickupDatetime}
+                onChange={(event) => setDropoffDatetime(event.target.value)}
+                className={`${fieldClass} pl-9`}
+                required
+              />
+            </div>
+          </div>
+
+          <div className={embedded ? "min-w-0 sm:col-span-2 lg:col-span-1" : "min-w-0 sm:col-span-2 xl:col-span-2"}>
+            <button
+              type="submit"
+              disabled={busy || isPending || locations.length === 0}
+              className={submitClass}
+            >
+              Search
+              <ArrowRight size={16} aria-hidden="true" />
+            </button>
+          </div>
+        </div>
+
+        {!sameLocation ? (
+          <div className={`min-w-0 ${embedded ? "sm:max-w-xs" : "max-w-md"}`}>
+            <FieldLabel>Drop-off location</FieldLabel>
+            <div className="relative">
+              <MapPin
+                size={16}
+                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"
+                aria-hidden="true"
+              />
+              <select
+                value={dropoffLocationId}
+                onChange={(event) => setDropoffLocationId(event.target.value)}
+                disabled={isPending || locations.length === 0}
+                className={`${fieldClass} pl-9`}
+                required
+              >
+                {locations.map((location) => (
+                  <option key={location.id} value={String(location.id)}>
+                    {location.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        ) : null}
+
+        {error ? <p className="text-sm font-medium text-red-600">{error}</p> : null}
+      </form>
+    </section>
   );
 }

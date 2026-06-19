@@ -25,7 +25,7 @@ export default function CarDetailPageClient({ slug }: { slug: string }) {
 
   if (vehiclePending || listPending) {
     return (
-      <div className="flex w-full flex-col gap-6 px-6 py-8 lg:flex-row lg:items-start">
+      <div className="flex w-full flex-col gap-6 px-4 py-4 sm:px-6 sm:py-6 lg:flex-row lg:items-start">
         <div className="h-64 w-full shrink-0 animate-pulse rounded-[10px] bg-white lg:w-[260px] dark:bg-gray-900" />
         <div className="flex min-w-0 w-full flex-1 flex-col gap-6">
           <div className="h-[420px] animate-pulse rounded-[10px] bg-white dark:bg-gray-900" />

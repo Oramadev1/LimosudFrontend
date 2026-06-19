@@ -1,25 +1,66 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function RentNowButton({
+import { routes } from "@/config/routes";
+import { buildBookUrl, rentalSearchFromQuery } from "@/lib/rental-search";
+
+function RentNowButtonInner({
   slug,
   large = false,
+  disabled = false,
 }: {
   slug: string;
   large?: boolean;
+  disabled?: boolean;
 }) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const rental = rentalSearchFromQuery(searchParams);
 
   return (
     <button
       type="button"
-      onClick={() => router.push(`/checkout?slug=${encodeURIComponent(slug)}`)}
-      className={`rounded-[4px] bg-[#3563E9] font-semibold text-white transition-colors hover:bg-[#2a52c9] ${
+      disabled={disabled}
+      onClick={() => router.push(buildBookUrl(slug, rental))}
+      className={`rounded-[4px] font-semibold text-white transition-colors ${
         large ? "px-8 py-3 text-base" : "px-4 py-2 text-sm"
+      } ${
+        disabled
+          ? "cursor-not-allowed bg-gray-300 text-gray-500 dark:bg-gray-700 dark:text-gray-400"
+          : "bg-[#3563E9] hover:bg-[#2a52c9]"
       }`}
     >
-      Rent Now
+      {disabled ? "Unavailable" : "Rent Now"}
     </button>
+  );
+}
+
+export default function RentNowButton(props: {
+  slug: string;
+  large?: boolean;
+  disabled?: boolean;
+}) {
+  return (
+    <Suspense
+      fallback={
+        <button
+          type="button"
+          disabled={props.disabled}
+          className={`rounded-[4px] font-semibold text-white transition-colors ${
+            props.large ? "px-8 py-3 text-base" : "px-4 py-2 text-sm"
+          } ${
+            props.disabled
+              ? "cursor-not-allowed bg-gray-300 text-gray-500 dark:bg-gray-700 dark:text-gray-400"
+              : "bg-[#3563E9] hover:bg-[#2a52c9]"
+          }`}
+        >
+          {props.disabled ? "Unavailable" : "Rent Now"}
+        </button>
+      }
+    >
+      <RentNowButtonInner {...props} />
+    </Suspense>
   );
 }
