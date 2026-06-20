@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://127.0.0.1:8000/api";
+const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "https://api.limosudcars.com/api";
 const apiOrigin = new URL(apiUrl);
 
 const storageRemotePattern = {
@@ -29,21 +29,9 @@ const nextConfig: NextConfig = {
       },
       storageRemotePattern,
       {
-        protocol: "http",
-        hostname: "127.0.0.1",
-        port: "8000",
-        pathname: "/storage/**",
-      },
-      {
         protocol: "https",
         hostname: "i.pravatar.cc",
         pathname: "/**",
-      },
-      {
-        protocol: "http",
-        hostname: "localhost",
-        port: "8000",
-        pathname: "/storage/**",
       },
     ],
   },
