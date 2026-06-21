@@ -1,4 +1,5 @@
 import { siteConfig } from "@/config/site";
+import { resolveApiUrl } from "@/lib/api/base-url";
 import type { ApiValidationError } from "@/types/api";
 
 export class ApiError extends Error {
@@ -34,7 +35,7 @@ export async function apiFetch<T>(
   path: string,
   init?: RequestInit,
 ): Promise<T> {
-  const url = `${siteConfig.apiUrl}${path}`;
+  const url = resolveApiUrl(path);
 
   const isDynamic = init?.cache === "no-store" || init?.method === "POST";
   const isBrowser = typeof window !== "undefined";
@@ -51,8 +52,7 @@ export async function apiFetch<T>(
   }).catch((error: unknown) => {
     if (error instanceof TypeError) {
       throw new ApiError(0, {
-        message:
-          "Unable to reach the API. Make sure the backend is running on http://127.0.0.1:8000.",
+        message: "Unable to reach the API. Check your connection and API configuration.",
       });
     }
 

@@ -6,7 +6,7 @@ export const siteConfig = {
   description:
     "Renting a car is easy and fast with Limosud Cars. Premium rental fleet in Dakhla.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
-  apiUrl: process.env.NEXT_PUBLIC_API_URL ?? "https://api.limosudcars.com/api",
+  apiUrl: process.env.NEXT_PUBLIC_API_URL ?? "/api",
   adminUrl: process.env.NEXT_PUBLIC_ADMIN_URL ?? "http://localhost:3001/login",
   locale: "fr_FR",
   language: "en",

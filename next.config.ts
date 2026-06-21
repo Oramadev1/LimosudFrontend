@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "https://api.limosudcars.com/api";
-const apiOrigin = new URL(apiUrl);
+const laravelApiUrl =
+  process.env.LARAVEL_API_URL ?? "https://api.limosudcars.com/api";
+const apiOrigin = new URL(laravelApiUrl);
 
 const storageRemotePattern = {
   protocol: apiOrigin.protocol.replace(":", "") as "http" | "https",
@@ -15,6 +16,16 @@ const nextConfig: NextConfig = {
   compress: true,
   async redirects() {
     return [];
+  },
+  async rewrites() {
+    const upstream = laravelApiUrl.replace(/\/$/, "");
+
+    return [
+      {
+        source: "/api/:path*",
+        destination: `${upstream}/:path*`,
+      },
+    ];
   },
   turbopack: {
     root: import.meta.dirname,
