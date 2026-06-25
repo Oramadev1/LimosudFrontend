@@ -9,6 +9,8 @@ export type VehicleFilterState = {
   types: string[];
   caps: number[];
   maxPrice: number;
+  /** Minimum seats from URL search (homepage hero). */
+  minSeats?: number;
 };
 
 export const defaultVehicleFilters: VehicleFilterState = {
@@ -30,7 +32,13 @@ export function getVehicleFuelLabel(vehicle: Vehicle): string {
 }
 
 export function getVehicleDailyPrice(vehicle: Vehicle): number {
-  return parseFloat(vehicle.daily_price);
+  const price = parseFloat(vehicle.daily_price);
+  return Number.isFinite(price) ? price : 0;
+}
+
+export function getVehicleSeats(vehicle: Vehicle): number {
+  const seats = Number(vehicle.seats);
+  return Number.isFinite(seats) ? seats : 0;
 }
 
 export function getVehicleFilterTypes(vehicles: Vehicle[]): string[] {
@@ -55,26 +63,44 @@ export function filterVehicles(
   return vehicles.filter((vehicle) => {
     const category = getVehicleCategoryLabel(vehicle);
     const price = getVehicleDailyPrice(vehicle);
-    const seats = vehicle.seats;
+    const seats = getVehicleSeats(vehicle);
 
     const typeOk =
       filters.types.length === 0 || filters.types.includes(category);
     const capOk =
       filters.caps.length === 0 ||
-      filters.caps.some((cap) => (cap === 8 ? seats >= 8 : seats === cap));
+      filters.caps.some((cap) => vehicleMatchesCapacity(vehicle, cap));
+    const minSeatsOk =
+      filters.minSeats == null || seats >= filters.minSeats;
     const priceOk = price <= filters.maxPrice;
     const nameOk =
       !q ||
       vehicle.name.toLowerCase().includes(q) ||
       vehicle.model.toLowerCase().includes(q) ||
-      vehicle.brand?.name.toLowerCase().includes(q);
+      (vehicle.brand?.name?.toLowerCase().includes(q) ?? false);
 
-    return typeOk && capOk && priceOk && nameOk;
+    return typeOk && capOk && minSeatsOk && priceOk && nameOk;
   });
 }
 
+/** Seat ranges aligned with sidebar labels (2 / 4 / 6 / 8+). */
 export function vehicleMatchesCapacity(vehicle: Vehicle, cap: number): boolean {
-  return cap === 8 ? vehicle.seats >= 8 : vehicle.seats === cap;
+  const seats = getVehicleSeats(vehicle);
+
+  if (cap === 2) {
+    return seats <= 2;
+  }
+  if (cap === 4) {
+    return seats >= 3 && seats <= 5;
+  }
+  if (cap === 6) {
+    return seats >= 6 && seats <= 7;
+  }
+  if (cap === 8) {
+    return seats >= 8;
+  }
+
+  return false;
 }
 
 export function vehicleCardImage(vehicle: Vehicle): string {

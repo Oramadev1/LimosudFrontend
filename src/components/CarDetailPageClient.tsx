@@ -1,12 +1,17 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { notFound } from "next/navigation";
 
 import CarCardSkeleton from "@/components/CarCardSkeleton";
-import FilterSidebar from "@/components/FilterSidebar";
+import FilterSidebar, {
+  defaultFilters,
+  filterVehicles,
+  type FilterState,
+} from "@/components/FilterSidebar";
 import RecentCars from "@/components/RecentCars";
 import VehicleDetailPanel from "@/components/VehicleDetailPanel";
+import { getMaxVehiclePrice } from "@/lib/vehicle-catalog";
 import { useAllVehiclesQuery, useVehicleQuery } from "@/lib/query/hooks";
 
 export default function CarDetailPageClient({ slug }: { slug: string }) {
@@ -16,6 +21,20 @@ export default function CarDetailPageClient({ slug }: { slug: string }) {
     isError: vehicleError,
   } = useVehicleQuery(slug);
   const { data: allVehicles = [], isPending: listPending } = useAllVehiclesQuery();
+  const maxPrice = getMaxVehiclePrice(allVehicles);
+  const [filters, setFilters] = useState<FilterState>({
+    ...defaultFilters,
+    maxPrice,
+  });
+
+  useEffect(() => {
+    setFilters((current) => ({ ...current, maxPrice }));
+  }, [maxPrice]);
+
+  const filteredVehicles = useMemo(
+    () => filterVehicles(allVehicles, filters),
+    [allVehicles, filters],
+  );
 
   useEffect(() => {
     if (!vehiclePending && !listPending && (vehicleError || !vehicle)) {
@@ -45,10 +64,14 @@ export default function CarDetailPageClient({ slug }: { slug: string }) {
 
   return (
     <div className="flex w-full flex-col gap-6 px-6 py-8 lg:flex-row lg:items-start">
-      <FilterSidebar vehicles={allVehicles} />
+      <FilterSidebar
+        vehicles={allVehicles}
+        filters={filters}
+        onChange={setFilters}
+      />
       <div className="flex min-w-0 w-full flex-1 flex-col gap-6">
         <VehicleDetailPanel vehicle={vehicle} />
-        <RecentCars vehicles={allVehicles} currentSlug={slug} />
+        <RecentCars vehicles={filteredVehicles} currentSlug={slug} />
       </div>
     </div>
   );

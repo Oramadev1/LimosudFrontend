@@ -154,7 +154,7 @@ export default function FilterSidebar({
           type="range"
           min={0}
           max={maxCatalogPrice}
-          value={filters.maxPrice}
+          value={Math.min(filters.maxPrice, maxCatalogPrice)}
           onChange={(event) =>
             handleChange({
               ...filters,

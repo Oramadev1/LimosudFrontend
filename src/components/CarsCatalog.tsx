@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import CarCard from "@/components/CarCard";
 import CarCardSkeleton from "@/components/CarCardSkeleton";
@@ -12,6 +12,7 @@ import FilterSidebar, {
 } from "@/components/FilterSidebar";
 import SearchForm from "@/components/SearchForm";
 import { CarGridSkeleton } from "@/components/CarCardSkeleton";
+import { routes } from "@/config/routes";
 import { formatDateTime, combineDatetime } from "@/lib/format";
 import { rentalSearchFromQuery } from "@/lib/rental-search";
 import {
@@ -56,19 +57,58 @@ function RentalSummary() {
   );
 }
 
+function parseMinSeats(value: string | null): number | undefined {
+  if (!value?.trim()) {
+    return undefined;
+  }
+
+  const seats = Number(value);
+  return Number.isFinite(seats) && seats > 0 ? seats : undefined;
+}
+
+function parseMaxPrice(value: string | null): number | undefined {
+  if (!value?.trim()) {
+    return undefined;
+  }
+
+  const price = Number(value);
+  return Number.isFinite(price) && price > 0 ? price : undefined;
+}
+
 function CarsContent({ vehicles }: { vehicles: Vehicle[] }) {
+  const router = useRouter();
   const maxPrice = getMaxVehiclePrice(vehicles);
-  const [filters, setFilters] = useState<FilterState>({
-    ...defaultFilters,
-    maxPrice,
-  });
-  const [visibleCount, setVisibleCount] = useState(9);
   const searchParams = useSearchParams();
   const q = searchParams.get("q")?.trim() ?? "";
+  const minSeats = parseMinSeats(searchParams.get("seats"));
+  const maxPriceFromUrl = parseMaxPrice(searchParams.get("max_price"));
+
+  const [filters, setFilters] = useState<FilterState>(() => ({
+    ...defaultFilters,
+    maxPrice: maxPriceFromUrl ?? maxPrice,
+    minSeats,
+  }));
+  const [visibleCount, setVisibleCount] = useState(9);
+
+  useEffect(() => {
+    setFilters((current) => ({
+      ...current,
+      maxPrice: maxPriceFromUrl ?? maxPrice,
+      minSeats,
+    }));
+  }, [maxPrice, maxPriceFromUrl, minSeats]);
 
   useEffect(() => {
     setVisibleCount(9);
   }, [filters, q]);
+
+  function clearFilters() {
+    router.replace(routes.vehicles);
+    setFilters({
+      ...defaultFilters,
+      maxPrice,
+    });
+  }
 
   const filtered = useMemo(
     () => filterVehicles(vehicles, filters as VehicleFilterState, q),
@@ -106,12 +146,7 @@ function CarsContent({ vehicles }: { vehicles: Vehicle[] }) {
             <p className="text-sm text-gray-400">Try adjusting your filters</p>
             <button
               type="button"
-              onClick={() =>
-                setFilters({
-                  ...defaultFilters,
-                  maxPrice,
-                })
-              }
+              onClick={clearFilters}
               className="mt-2 text-sm font-semibold text-[#3563E9] hover:underline"
             >
               Clear filters
