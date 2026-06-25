@@ -15,6 +15,12 @@ export function formatDateTime(value: string): string {
   }).format(new Date(value));
 }
 
+export function formatBlogDate(value: string): string {
+  return new Intl.DateTimeFormat("fr-FR", {
+    dateStyle: "long",
+  }).format(new Date(value));
+}
+
 export function toApiDatetime(localDatetime: string): string {
   const date = new Date(localDatetime);
   const pad = (n: number) => String(n).padStart(2, "0");

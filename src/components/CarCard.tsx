@@ -49,7 +49,7 @@ export default function CarCard({
             {vehicle.name}
           </h3>
           <span className="text-xs text-gray-400 dark:text-gray-500">
-            {getVehicleCategoryLabel(vehicle)}
+            {[vehicle.brand?.name, getVehicleCategoryLabel(vehicle)].filter(Boolean).join(" · ")}
           </span>
         </Link>
         <VehicleAvailabilityBadge vehicle={vehicle} />
@@ -59,19 +59,13 @@ export default function CarCard({
         href={routes.vehicle(vehicle.slug)}
         className="relative block h-[120px] w-full overflow-hidden"
       >
-        {image ? (
-          <StorageImage
-            src={image}
-            alt={vehicle.name}
-            fill
-            priority={priority}
-            className="object-contain drop-shadow-sm transition-transform duration-300 hover:scale-105"
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800">
-            <span className="text-xs text-gray-300">No Image</span>
-          </div>
-        )}
+        <StorageImage
+          src={image}
+          alt={vehicle.name}
+          fill
+          priority={priority}
+          className="object-contain drop-shadow-sm transition-transform duration-300 hover:scale-105"
+        />
       </Link>
 
       <div className="flex items-center justify-between text-xs text-gray-400">

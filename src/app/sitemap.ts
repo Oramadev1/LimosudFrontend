@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 
 import { routes } from "@/config/routes";
 import { siteConfig } from "@/config/site";
+import { getAllBlogPosts } from "@/lib/blogs";
 import { getVehicles } from "@/lib/api/public";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -18,6 +19,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       }),
     );
 
+    const blogRoutes: MetadataRoute.Sitemap = getAllBlogPosts().map((post) => ({
+      url: `${siteConfig.url}${routes.blogPost(post.slug)}`,
+      lastModified: new Date(post.publishedAt),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    }));
+
     return [
       {
         url: siteConfig.url,
@@ -31,6 +39,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: "daily",
         priority: 0.9,
       },
+      {
+        url: `${siteConfig.url}${routes.blog}`,
+        lastModified,
+        changeFrequency: "weekly",
+        priority: 0.7,
+      },
+      ...blogRoutes,
       ...vehicleRoutes,
     ];
   } catch {

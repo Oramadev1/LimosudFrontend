@@ -32,7 +32,6 @@ export function getVehicleAvailabilityInfo(vehicle: Vehicle): VehicleAvailabilit
         tone: "unavailable",
       };
     case "out_of_service":
-    case "sold":
       return {
         label: "Unavailable",
         rentable: false,

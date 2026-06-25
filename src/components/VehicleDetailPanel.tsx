@@ -32,11 +32,7 @@ export default function VehicleDetailPanel({ vehicle }: { vehicle: Vehicle }) {
       return [fallback, fallback, fallback];
     }
 
-    if (photos.length === 1) {
-      return [photos[0], photos[0], photos[0]];
-    }
-
-    return photos.slice(0, 3);
+    return photos;
   }, [vehicle]);
 
   const heroImage = images[activeThumb] ?? images[0];
@@ -64,7 +60,11 @@ export default function VehicleDetailPanel({ vehicle }: { vehicle: Vehicle }) {
           ) : null}
         </div>
 
-        <div className="flex gap-3" role="tablist" aria-label="Vehicle photos">
+        <div
+          className="flex gap-3 overflow-x-auto pb-1"
+          role="tablist"
+          aria-label="Vehicle photos"
+        >
           {images.map((src, index) => (
             <button
               key={`${src}-${index}`}
@@ -73,7 +73,7 @@ export default function VehicleDetailPanel({ vehicle }: { vehicle: Vehicle }) {
               aria-selected={activeThumb === index}
               aria-label={`View image ${index + 1}`}
               onClick={() => setActiveThumb(index)}
-              className={`relative h-[72px] flex-1 overflow-hidden rounded-[8px] border-2 bg-white transition-colors dark:bg-gray-800 ${
+              className={`relative h-[72px] w-[72px] shrink-0 overflow-hidden rounded-[8px] border-2 bg-white transition-colors dark:bg-gray-800 ${
                 activeThumb === index
                   ? "border-[#3563E9]"
                   : "border-transparent dark:border-gray-700"
@@ -99,7 +99,7 @@ export default function VehicleDetailPanel({ vehicle }: { vehicle: Vehicle }) {
             <VehicleAvailabilityBadge vehicle={vehicle} />
           </div>
           <p className="mt-1 text-xs text-gray-400">
-            {getVehicleCategoryLabel(vehicle)}
+            {[vehicle.brand?.name, vehicle.model, vehicle.year].filter(Boolean).join(" · ")}
           </p>
           {!availability.rentable ? (
             <p className="mt-2 text-sm font-medium text-red-500">
@@ -114,8 +114,28 @@ export default function VehicleDetailPanel({ vehicle }: { vehicle: Vehicle }) {
         </p>
 
         <div className="grid grid-cols-2 gap-x-8 gap-y-3 text-sm">
+          {vehicle.brand ? (
+            <div className="flex justify-between">
+              <span className="text-gray-400">Brand</span>
+              <span className="font-semibold text-gray-700 dark:text-gray-200">
+                {vehicle.brand.name}
+              </span>
+            </div>
+          ) : null}
           <div className="flex justify-between">
-            <span className="text-gray-400">Type Car</span>
+            <span className="text-gray-400">Model</span>
+            <span className="font-semibold text-gray-700 dark:text-gray-200">
+              {vehicle.model}
+            </span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-gray-400">Year</span>
+            <span className="font-semibold text-gray-700 dark:text-gray-200">
+              {vehicle.year}
+            </span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-gray-400">Type</span>
             <span className="font-semibold text-gray-700 dark:text-gray-200">
               {getVehicleCategoryLabel(vehicle)}
             </span>
@@ -123,17 +143,23 @@ export default function VehicleDetailPanel({ vehicle }: { vehicle: Vehicle }) {
           <div className="flex justify-between">
             <span className="text-gray-400">Capacity</span>
             <span className="font-semibold text-gray-700 dark:text-gray-200">
-              {vehicle.seats} Person
+              {vehicle.seats} seats
             </span>
           </div>
           <div className="flex justify-between">
-            <span className="text-gray-400">Steering</span>
+            <span className="text-gray-400">Doors</span>
+            <span className="font-semibold text-gray-700 dark:text-gray-200">
+              {vehicle.doors}
+            </span>
+          </div>
+          <div className="flex justify-between">
+            <span className="text-gray-400">Transmission</span>
             <span className="font-semibold text-gray-700 dark:text-gray-200">
               {getVehicleTransmissionLabel(vehicle)}
             </span>
           </div>
           <div className="flex justify-between">
-            <span className="text-gray-400">Gasoline</span>
+            <span className="text-gray-400">Fuel</span>
             <span className="font-semibold text-gray-700 dark:text-gray-200">
               {getVehicleFuelLabel(vehicle)}
             </span>

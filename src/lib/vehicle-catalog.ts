@@ -1,6 +1,7 @@
 import type { Vehicle } from "@/types/api";
 
 import { getVehicleImageUrl } from "./images";
+import { pickPublicCarImage, PUBLIC_CAR_IMAGES } from "./public-car-images";
 
 export const CAPACITY_BUCKETS = [2, 4, 6, 8] as const;
 
@@ -76,6 +77,6 @@ export function vehicleMatchesCapacity(vehicle: Vehicle, cap: number): boolean {
   return cap === 8 ? vehicle.seats >= 8 : vehicle.seats === cap;
 }
 
-export function vehicleCardImage(vehicle: Vehicle): string | undefined {
-  return getVehicleImageUrl(vehicle) ?? undefined;
+export function vehicleCardImage(vehicle: Vehicle): string {
+  return getVehicleImageUrl(vehicle) ?? pickPublicCarImage(vehicle.id, PUBLIC_CAR_IMAGES);
 }
