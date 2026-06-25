@@ -5,23 +5,16 @@ import {
   getVehicleTransmissionLabel,
 } from "@/lib/vehicle-catalog";
 import { getVehicleImageUrl } from "@/lib/images";
-import { pickPublicCarImage } from "@/lib/public-car-images";
 import { routes } from "@/config/routes";
 import type { MarketingCar } from "@/types/marketing";
 import type { Vehicle } from "@/types/api";
 
-export function vehicleToMarketingCar(
-  vehicle: Vehicle,
-  carImages: readonly string[],
-  index = vehicle.id,
-): MarketingCar {
-  const apiImage = getVehicleImageUrl(vehicle);
-
+export function vehicleToMarketingCar(vehicle: Vehicle): MarketingCar {
   return {
     id: vehicle.id,
     name: vehicle.name,
     year: vehicle.year,
-    image: apiImage ?? pickPublicCarImage(index, carImages),
+    image: getVehicleImageUrl(vehicle),
     brand: vehicle.brand?.name,
     model: vehicle.model,
     category: getVehicleCategoryLabel(vehicle),

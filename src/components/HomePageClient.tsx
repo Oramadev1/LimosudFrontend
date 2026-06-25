@@ -12,18 +12,10 @@ import { CarGridSkeleton } from "@/components/CarCardSkeleton";
 import { vehicleToMarketingCar } from "@/lib/marketing/vehicles";
 import { useAllVehiclesQuery } from "@/lib/query/hooks";
 
-export default function HomePageClient({
-  carImages,
-  heroImages,
-}: {
-  carImages: string[];
-  heroImages: string[];
-}) {
+export default function HomePageClient({ heroImages }: { heroImages: string[] }) {
   const { data: vehicles = [], isPending, isError } = useAllVehiclesQuery();
 
-  const rentCars = vehicles.slice(0, 6).map((vehicle, index) =>
-    vehicleToMarketingCar(vehicle, carImages, index),
-  );
+  const rentCars = vehicles.slice(0, 6).map((vehicle) => vehicleToMarketingCar(vehicle));
 
   return (
     <div className="min-w-0 bg-[#F5F5F5]">
@@ -42,7 +34,7 @@ export default function HomePageClient({
           Impossible de charger les véhicules. Actualisez la page.
         </section>
       ) : (
-        <ServicesSection rentCars={rentCars} carImages={carImages} />
+        <ServicesSection rentCars={rentCars} />
       )}
 
       <WhyChooseUsSection />

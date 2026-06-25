@@ -14,6 +14,7 @@ import {
 import type { Vehicle } from "@/types/api";
 
 import RentNowButton from "./RentNowButton";
+import { VehicleImagePlaceholder } from "./VehicleImagePlaceholder";
 
 interface CarCardProps {
   vehicle: Vehicle;
@@ -59,13 +60,17 @@ export default function CarCard({
         href={routes.vehicle(vehicle.slug)}
         className="relative block h-[120px] w-full overflow-hidden"
       >
-        <StorageImage
-          src={image}
-          alt={vehicle.name}
-          fill
-          priority={priority}
-          className="object-contain drop-shadow-sm transition-transform duration-300 hover:scale-105"
-        />
+        {image ? (
+          <StorageImage
+            src={image}
+            alt={vehicle.name}
+            fill
+            priority={priority}
+            className="object-contain drop-shadow-sm transition-transform duration-300 hover:scale-105"
+          />
+        ) : (
+          <VehicleImagePlaceholder />
+        )}
       </Link>
 
       <div className="flex items-center justify-between text-xs text-gray-400">

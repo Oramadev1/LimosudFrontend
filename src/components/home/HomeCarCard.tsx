@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 
 import { formatMarketingPrice } from "@/lib/marketing/vehicles";
 import { routes } from "@/config/routes";
+import { VehicleImagePlaceholder } from "@/components/VehicleImagePlaceholder";
 import type { MarketingCar } from "@/types/marketing";
 
 function carSubtitle(car: MarketingCar): string {
@@ -25,13 +26,17 @@ export function HomeCarCard({ car }: { car: MarketingCar }) {
       className="overflow-hidden rounded-xl border border-[#E5E5E5] bg-white"
     >
       <div className="relative h-[190px] w-full overflow-hidden">
-        <Image
-          src={car.image}
-          alt={car.name}
-          fill
-          className="object-contain p-2"
-          sizes="(max-width:768px) 100vw, 33vw"
-        />
+        {car.image ? (
+          <Image
+            src={car.image}
+            alt={car.name}
+            fill
+            className="object-contain p-2"
+            sizes="(max-width:768px) 100vw, 33vw"
+          />
+        ) : (
+          <VehicleImagePlaceholder label="Photo à venir" />
+        )}
         {car.isFeatured ? (
           <span className="absolute top-3 left-3 rounded-full bg-[#E8192C] px-2.5 py-1 text-[10px] font-semibold tracking-wide text-white uppercase">
             Vedette

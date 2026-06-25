@@ -11,28 +11,23 @@ import {
   getVehicleCategoryLabel,
   getVehicleFuelLabel,
   getVehicleTransmissionLabel,
-  vehicleCardImage,
 } from "@/lib/vehicle-catalog";
 import type { Vehicle } from "@/types/api";
 
 import RentNowButton from "./RentNowButton";
+import { VehicleImagePlaceholder } from "./VehicleImagePlaceholder";
 
 export default function VehicleDetailPanel({ vehicle }: { vehicle: Vehicle }) {
   const [activeThumb, setActiveThumb] = useState(0);
 
   const images = useMemo(() => {
-    const photos = vehicle.photos?.length
-      ? [...vehicle.photos]
-          .sort((a, b) => a.sort_order - b.sort_order)
-          .map((photo) => vehiclePhotoUrl(photo.path))
-      : [];
-
-    const fallback = vehicleCardImage(vehicle);
-    if (photos.length === 0 && fallback) {
-      return [fallback, fallback, fallback];
+    if (!vehicle.photos?.length) {
+      return [];
     }
 
-    return photos;
+    return [...vehicle.photos]
+      .sort((a, b) => a.sort_order - b.sort_order)
+      .map((photo) => vehiclePhotoUrl(photo.path));
   }, [vehicle]);
 
   const heroImage = images[activeThumb] ?? images[0];
@@ -57,7 +52,11 @@ export default function VehicleDetailPanel({ vehicle }: { vehicle: Vehicle }) {
                 className="object-contain object-bottom drop-shadow-2xl"
               />
             </div>
-          ) : null}
+          ) : (
+            <div className="relative h-[130px] w-full">
+              <VehicleImagePlaceholder label="Photo à venir" />
+            </div>
+          )}
         </div>
 
         <div
