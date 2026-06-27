@@ -49,8 +49,13 @@ export const rentalSchema = z
     }
   });
 
+export const confirmSchema = z.object({
+  agreeTerms: z.boolean().refine((value) => value, "You must agree to the terms and conditions"),
+});
+
 export type BillingData  = z.infer<typeof billingSchema>;
 export type RentalData   = z.infer<typeof rentalSchema>;
+export type ConfirmData  = z.infer<typeof confirmSchema>;
 
 export function isRentalPeriodValid(
   pickupDate: string,

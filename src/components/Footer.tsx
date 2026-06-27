@@ -11,7 +11,7 @@ const footerColumns = {
     { label: "À propos", href: routes.home },
     { label: "Blog", href: routes.blog },
     { label: "Contact", href: "#contact" },
-    { label: "Conditions d'utilisation", href: "#" },
+    { label: "Conditions d'utilisation", href: routes.terms },
   ],
 };
 

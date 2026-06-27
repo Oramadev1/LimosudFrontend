@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ShieldCheck, ChevronDown, CheckCircle2, AlertCircle } from "lucide-react";
@@ -13,9 +14,11 @@ import { checkVehicleAvailability } from "@/lib/api/public";
 import {
   billingSchema,
   rentalSchema,
+  confirmSchema,
   isRentalPeriodValid,
   type BillingData,
   type RentalData,
+  type ConfirmData,
 } from "@/lib/checkout-schema";
 import {
   combineDatetime,
@@ -258,6 +261,11 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
     resolver: zodResolver(rentalSchema),
     mode: "onTouched",
   });
+  const confirm = useForm<ConfirmData>({
+    resolver: zodResolver(confirmSchema),
+    mode: "onTouched",
+    defaultValues: { agreeTerms: false },
+  });
 
   useEffect(() => {
     const rentalParams = rentalSearchFromQuery(searchParams);
@@ -289,9 +297,10 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
   async function handleSubmit() {
     setSubmitError(null);
 
-    const [billingOk, rentalOk] = await Promise.all([
+    const [billingOk, rentalOk, confirmOk] = await Promise.all([
       billing.trigger(),
       rental.trigger(),
+      confirm.trigger(),
     ]);
 
     if (!billingOk) {
@@ -312,6 +321,15 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
       setSubmitError(message);
       toast.error(message);
       document.getElementById("checkout-rental")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    if (!confirmOk) {
+      const message =
+        confirm.formState.errors.agreeTerms?.message ??
+        "Please agree to the terms and conditions.";
+      setSubmitError(message);
+      toast.error(message);
+      document.getElementById("checkout-confirm")?.scrollIntoView({ behavior: "smooth", block: "start" });
       return;
     }
 
@@ -525,6 +543,25 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
           subtitle="We are getting to the end. Just few clicks and your rental is ready!"
         >
           <div className="flex flex-col gap-3">
+            <label className="flex cursor-pointer items-start gap-3 rounded-[8px] bg-[#F6F7F9] px-4 py-3.5 dark:bg-gray-800">
+              <input
+                type="checkbox"
+                {...confirm.register("agreeTerms")}
+                className="mt-0.5 h-4 w-4 shrink-0 accent-[#3563E9]"
+              />
+              <span className="text-sm text-gray-600 dark:text-gray-300">
+                I agree with our{" "}
+                <Link
+                  href={routes.terms}
+                  target="_blank"
+                  className="font-medium text-[#3563E9] hover:underline"
+                >
+                  terms and conditions
+                </Link>{" "}
+                and cancellation policy.
+              </span>
+            </label>
+            <FieldError msg={confirm.formState.errors.agreeTerms?.message} />
             <button
               type="button"
               onClick={handleSubmit}
