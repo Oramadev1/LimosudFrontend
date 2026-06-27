@@ -1,4 +1,4 @@
-import { siteConfig } from "@/config/site";
+import axios, { isAxiosError, type AxiosRequestConfig } from "axios";
 import { resolveApiUrl } from "@/lib/api/base-url";
 import type { ApiValidationError } from "@/types/api";
 
@@ -31,42 +31,72 @@ export function isValidationError(
   );
 }
 
+const apiClient = axios.create({
+  headers: {
+    Accept: "application/json",
+  },
+});
+
+function normalizeHeaders(headers?: HeadersInit): Record<string, string> {
+  if (!headers) {
+    return {};
+  }
+
+  if (headers instanceof Headers) {
+    return Object.fromEntries(headers.entries());
+  }
+
+  if (Array.isArray(headers)) {
+    return Object.fromEntries(headers);
+  }
+
+  return headers;
+}
+
+function toAxiosConfig(path: string, init: RequestInit = {}): AxiosRequestConfig {
+  const method = (init.method ?? "GET").toUpperCase();
+  const headers = normalizeHeaders(init.headers);
+
+  return {
+    url: resolveApiUrl(path),
+    method,
+    headers,
+    data: init.body ?? undefined,
+    validateStatus: () => true,
+  };
+}
+
+function mapAxiosError(error: unknown): never {
+  if (error instanceof ApiError) {
+    throw error;
+  }
+
+  if (isAxiosError(error) && !error.response) {
+    throw new ApiError(0, {
+      message: "Unable to reach the API. Check your connection and API configuration.",
+    });
+  }
+
+  throw error;
+}
+
 export async function apiFetch<T>(
   path: string,
   init?: RequestInit,
 ): Promise<T> {
-  const url = resolveApiUrl(path);
+  try {
+    const response = await apiClient.request<T>(toAxiosConfig(path, init ?? {}));
 
-  const isDynamic = init?.cache === "no-store" || init?.method === "POST";
-  const isBrowser = typeof window !== "undefined";
-
-  const response = await fetch(url, {
-    ...init,
-    headers: {
-      Accept: "application/json",
-      ...init?.headers,
-    },
-    ...(isDynamic || isBrowser
-      ? { cache: "no-store" as const }
-      : { next: { revalidate: 60 } }),
-  }).catch((error: unknown) => {
-    if (error instanceof TypeError) {
-      throw new ApiError(0, {
-        message: "Unable to reach the API. Check your connection and API configuration.",
-      });
+    if (response.status < 200 || response.status >= 300) {
+      throw new ApiError(response.status, response.data);
     }
 
-    throw error;
-  });
+    if (response.status === 204) {
+      return null as T;
+    }
 
-  if (!response.ok) {
-    const body = await response.json().catch(() => null);
-    throw new ApiError(response.status, body);
+    return response.data;
+  } catch (error) {
+    mapAxiosError(error);
   }
-
-  if (response.status === 204) {
-    return null as T;
-  }
-
-  return response.json() as Promise<T>;
 }
