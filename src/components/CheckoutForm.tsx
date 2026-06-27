@@ -344,7 +344,6 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
     const rentalData = rental.getValues();
     if (
       isCalendarDayBlocked(rentalData.pickupDate, blockedPeriods) ||
-      isCalendarDayBlocked(rentalData.dropoffDate, blockedPeriods) ||
       rentalRangeOverlapsBlocked(
         rentalData.pickupDate,
         rentalData.pickupTime,
@@ -543,7 +542,6 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
                         field.onBlur();
                         rental.trigger().then((valid) => setStep2Done(valid));
                       }}
-                      blockedPeriods={blockedPeriods}
                       minDate={pickupDate || todayYmd()}
                       error={rental.formState.errors.dropoffDate?.message}
                       name={field.name}

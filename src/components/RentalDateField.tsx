@@ -20,7 +20,7 @@ type RentalDateFieldProps = {
   value: string;
   onChange: (value: string) => void;
   onBlur?: () => void;
-  blockedPeriods: BlockedPeriod[];
+  blockedPeriods?: BlockedPeriod[];
   minDate?: string;
   error?: string;
   name?: string;
@@ -37,7 +37,7 @@ export function RentalDateField({
   value,
   onChange,
   onBlur,
-  blockedPeriods,
+  blockedPeriods = [],
   minDate = todayYmd(),
   error,
   name,
