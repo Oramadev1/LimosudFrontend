@@ -21,7 +21,7 @@ import type { Location } from "@/types/api";
 type SearchFormProps = {
   id?: string;
   className?: string;
-  variant?: "default" | "embedded";
+  variant?: "default" | "embedded" | "heroFooter";
 };
 
 function mergeSearchValues(
@@ -56,6 +56,7 @@ export default function SearchForm({
   const searchParams = useSearchParams();
   const { data: locations = [], isPending, isError } = useLocationsQuery();
   const embedded = variant === "embedded";
+  const heroFooter = variant === "heroFooter";
 
   const initialValues = useMemo(
     () => mergeSearchValues(locations, rentalSearchFromQuery(searchParams)),
@@ -135,24 +136,38 @@ export default function SearchForm({
   const fieldClass =
     "booking-field w-full min-w-0 max-w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10 dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:border-slate-400";
 
-  const shellClass = embedded
-    ? ""
-    : "rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm sm:p-5 lg:p-6 dark:border-slate-800 dark:bg-slate-950";
+  const shellClass =
+    embedded || heroFooter
+      ? ""
+      : "rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm sm:p-5 lg:p-6 dark:border-slate-800 dark:bg-slate-950";
 
   const submitClass =
-    "inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 text-sm font-semibold text-white transition hover:bg-slate-800 disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 dark:disabled:bg-slate-700 dark:disabled:text-slate-400";
+    "inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#CC0000] px-5 text-sm font-semibold text-white transition hover:bg-[#a80000] disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500";
+
+  const gridClass = embedded
+    ? "grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:items-end"
+    : heroFooter
+      ? "grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-12 lg:items-end lg:gap-3"
+      : "grid grid-cols-1 gap-3.5 sm:grid-cols-2 xl:grid-cols-12 xl:items-end xl:gap-3";
+
+  const pickupColClass = embedded
+    ? "min-w-0"
+    : heroFooter
+      ? "min-w-0 sm:col-span-2 lg:col-span-4"
+      : "min-w-0 sm:col-span-2 xl:col-span-4";
+
+  const dateColClass = embedded ? "min-w-0" : heroFooter ? "min-w-0 lg:col-span-3" : "min-w-0 xl:col-span-3";
+
+  const submitColClass = embedded
+    ? "min-w-0 sm:col-span-2 lg:col-span-1"
+    : heroFooter
+      ? "min-w-0 sm:col-span-2 lg:col-span-2"
+      : "min-w-0 sm:col-span-2 xl:col-span-2";
 
   return (
     <section id={id} className={`min-w-0 max-w-full ${shellClass} ${className}`.trim()}>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        {!embedded ? (
-          <div>
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white">Search fleet</h2>
-            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-              Set your trip details to see available vehicles.
-            </p>
-          </div>
-        ) : (
+        {embedded ? (
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
               Step 1
@@ -180,9 +195,34 @@ export default function SearchForm({
               Same drop-off as pick-up
             </label>
           </div>
+        ) : heroFooter ? (
+          <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+            <div>
+              <h2 className="text-lg font-bold text-slate-900">Search fleet</h2>
+              <p className="mt-1 text-sm text-slate-500">
+                Set your trip details to see available vehicles.
+              </p>
+            </div>
+            <label className="flex shrink-0 items-center gap-2 text-sm text-slate-600">
+              <input
+                type="checkbox"
+                checked={sameLocation}
+                onChange={(event) => setSameLocation(event.target.checked)}
+                className="h-4 w-4 rounded border-slate-300 text-[#CC0000] focus:ring-[#CC0000]"
+              />
+              Return to same location
+            </label>
+          </div>
+        ) : (
+          <div>
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white">Search fleet</h2>
+            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+              Set your trip details to see available vehicles.
+            </p>
+          </div>
         )}
 
-        {!embedded ? (
+        {!embedded && !heroFooter ? (
           <label className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
             <input
               type="checkbox"
@@ -206,14 +246,8 @@ export default function SearchForm({
           </p>
         ) : null}
 
-        <div
-          className={
-            embedded
-              ? "grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:items-end"
-              : "grid grid-cols-1 gap-3.5 sm:grid-cols-2 xl:grid-cols-12 xl:items-end xl:gap-3"
-          }
-        >
-          <div className={embedded ? "min-w-0" : "min-w-0 sm:col-span-2 xl:col-span-4"}>
+        <div className={gridClass}>
+          <div className={pickupColClass}>
             <FieldLabel>Pick-up location</FieldLabel>
             <div className="relative">
               <MapPin
@@ -238,7 +272,7 @@ export default function SearchForm({
             </div>
           </div>
 
-          <div className={embedded ? "min-w-0" : "min-w-0 xl:col-span-3"}>
+          <div className={dateColClass}>
             <FieldLabel>Pick-up date</FieldLabel>
             <div className="relative">
               <Calendar
@@ -257,7 +291,7 @@ export default function SearchForm({
             </div>
           </div>
 
-          <div className={embedded ? "min-w-0" : "min-w-0 xl:col-span-3"}>
+          <div className={dateColClass}>
             <FieldLabel>Drop-off date</FieldLabel>
             <div className="relative">
               <Calendar
@@ -276,7 +310,7 @@ export default function SearchForm({
             </div>
           </div>
 
-          <div className={embedded ? "min-w-0 sm:col-span-2 lg:col-span-1" : "min-w-0 sm:col-span-2 xl:col-span-2"}>
+          <div className={submitColClass}>
             <button
               type="submit"
               disabled={busy || isPending || locations.length === 0}
@@ -289,7 +323,7 @@ export default function SearchForm({
         </div>
 
         {!sameLocation ? (
-          <div className={`min-w-0 ${embedded ? "sm:max-w-xs" : "max-w-md"}`}>
+          <div className={`min-w-0 ${embedded ? "sm:max-w-xs" : heroFooter ? "lg:max-w-sm" : "max-w-md"}`}>
             <FieldLabel>Drop-off location</FieldLabel>
             <div className="relative">
               <MapPin
