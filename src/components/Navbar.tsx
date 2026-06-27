@@ -7,25 +7,25 @@ import { Menu, X } from "lucide-react";
 
 import { BrandLogo } from "@/components/BrandLogo";
 import { routes } from "@/config/routes";
-import { navLinks, siteConfig } from "@/config/site";
+import { navLinks } from "@/config/site";
 
 const navHref: Record<string, string> = {
-  "Home Page": routes.home,
-  "Rent Car": routes.vehicles,
-  "Buy Car": routes.vehicles,
-  News: routes.blog,
+  Accueil: routes.home,
+  Véhicules: routes.vehicles,
+  Blog: routes.blog,
+  Contact: "#contact",
 };
 
 function isNavActive(pathname: string, label: string): boolean {
-  if (label === "Home Page") {
+  if (label === "Accueil") {
     return pathname === routes.home;
   }
 
-  if (label === "Rent Car" || label === "Buy Car") {
+  if (label === "Véhicules") {
     return pathname.startsWith(routes.vehicles) || pathname.startsWith("/book");
   }
 
-  if (label === "News") {
+  if (label === "Blog") {
     return pathname.startsWith(routes.blog);
   }
 
@@ -48,7 +48,7 @@ export default function Navbar() {
       <div className="mx-auto flex h-[72px] max-w-[1200px] items-center justify-between gap-4 px-6">
         <BrandLogo href={routes.home} height={44} />
 
-        <ul className="hidden items-center gap-8 lg:flex">
+        <ul className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => {
             const href = navHref[link.label] ?? routes.home;
             const active = isNavActive(pathname, link.label);
@@ -70,51 +70,34 @@ export default function Navbar() {
           })}
         </ul>
 
-        <div className="hidden lg:block">
-          <a
-            href={siteConfig.adminUrl}
-            className="rounded-lg bg-[#CC0000] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#a80000]"
-          >
-            Sign in
-          </a>
-        </div>
-
         <button
           type="button"
-          className="text-[#666666] lg:hidden"
+          className="text-[#666666] md:hidden"
           onClick={() => setOpen((value) => !value)}
-          aria-label={open ? "Close menu" : "Open menu"}
+          aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
         >
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
       {open ? (
-        <div className="border-t border-[#E5E5E5] bg-white px-6 py-4 lg:hidden">
+        <div className="border-t border-[#E5E5E5] bg-white px-6 py-4 md:hidden">
           <ul className="space-y-3">
             {navLinks.map((link) => {
               const href = navHref[link.label] ?? routes.home;
 
               return (
-              <li key={link.label}>
-                <Link
-                  href={href}
-                  onClick={() => setOpen(false)}
-                  className="block text-sm font-medium text-[#333333]"
-                >
-                  {link.label}
-                </Link>
-              </li>
+                <li key={link.label}>
+                  <Link
+                    href={href}
+                    onClick={() => setOpen(false)}
+                    className="block text-sm font-medium text-[#333333]"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
               );
             })}
-            <li>
-              <a
-                href={siteConfig.adminUrl}
-                className="inline-flex rounded-lg bg-[#CC0000] px-5 py-2.5 text-sm font-semibold text-white"
-              >
-                Sign in
-              </a>
-            </li>
           </ul>
         </div>
       ) : null}

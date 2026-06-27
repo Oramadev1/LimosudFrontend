@@ -5,7 +5,7 @@ export const siteConfig = {
   logo: "/logo.jpg",
   heroBanner: "/heroandnavbarimge.jpeg",
   description:
-    "Buy and sell reputable cars. Renting a car is easy and fast with Limosud Cars",
+    "Louer une voiture est simple et rapide avec Limosud Cars. Flotte premium à Dakhla.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   apiUrl: process.env.NEXT_PUBLIC_API_URL ?? "https://api.limosudcars.com/api",
   adminUrl: process.env.NEXT_PUBLIC_ADMIN_URL ?? "http://localhost:3001/login",
@@ -21,13 +21,13 @@ export const siteConfig = {
 } as const;
 
 export const heroStats = [
-  { value: "50+", label: "Car brands" },
+  { value: "50+", label: "Marques" },
   { value: "10k+", label: "Clients" },
 ] as const;
 
 export const navLinks = [
-  { label: "Home Page" },
-  { label: "Rent Car" },
-  { label: "Buy Car" },
-  { label: "News" },
+  { label: "Accueil" },
+  { label: "Véhicules" },
+  { label: "Blog" },
+  { label: "Contact" },
 ] as const;
