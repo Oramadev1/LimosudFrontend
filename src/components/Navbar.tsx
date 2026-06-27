@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 
 import { BrandLogo } from "@/components/BrandLogo";
@@ -35,16 +35,36 @@ function isNavActive(pathname: string, label: string): boolean {
 export default function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const isHome = pathname === routes.home;
+  const overlayOnHero = isHome && !scrolled;
+
+  useEffect(() => {
+    if (!isHome) {
+      setScrolled(false);
+      return;
+    }
+
+    const onScroll = () => setScrolled(window.scrollY > 48);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [isHome]);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
 
   return (
     <header
-      className={`sticky top-0 z-50 ${
-        isHome ? "bg-transparent shadow-none" : "bg-white shadow-[0_1px_4px_rgba(0,0,0,0.08)]"
+      className={`z-50 ${
+        isHome
+          ? `fixed inset-x-0 top-0 ${overlayOnHero ? "!bg-transparent shadow-none" : "bg-white shadow-[0_1px_4px_rgba(0,0,0,0.08)]"}`
+          : "sticky top-0 bg-white shadow-[0_1px_4px_rgba(0,0,0,0.08)]"
       }`}
     >
       <div className="mx-auto flex h-[72px] max-w-[1200px] items-center justify-between gap-4 px-6">
-        <BrandLogo href={routes.home} height={44} onDark={isHome} />
+        <BrandLogo href={routes.home} height={44} onDark={overlayOnHero} />
 
         <ul className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => {
@@ -56,11 +76,11 @@ export default function Navbar() {
                 <Link
                   href={href}
                   className={
-                    isHome
-                      ? `text-sm transition hover:text-[#CC0000] ${
+                    overlayOnHero
+                      ? `text-sm transition hover:text-[#FF6B6B] ${
                           active
-                            ? "border-b-2 border-white pb-1 font-semibold text-white"
-                            : "text-white/90"
+                            ? "border-b-2 border-white pb-1 font-semibold text-white drop-shadow"
+                            : "text-white drop-shadow"
                         }`
                       : `text-sm transition hover:text-[#CC0000] ${
                           active
@@ -78,7 +98,11 @@ export default function Navbar() {
 
         <button
           type="button"
-          className={isHome ? "text-white md:hidden" : "text-[#666666] md:hidden"}
+          className={
+            overlayOnHero
+              ? "text-white drop-shadow md:hidden"
+              : "text-[#666666] md:hidden"
+          }
           onClick={() => setOpen((value) => !value)}
           aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
         >
@@ -87,11 +111,7 @@ export default function Navbar() {
       </div>
 
       {open ? (
-        <div
-          className={`px-6 py-4 md:hidden ${
-            isHome ? "bg-black/40 backdrop-blur-sm" : "border-t border-[#E5E5E5] bg-white"
-          }`}
-        >
+        <div className={`px-6 pb-4 md:hidden ${overlayOnHero ? "bg-transparent" : "border-t border-[#E5E5E5] bg-white"}`}>
           <ul className="space-y-3">
             {navLinks.map((link) => {
               const href = navHref[link.label] ?? routes.home;
@@ -101,8 +121,8 @@ export default function Navbar() {
                   <Link
                     href={href}
                     onClick={() => setOpen(false)}
-                    className={`block text-sm font-medium ${
-                      isHome ? "text-white" : "text-[#333333]"
+                    className={`block text-sm font-medium drop-shadow ${
+                      overlayOnHero ? "text-white" : "text-[#333333]"
                     }`}
                   >
                     {link.label}

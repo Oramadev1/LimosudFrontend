@@ -30,7 +30,7 @@ function HeroCopy() {
 
 export function HeroSection() {
   return (
-    <section className="relative -mt-[72px] w-full overflow-hidden">
+    <section className="relative w-full overflow-hidden">
       <div className="relative w-full lg:min-h-[560px] xl:min-h-[620px]">
         <Image
           src={siteConfig.heroBanner}
@@ -43,11 +43,11 @@ export function HeroSection() {
         />
 
         <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/65 via-black/25 to-black/10 lg:bg-gradient-to-r lg:from-black/50 lg:via-black/20 lg:to-transparent"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/65 via-black/25 to-transparent lg:bg-gradient-to-r lg:from-black/50 lg:via-black/20 lg:to-transparent"
           aria-hidden="true"
         />
 
-        <div className="absolute inset-x-0 bottom-0 px-6 pb-8 pt-28 sm:pb-10 lg:inset-0 lg:flex lg:items-center lg:pb-12 lg:pt-[88px]">
+        <div className="absolute inset-x-0 bottom-0 px-6 pb-8 pt-32 sm:pb-10 lg:inset-0 lg:flex lg:items-center lg:pb-12 lg:pt-[88px]">
           <div className="pointer-events-auto mx-auto w-full max-w-[1200px]">
             <HeroCopy />
           </div>

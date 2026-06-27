@@ -7,7 +7,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
   return (
     <>
       <Navbar />
-      <main id="main-content" className="flex-1 min-w-0 overflow-x-hidden bg-[#F5F5F5]">
+      <main id="main-content" className="flex-1 min-w-0 overflow-x-hidden bg-[#F5F5F5] pt-0">
         <PageTransition>{children}</PageTransition>
       </main>
       <Footer />
