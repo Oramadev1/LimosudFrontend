@@ -16,8 +16,10 @@ export function BrandLogo({
   height = 48,
   onDark = false,
 }: BrandLogoProps) {
-  const width = Math.round(height * 2.4);
-  const imageClass = onDark ? "object-contain object-left drop-shadow-md" : "object-contain object-left";
+  const width = Math.round(height * 1.2);
+  const imageClass = onDark
+    ? "object-contain object-left drop-shadow-[0_0_10px_rgba(255,255,255,0.95)] drop-shadow-[0_2px_6px_rgba(0,0,0,0.45)]"
+    : "object-contain object-left";
 
   const image = (
     <span
@@ -42,6 +44,7 @@ export function BrandLogo({
   return (
     <Link
       href={href}
+      aria-label={siteConfig.name}
       className={`inline-flex shrink-0 transition-opacity hover:opacity-90 ${className}`.trim()}
     >
       {image}

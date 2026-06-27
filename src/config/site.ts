@@ -2,7 +2,7 @@ export const siteConfig = {
   name: "Limosud Cars",
   shortName: "Limosud",
   brand: "LIMOSUD CARS",
-  logo: "/logo.jpg",
+  logo: "/logo.png",
   heroBanner: "/heroandnavbarimge.jpeg",
   description:
     "Louer une voiture est simple et rapide avec Limosud Cars. Flotte premium à Dakhla.",
