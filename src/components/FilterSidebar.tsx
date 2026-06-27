@@ -56,7 +56,7 @@ export default function FilterSidebar({
   }
 
   return (
-    <aside className="flex w-full shrink-0 flex-col gap-8 self-start rounded-[10px] border border-transparent bg-white p-6 transition-colors lg:w-[260px] dark:border-gray-800 dark:bg-gray-900">
+    <aside className="flex w-full shrink-0 flex-col gap-8 self-start rounded-[10px] border border-transparent bg-white p-6 transition-colors dark:bg-white lg:w-[260px]">
       <div>
         <p className="mb-4 text-xs font-semibold tracking-widest text-gray-300 uppercase">
           Type
@@ -75,7 +75,7 @@ export default function FilterSidebar({
                 onClick={() => toggleType(type)}
               >
                 <div
-                  className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-md border-2 transition-colors ${checked ? "border-[#3563E9] bg-[#3563E9]" : "border-gray-300 dark:border-gray-600"}`}
+                  className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-md border-2 transition-colors ${checked ? "border-[#3563E9] bg-[#3563E9]" : "border-gray-300"}`}
                 >
                   {checked ? (
                     <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
@@ -89,10 +89,10 @@ export default function FilterSidebar({
                     </svg>
                   ) : null}
                 </div>
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                <span className="text-sm font-medium text-gray-700">
                   {type}
                 </span>
-                <span className="ml-auto text-xs text-gray-300 dark:text-gray-600">
+                <span className="ml-auto text-xs text-gray-300">
                   ({count})
                 </span>
               </li>
@@ -120,7 +120,7 @@ export default function FilterSidebar({
                 onClick={() => toggleCap(cap)}
               >
                 <div
-                  className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-md border-2 transition-colors ${checked ? "border-[#3563E9] bg-[#3563E9]" : "border-gray-300 dark:border-gray-600"}`}
+                  className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-md border-2 transition-colors ${checked ? "border-[#3563E9] bg-[#3563E9]" : "border-gray-300"}`}
                 >
                   {checked ? (
                     <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
@@ -134,10 +134,10 @@ export default function FilterSidebar({
                     </svg>
                   ) : null}
                 </div>
-                <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                <span className="text-sm font-medium text-gray-700">
                   {label}
                 </span>
-                <span className="ml-auto text-xs text-gray-300 dark:text-gray-600">
+                <span className="ml-auto text-xs text-gray-300">
                   ({count})
                 </span>
               </li>
@@ -163,7 +163,7 @@ export default function FilterSidebar({
           }
           className="w-full cursor-pointer accent-[#3563E9]"
         />
-        <p className="mt-2 text-sm font-semibold text-gray-700 dark:text-gray-300">
+        <p className="mt-2 text-sm font-semibold text-gray-700">
           Max. {filters.maxPrice.toFixed(0)} MAD/day
         </p>
       </div>
