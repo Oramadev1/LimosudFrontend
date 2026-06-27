@@ -35,7 +35,7 @@ export default function CarCard({
     <div
       style={{ animationDelay: `${index * 0.07}s` }}
       data-testid="car-card"
-      className={`animate-fade-in-up flex flex-col gap-4 rounded-[10px] border bg-white p-5 transition-all duration-300 dark:border-gray-800 dark:bg-gray-900 ${
+      className={`animate-fade-in-up flex flex-col gap-4 rounded-[10px] border bg-white p-5 transition-all duration-300 dark:bg-white ${
         availability.rentable
           ? "cursor-pointer border-transparent hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(53,99,233,0.12)]"
           : "border-gray-100 opacity-95"
@@ -46,10 +46,10 @@ export default function CarCard({
           href={routes.vehicle(vehicle.slug)}
           className="min-w-0 hover:underline"
         >
-          <h3 className="truncate text-base font-bold text-gray-900 dark:text-white">
+          <h3 className="truncate text-base font-bold text-gray-900">
             {vehicle.name}
           </h3>
-          <span className="text-xs text-gray-400 dark:text-gray-500">
+          <span className="text-xs text-gray-400">
             {[vehicle.brand?.name, getVehicleCategoryLabel(vehicle)].filter(Boolean).join(" · ")}
           </span>
         </Link>
@@ -81,7 +81,7 @@ export default function CarCard({
 
       <div className="flex items-center justify-between">
         <div>
-          <div className="text-base font-bold text-gray-900 dark:text-white">
+          <div className="text-base font-bold text-gray-900">
             {formatCurrency(price)}
             <span className="text-xs font-normal text-gray-400">/day</span>
           </div>

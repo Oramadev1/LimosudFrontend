@@ -8,7 +8,7 @@ import type { BlogPost } from "@/types/blog";
 
 export function BlogCard({ post }: { post: BlogPost }) {
   return (
-    <article className="flex h-full flex-col overflow-hidden rounded-xl border border-[#E5E5E5] bg-white transition hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)]">
+    <article className="flex h-full flex-col overflow-hidden rounded-xl border border-[#E5E5E5] bg-white transition hover:shadow-[0_8px_30px_rgba(0,0,0,0.08)] dark:bg-white">
       <div className="relative h-[180px] w-full overflow-hidden bg-[#FAFAFA]">
         <Image
           src={post.coverImage}

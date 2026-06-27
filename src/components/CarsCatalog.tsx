@@ -120,7 +120,7 @@ function CarsContent({ vehicles }: { vehicles: Vehicle[] }) {
       <FilterSidebar vehicles={vehicles} filters={filters} onChange={setFilters} />
 
       <div className="flex w-full min-w-0 flex-1 flex-col gap-6">
-        <Suspense fallback={<div className="h-40 animate-pulse rounded-2xl bg-white dark:bg-gray-900" />}>
+        <Suspense fallback={<div className="h-40 animate-pulse rounded-2xl bg-white dark:bg-white" />}>
           <SearchForm />
         </Suspense>
 
@@ -193,7 +193,7 @@ export default function CarsCatalog() {
   if (isPending) {
     return (
       <div className="flex w-full min-w-0 max-w-full flex-col gap-6 px-4 py-4 sm:px-6 sm:py-6 lg:flex-row lg:items-start">
-        <div className="h-64 w-full shrink-0 animate-pulse rounded-[10px] bg-white lg:w-[260px] dark:bg-gray-900" />
+        <div className="h-64 w-full shrink-0 animate-pulse rounded-[10px] bg-white dark:bg-white lg:w-[260px]" />
         <div className="grid w-full flex-1 grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
           <CarGridSkeleton count={6} />
         </div>
@@ -217,7 +217,7 @@ export default function CarsCatalog() {
     <Suspense
       fallback={
         <div className="flex w-full min-w-0 max-w-full flex-col gap-6 px-4 py-4 sm:px-6 sm:py-6 lg:flex-row lg:items-start">
-          <div className="h-64 w-full shrink-0 animate-pulse rounded-[10px] bg-white lg:w-[260px] dark:bg-gray-900" />
+          <div className="h-64 w-full shrink-0 animate-pulse rounded-[10px] bg-white dark:bg-white lg:w-[260px]" />
           <div className="grid w-full flex-1 grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
             {[...Array(6)].map((_, index) => (
               <CarCardSkeleton key={index} />

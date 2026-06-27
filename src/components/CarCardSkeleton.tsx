@@ -1,6 +1,6 @@
 export default function CarCardSkeleton() {
   return (
-    <div className="bg-white rounded-[10px] p-5 flex flex-col gap-4 animate-pulse">
+    <div className="animate-pulse rounded-[10px] bg-white p-5 dark:bg-white flex flex-col gap-4">
       <div className="flex items-start justify-between">
         <div className="flex flex-col gap-1.5">
           <div className="h-4 w-28 bg-gray-200 rounded" />

@@ -37,7 +37,7 @@ export default function VehicleDetailPanel({ vehicle }: { vehicle: Vehicle }) {
   return (
     <div className="flex flex-col gap-6 lg:flex-row">
       <div className="flex shrink-0 flex-col gap-4 lg:w-[380px]">
-        <div className="relative h-[280px] w-full overflow-hidden rounded-[10px] bg-gray-50 dark:bg-gray-900">
+        <div className="relative h-[280px] w-full overflow-hidden rounded-[10px] bg-gray-50">
           {heroImage ? (
             <StorageImage
               src={heroImage}
@@ -64,10 +64,10 @@ export default function VehicleDetailPanel({ vehicle }: { vehicle: Vehicle }) {
               aria-selected={activeThumb === index}
               aria-label={`View image ${index + 1}`}
               onClick={() => setActiveThumb(index)}
-              className={`relative h-[72px] w-[72px] shrink-0 overflow-hidden rounded-[8px] border-2 bg-white transition-colors dark:bg-gray-800 ${
+              className={`relative h-[72px] w-[72px] shrink-0 overflow-hidden rounded-[8px] border-2 bg-white transition-colors ${
                 activeThumb === index
                   ? "border-[#3563E9]"
-                  : "border-transparent dark:border-gray-700"
+                  : "border-transparent"
               }`}
             >
               <StorageImage
@@ -81,10 +81,10 @@ export default function VehicleDetailPanel({ vehicle }: { vehicle: Vehicle }) {
         </div>
       </div>
 
-      <div className="flex flex-1 flex-col gap-4 rounded-[10px] border border-transparent bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
+      <div className="flex flex-1 flex-col gap-4 rounded-[10px] border border-transparent bg-white p-6 dark:bg-white">
         <div>
           <div className="flex flex-wrap items-center gap-3">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-2xl font-bold text-gray-900">
               {vehicle.name}
             </h1>
             <VehicleAvailabilityBadge vehicle={vehicle} />
@@ -108,50 +108,50 @@ export default function VehicleDetailPanel({ vehicle }: { vehicle: Vehicle }) {
           {vehicle.brand ? (
             <div className="flex justify-between">
               <span className="text-gray-400">Brand</span>
-              <span className="font-semibold text-gray-700 dark:text-gray-200">
+              <span className="font-semibold text-gray-700">
                 {vehicle.brand.name}
               </span>
             </div>
           ) : null}
           <div className="flex justify-between">
             <span className="text-gray-400">Model</span>
-            <span className="font-semibold text-gray-700 dark:text-gray-200">
+            <span className="font-semibold text-gray-700">
               {vehicle.model}
             </span>
           </div>
           <div className="flex justify-between">
             <span className="text-gray-400">Year</span>
-            <span className="font-semibold text-gray-700 dark:text-gray-200">
+            <span className="font-semibold text-gray-700">
               {vehicle.year}
             </span>
           </div>
           <div className="flex justify-between">
             <span className="text-gray-400">Type</span>
-            <span className="font-semibold text-gray-700 dark:text-gray-200">
+            <span className="font-semibold text-gray-700">
               {getVehicleCategoryLabel(vehicle)}
             </span>
           </div>
           <div className="flex justify-between">
             <span className="text-gray-400">Capacity</span>
-            <span className="font-semibold text-gray-700 dark:text-gray-200">
+            <span className="font-semibold text-gray-700">
               {vehicle.seats} seats
             </span>
           </div>
           <div className="flex justify-between">
             <span className="text-gray-400">Doors</span>
-            <span className="font-semibold text-gray-700 dark:text-gray-200">
+            <span className="font-semibold text-gray-700">
               {vehicle.doors}
             </span>
           </div>
           <div className="flex justify-between">
             <span className="text-gray-400">Transmission</span>
-            <span className="font-semibold text-gray-700 dark:text-gray-200">
+            <span className="font-semibold text-gray-700">
               {getVehicleTransmissionLabel(vehicle)}
             </span>
           </div>
           <div className="flex justify-between">
             <span className="text-gray-400">Fuel</span>
-            <span className="font-semibold text-gray-700 dark:text-gray-200">
+            <span className="font-semibold text-gray-700">
               {getVehicleFuelLabel(vehicle)}
             </span>
           </div>
@@ -159,7 +159,7 @@ export default function VehicleDetailPanel({ vehicle }: { vehicle: Vehicle }) {
 
         <div className="mt-auto flex items-center justify-between pt-4">
           <div>
-            <span className="text-2xl font-bold text-gray-900 dark:text-white">
+            <span className="text-2xl font-bold text-gray-900">
               {formatCurrency(price)}
             </span>
             <span className="text-sm text-gray-400"> / day</span>

@@ -23,7 +23,7 @@ export function HomeCarCard({ car }: { car: MarketingCar }) {
     <motion.div
       whileHover={{ y: -4, boxShadow: "0 8px 30px rgba(0,0,0,0.12)" }}
       transition={{ duration: 0.2 }}
-      className="overflow-hidden rounded-xl border border-[#E5E5E5] bg-white"
+      className="overflow-hidden rounded-xl border border-[#E5E5E5] bg-white dark:bg-white"
     >
       <div className="relative h-[190px] w-full overflow-hidden">
         {car.image ? (
