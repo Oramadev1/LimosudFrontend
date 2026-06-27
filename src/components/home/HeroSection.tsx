@@ -34,7 +34,10 @@ function HeroSearchFooter() {
   return (
     <Suspense
       fallback={
-        <div className="h-40 w-full animate-pulse bg-white/90" aria-hidden="true" />
+        <div
+          className="h-40 w-full animate-pulse rounded-2xl bg-white/70"
+          aria-hidden="true"
+        />
       }
     >
       <SearchForm id="hero-search" variant="heroFooter" />
@@ -51,12 +54,12 @@ export function HeroSection() {
           alt="Limosud Cars — location de voitures à Dakhla"
           fill
           priority
-          className="object-cover object-center"
+          className="object-cover object-center opacity-95"
           sizes="100vw"
         />
 
         <div
-          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/35 via-black/15 to-black/50"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/40"
           aria-hidden="true"
         />
 
@@ -67,9 +70,9 @@ export function HeroSection() {
             </div>
           </div>
 
-          <div className="w-full border-t border-white/20 bg-white/97 px-4 py-5 shadow-[0_-12px_40px_rgba(0,0,0,0.15)] backdrop-blur-sm sm:px-6 sm:py-6">
-            <div className="mx-auto w-full max-w-[1200px]">
-              <div className="animate-fade-in-up">
+          <div className="px-4 pb-8 pt-2 sm:px-6 sm:pb-10">
+            <div className="animate-fade-in-up mx-auto w-full max-w-[980px]">
+              <div className="rounded-2xl border border-white/40 bg-white/78 px-4 py-5 shadow-[0_20px_50px_rgba(0,0,0,0.2)] backdrop-blur-md sm:px-6 sm:py-6">
                 <HeroSearchFooter />
               </div>
             </div>
