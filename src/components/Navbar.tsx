@@ -44,7 +44,7 @@ export default function Navbar() {
       }`}
     >
       <div className="mx-auto flex h-[72px] max-w-[1200px] items-center justify-between gap-4 px-6">
-        <BrandLogo href={routes.home} height={44} />
+        <BrandLogo href={routes.home} height={44} onDark={isHome} />
 
         <ul className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => {
@@ -89,7 +89,7 @@ export default function Navbar() {
       {open ? (
         <div
           className={`px-6 py-4 md:hidden ${
-            isHome ? "bg-white/95 backdrop-blur-sm" : "border-t border-[#E5E5E5] bg-white"
+            isHome ? "bg-black/40 backdrop-blur-sm" : "border-t border-[#E5E5E5] bg-white"
           }`}
         >
           <ul className="space-y-3">
@@ -101,7 +101,9 @@ export default function Navbar() {
                   <Link
                     href={href}
                     onClick={() => setOpen(false)}
-                    className="block text-sm font-medium text-[#333333]"
+                    className={`block text-sm font-medium ${
+                      isHome ? "text-white" : "text-[#333333]"
+                    }`}
                   >
                     {link.label}
                   </Link>

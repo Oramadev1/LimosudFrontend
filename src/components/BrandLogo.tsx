@@ -7,10 +7,17 @@ type BrandLogoProps = {
   href?: string;
   className?: string;
   height?: number;
+  onDark?: boolean;
 };
 
-export function BrandLogo({ href = "/", className = "", height = 48 }: BrandLogoProps) {
+export function BrandLogo({
+  href = "/",
+  className = "",
+  height = 48,
+  onDark = false,
+}: BrandLogoProps) {
   const width = Math.round(height * 2.4);
+  const imageClass = onDark ? "object-contain object-left drop-shadow-md" : "object-contain object-left";
 
   const image = (
     <span
@@ -21,7 +28,7 @@ export function BrandLogo({ href = "/", className = "", height = 48 }: BrandLogo
         src={siteConfig.logo}
         alt={siteConfig.name}
         fill
-        className="object-contain object-left"
+        className={imageClass}
         sizes={`${width}px`}
         priority
       />
