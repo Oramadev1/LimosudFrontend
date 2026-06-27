@@ -1,0 +1,69 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "vehicles": "Véhicules",
+    "blog": "Blog",
+    "contact": "Contact",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "language": "Langue"
+  },
+  "hero": {
+    "titleLine1": "Louez des voitures",
+    "titleAccent": "de confiance",
+    "description": "Louer une voiture est simple et rapide avec Limosud Cars. Flotte premium à Dakhla.",
+    "statsBrands": "Marques",
+    "statsClients": "Clients"
+  },
+  "search": {
+    "title": "Rechercher la flotte",
+    "subtitle": "Indiquez les détails de votre voyage pour voir les véhicules disponibles.",
+    "sameLocation": "Retour au même lieu",
+    "pickupLocation": "Lieu de prise en charge",
+    "dropoffLocation": "Lieu de restitution",
+    "pickupDate": "Date de prise en charge",
+    "dropoffDate": "Date de restitution",
+    "search": "Rechercher",
+    "loading": "Chargement...",
+    "locationsError": "Impossible de charger les lieux. Actualisez la page.",
+    "noLocations": "Aucun lieu de prise en charge disponible. Contactez l'agence.",
+    "incomplete": "Veuillez choisir les lieux et les dates.",
+    "invalidPeriod": "La restitution doit être après la prise en charge.",
+    "step": "Étape 1",
+    "whenWhere": "Quand et où ?",
+    "sameDropoff": "Même lieu de restitution"
+  },
+  "footer": {
+    "description": "Louer une voiture est simple et rapide avec Limosud Cars. Flotte premium à Dakhla.",
+    "fleet": "Flotte",
+    "services": "Services",
+    "company": "Entreprise",
+    "vehicles": "Véhicules",
+    "booking": "Réservation",
+    "rental": "Location",
+    "delivery": "Livraison",
+    "insurance": "Assurance",
+    "warranty": "Garantie",
+    "financing": "Financement",
+    "about": "À propos",
+    "blog": "Blog",
+    "contact": "Contact",
+    "terms": "Conditions d'utilisation",
+    "social": "Réseau social",
+    "rights": "Tous droits réservés."
+  },
+  "settings": {
+    "title": "Paramètres",
+    "saved": "Enregistré",
+    "appearance": "Apparence",
+    "darkMode": "Mode sombre",
+    "darkModeDesc": "Basculer entre thème clair et sombre",
+    "language": "Langue",
+    "languageDesc": "Choisissez votre langue préférée"
+  },
+  "common": {
+    "rentNow": "Louer",
+    "unavailable": "Indisponible",
+    "seeMore": "Voir plus"
+  }
+}

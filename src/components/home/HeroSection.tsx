@@ -2,29 +2,34 @@
 
 import { Suspense } from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 import SearchForm from "@/components/SearchForm";
-import { heroStats, siteConfig } from "@/config/site";
+import { siteConfig } from "@/config/site";
 
 function HeroCopy() {
+  const t = useTranslations("hero");
+
   return (
     <div className="animate-fade-in-left max-w-2xl">
       <h1 className="text-3xl leading-tight font-extrabold text-white drop-shadow-md sm:text-4xl lg:text-5xl xl:text-[3.25rem]">
-        Louez des voitures
+        {t("titleLine1")}
         <br />
-        <span className="text-[#FF6B6B]">de confiance</span>
+        <span className="text-[#FF6B6B]">{t("titleAccent")}</span>
       </h1>
       <p className="mt-4 max-w-lg text-sm leading-relaxed text-white/95 drop-shadow sm:text-base">
-        {siteConfig.description}
+        {t("description")}
       </p>
 
       <div className="mt-6 flex gap-8 sm:mt-8 sm:gap-10">
-        {heroStats.map((stat) => (
-          <div key={stat.label}>
-            <span className="text-xl font-bold text-white drop-shadow sm:text-2xl">{stat.value}</span>
-            <p className="mt-0.5 text-xs text-white/85">{stat.label}</p>
-          </div>
-        ))}
+        <div>
+          <span className="text-xl font-bold text-white drop-shadow sm:text-2xl">50+</span>
+          <p className="mt-0.5 text-xs text-white/85">{t("statsBrands")}</p>
+        </div>
+        <div>
+          <span className="text-xl font-bold text-white drop-shadow sm:text-2xl">10k+</span>
+          <p className="mt-0.5 text-xs text-white/85">{t("statsClients")}</p>
+        </div>
       </div>
     </div>
   );
@@ -51,7 +56,7 @@ export function HeroSection() {
       <div className="relative min-h-[560px] w-full sm:min-h-[620px] lg:min-h-[680px]">
         <Image
           src={siteConfig.heroBanner}
-          alt="Limosud Cars — location de voitures à Dakhla"
+          alt="Limosud Cars"
           fill
           priority
           className="object-cover object-center opacity-95"

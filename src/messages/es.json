@@ -1,0 +1,69 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "vehicles": "Vehículos",
+    "blog": "Blog",
+    "contact": "Contacto",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "language": "Idioma"
+  },
+  "hero": {
+    "titleLine1": "Alquila coches",
+    "titleAccent": "de confianza",
+    "description": "Alquilar un coche es fácil y rápido con Limosud Cars. Flota premium en Dajla.",
+    "statsBrands": "Marcas",
+    "statsClients": "Clientes"
+  },
+  "search": {
+    "title": "Buscar flota",
+    "subtitle": "Indica los detalles de tu viaje para ver vehículos disponibles.",
+    "sameLocation": "Devolver en el mismo lugar",
+    "pickupLocation": "Lugar de recogida",
+    "dropoffLocation": "Lugar de devolución",
+    "pickupDate": "Fecha de recogida",
+    "dropoffDate": "Fecha de devolución",
+    "search": "Buscar",
+    "loading": "Cargando...",
+    "locationsError": "No se pudieron cargar las ubicaciones. Actualiza la página.",
+    "noLocations": "No hay lugares de recogida disponibles. Contacta con la agencia.",
+    "incomplete": "Elige ubicaciones y fechas de alquiler.",
+    "invalidPeriod": "La devolución debe ser después de la recogida.",
+    "step": "Paso 1",
+    "whenWhere": "¿Cuándo y dónde?",
+    "sameDropoff": "Misma ubicación de devolución"
+  },
+  "footer": {
+    "description": "Alquilar un coche es fácil y rápido con Limosud Cars. Flota premium en Dajla.",
+    "fleet": "Flota",
+    "services": "Servicios",
+    "company": "Empresa",
+    "vehicles": "Vehículos",
+    "booking": "Reserva",
+    "rental": "Alquiler",
+    "delivery": "Entrega",
+    "insurance": "Seguro",
+    "warranty": "Garantía",
+    "financing": "Financiación",
+    "about": "Sobre nosotros",
+    "blog": "Blog",
+    "contact": "Contacto",
+    "terms": "Condiciones de uso",
+    "social": "Red social",
+    "rights": "Todos los derechos reservados."
+  },
+  "settings": {
+    "title": "Ajustes",
+    "saved": "Guardado",
+    "appearance": "Apariencia",
+    "darkMode": "Modo oscuro",
+    "darkModeDesc": "Cambiar entre tema claro y oscuro",
+    "language": "Idioma",
+    "languageDesc": "Elige tu idioma preferido"
+  },
+  "common": {
+    "rentNow": "Alquilar",
+    "unavailable": "No disponible",
+    "seeMore": "Ver más"
+  }
+}

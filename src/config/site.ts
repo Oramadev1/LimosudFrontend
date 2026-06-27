@@ -19,15 +19,3 @@ export const siteConfig = {
   phone: "06 61 04 09 67",
   address: "Hay alqods N10 - Dakhla",
 } as const;
-
-export const heroStats = [
-  { value: "50+", label: "Marques" },
-  { value: "10k+", label: "Clients" },
-] as const;
-
-export const navLinks = [
-  { label: "Accueil" },
-  { label: "Véhicules" },
-  { label: "Blog" },
-  { label: "Contact" },
-] as const;

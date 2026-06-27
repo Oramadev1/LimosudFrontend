@@ -3,29 +3,30 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Menu, X } from "lucide-react";
 
 import { BrandLogo } from "@/components/BrandLogo";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import { routes } from "@/config/routes";
-import { navLinks } from "@/config/site";
 
-const navHref: Record<string, string> = {
-  Accueil: routes.home,
-  Véhicules: routes.vehicles,
-  Blog: routes.blog,
-  Contact: "#contact",
-};
+const navItems = [
+  { key: "home" as const, href: routes.home },
+  { key: "vehicles" as const, href: routes.vehicles },
+  { key: "blog" as const, href: routes.blog },
+  { key: "contact" as const, href: "#contact" },
+];
 
-function isNavActive(pathname: string, label: string): boolean {
-  if (label === "Accueil") {
+function isNavActive(pathname: string, key: (typeof navItems)[number]["key"]): boolean {
+  if (key === "home") {
     return pathname === routes.home;
   }
 
-  if (label === "Véhicules") {
+  if (key === "vehicles") {
     return pathname.startsWith(routes.vehicles) || pathname.startsWith("/book");
   }
 
-  if (label === "Blog") {
+  if (key === "blog") {
     return pathname.startsWith(routes.blog);
   }
 
@@ -33,6 +34,7 @@ function isNavActive(pathname: string, label: string): boolean {
 }
 
 export default function Navbar() {
+  const t = useTranslations("nav");
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -67,14 +69,13 @@ export default function Navbar() {
         <BrandLogo href={routes.home} height={72} onDark={overlayOnHero} />
 
         <ul className="hidden items-center gap-8 md:flex">
-          {navLinks.map((link) => {
-            const href = navHref[link.label] ?? routes.home;
-            const active = isNavActive(pathname, link.label);
+          {navItems.map((item) => {
+            const active = isNavActive(pathname, item.key);
 
             return (
-              <li key={link.label}>
+              <li key={item.key}>
                 <Link
-                  href={href}
+                  href={item.href}
                   className={
                     overlayOnHero
                       ? `text-sm transition hover:text-[#FF6B6B] ${
@@ -89,12 +90,16 @@ export default function Navbar() {
                         }`
                   }
                 >
-                  {link.label}
+                  {t(item.key)}
                 </Link>
               </li>
             );
           })}
         </ul>
+
+        <div className="hidden items-center gap-3 md:flex">
+          <LanguageSwitcher onDark={overlayOnHero} />
+        </div>
 
         <button
           type="button"
@@ -104,7 +109,7 @@ export default function Navbar() {
               : "text-[#666666] md:hidden"
           }
           onClick={() => setOpen((value) => !value)}
-          aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+          aria-label={open ? t("closeMenu") : t("openMenu")}
         >
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
@@ -112,24 +117,23 @@ export default function Navbar() {
 
       {open ? (
         <div className={`px-6 pb-4 md:hidden ${overlayOnHero ? "bg-transparent" : "border-t border-[#E5E5E5] bg-white"}`}>
+          <div className="mb-4">
+            <LanguageSwitcher onDark={overlayOnHero} />
+          </div>
           <ul className="space-y-3">
-            {navLinks.map((link) => {
-              const href = navHref[link.label] ?? routes.home;
-
-              return (
-                <li key={link.label}>
-                  <Link
-                    href={href}
-                    onClick={() => setOpen(false)}
-                    className={`block text-sm font-medium drop-shadow ${
-                      overlayOnHero ? "text-white" : "text-[#333333]"
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              );
-            })}
+            {navItems.map((item) => (
+              <li key={item.key}>
+                <Link
+                  href={item.href}
+                  onClick={() => setOpen(false)}
+                  className={`block text-sm font-medium drop-shadow ${
+                    overlayOnHero ? "text-white" : "text-[#333333]"
+                  }`}
+                >
+                  {t(item.key)}
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
       ) : null}

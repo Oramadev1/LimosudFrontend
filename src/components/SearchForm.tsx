@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { ArrowRight, Calendar, MapPin } from "lucide-react";
 
 import { useLocationsQuery } from "@/lib/query/hooks";
@@ -52,6 +53,7 @@ export default function SearchForm({
   className = "",
   variant = "default",
 }: SearchFormProps) {
+  const t = useTranslations("search");
   const router = useRouter();
   const searchParams = useSearchParams();
   const { data: locations = [], isPending, isError } = useLocationsQuery();
@@ -120,12 +122,12 @@ export default function SearchForm({
       };
 
       if (!isRentalSearchComplete(values)) {
-        setError("Please choose locations and rental dates.");
+        setError(t("incomplete"));
         return;
       }
 
       if (!isRentalSearchPeriodValid(values)) {
-        setError("Drop-off must be after pick-up.");
+        setError(t("invalidPeriod"));
         return;
       }
 
@@ -170,17 +172,17 @@ export default function SearchForm({
         {embedded ? (
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
-              Step 1
+              {t("step")}
             </p>
             <h2 className="mt-1 text-lg font-bold text-slate-900 dark:text-white">
-              When &amp; where?
+              {t("whenWhere")}
             </h2>
             <label className="mt-3 inline-flex cursor-pointer items-center gap-2.5 text-sm text-slate-600 dark:text-slate-300">
               <button
                 type="button"
                 role="switch"
                 aria-checked={sameLocation}
-                aria-label="Same drop-off as pick-up"
+                aria-label={t("sameDropoff")}
                 onClick={() => setSameLocation((value) => !value)}
                 className={`relative inline-flex h-7 w-12 shrink-0 items-center rounded-full transition-colors ${
                   sameLocation ? "bg-slate-900 dark:bg-amber-500" : "bg-slate-300 dark:bg-slate-600"
@@ -192,16 +194,14 @@ export default function SearchForm({
                   }`}
                 />
               </button>
-              Same drop-off as pick-up
+              {t("sameDropoff")}
             </label>
           </div>
         ) : heroFooter ? (
           <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <h2 className="text-lg font-bold text-slate-900">Search fleet</h2>
-              <p className="mt-1 text-sm text-slate-500">
-                Set your trip details to see available vehicles.
-              </p>
+              <h2 className="text-lg font-bold text-slate-900">{t("title")}</h2>
+              <p className="mt-1 text-sm text-slate-500">{t("subtitle")}</p>
             </div>
             <label className="flex shrink-0 items-center gap-2 text-sm text-slate-600">
               <input
@@ -210,15 +210,13 @@ export default function SearchForm({
                 onChange={(event) => setSameLocation(event.target.checked)}
                 className="h-4 w-4 rounded border-slate-300 text-[#CC0000] focus:ring-[#CC0000]"
               />
-              Return to same location
+              {t("sameLocation")}
             </label>
           </div>
         ) : (
           <div>
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white">Search fleet</h2>
-            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-              Set your trip details to see available vehicles.
-            </p>
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white">{t("title")}</h2>
+            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{t("subtitle")}</p>
           </div>
         )}
 
@@ -230,25 +228,25 @@ export default function SearchForm({
               onChange={(event) => setSameLocation(event.target.checked)}
               className="h-4 w-4 rounded border-slate-300 text-slate-900 focus:ring-slate-900"
             />
-            Return to same location
+            {t("sameLocation")}
           </label>
         ) : null}
 
         {isError ? (
           <p className="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
-            Could not load locations. Please refresh and try again.
+            {t("locationsError")}
           </p>
         ) : null}
 
         {!isPending && locations.length === 0 ? (
           <p className="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900">
-            No pick-up locations are available yet. Contact the agency to book.
+            {t("noLocations")}
           </p>
         ) : null}
 
         <div className={gridClass}>
           <div className={pickupColClass}>
-            <FieldLabel>Pick-up location</FieldLabel>
+            <FieldLabel>{t("pickupLocation")}</FieldLabel>
             <div className="relative">
               <MapPin
                 size={16}
@@ -262,7 +260,7 @@ export default function SearchForm({
                 className={`${fieldClass} pl-9`}
                 required
               >
-                {isPending ? <option value="">Loading...</option> : null}
+                {isPending ? <option value="">{t("loading")}</option> : null}
                 {locations.map((location) => (
                   <option key={location.id} value={String(location.id)}>
                     {location.name}
@@ -273,7 +271,7 @@ export default function SearchForm({
           </div>
 
           <div className={dateColClass}>
-            <FieldLabel>Pick-up date</FieldLabel>
+            <FieldLabel>{t("pickupDate")}</FieldLabel>
             <div className="relative">
               <Calendar
                 size={16}
@@ -292,7 +290,7 @@ export default function SearchForm({
           </div>
 
           <div className={dateColClass}>
-            <FieldLabel>Drop-off date</FieldLabel>
+            <FieldLabel>{t("dropoffDate")}</FieldLabel>
             <div className="relative">
               <Calendar
                 size={16}
@@ -316,7 +314,7 @@ export default function SearchForm({
               disabled={busy || isPending || locations.length === 0}
               className={submitClass}
             >
-              Search
+              {t("search")}
               <ArrowRight size={16} aria-hidden="true" />
             </button>
           </div>
@@ -324,7 +322,7 @@ export default function SearchForm({
 
         {!sameLocation ? (
           <div className={`min-w-0 ${embedded ? "sm:max-w-xs" : heroFooter ? "lg:max-w-sm" : "max-w-md"}`}>
-            <FieldLabel>Drop-off location</FieldLabel>
+            <FieldLabel>{t("dropoffLocation")}</FieldLabel>
             <div className="relative">
               <MapPin
                 size={16}

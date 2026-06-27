@@ -1,0 +1,69 @@
+{
+  "nav": {
+    "home": "الرئيسية",
+    "vehicles": "المركبات",
+    "blog": "المدونة",
+    "contact": "اتصل بنا",
+    "openMenu": "فتح القائمة",
+    "closeMenu": "إغلاق القائمة",
+    "language": "اللغة"
+  },
+  "hero": {
+    "titleLine1": "استأجر سيارات",
+    "titleAccent": "موثوقة",
+    "description": "استئجار السيارة سهل وسريع مع ليموزود كارز. أسطول مميز في الداخلة.",
+    "statsBrands": "ماركات",
+    "statsClients": "عملاء"
+  },
+  "search": {
+    "title": "ابحث في الأسطول",
+    "subtitle": "حدد تفاصيل رحلتك لعرض المركبات المتاحة.",
+    "sameLocation": "الإرجاع إلى نفس الموقع",
+    "pickupLocation": "موقع الاستلام",
+    "dropoffLocation": "موقع التسليم",
+    "pickupDate": "تاريخ الاستلام",
+    "dropoffDate": "تاريخ التسليم",
+    "search": "بحث",
+    "loading": "جاري التحميل...",
+    "locationsError": "تعذر تحميل المواقع. يرجى تحديث الصفحة.",
+    "noLocations": "لا توجد مواقع استلام متاحة. تواصل مع الوكالة.",
+    "incomplete": "يرجى اختيار المواقع والتواريخ.",
+    "invalidPeriod": "يجب أن يكون التسليم بعد الاستلام.",
+    "step": "الخطوة 1",
+    "whenWhere": "متى وأين؟",
+    "sameDropoff": "نفس موقع التسليم"
+  },
+  "footer": {
+    "description": "استئجار السيارة سهل وسريع مع ليموزود كارز. أسطول مميز في الداخلة.",
+    "fleet": "الأسطول",
+    "services": "الخدمات",
+    "company": "الشركة",
+    "vehicles": "المركبات",
+    "booking": "الحجز",
+    "rental": "التأجير",
+    "delivery": "التوصيل",
+    "insurance": "التأمين",
+    "warranty": "الضمان",
+    "financing": "التمويل",
+    "about": "من نحن",
+    "blog": "المدونة",
+    "contact": "اتصل بنا",
+    "terms": "شروط الاستخدام",
+    "social": "شبكة اجتماعية",
+    "rights": "جميع الحقوق محفوظة."
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "saved": "تم الحفظ",
+    "appearance": "المظهر",
+    "darkMode": "الوضع الداكن",
+    "darkModeDesc": "التبديل بين الوضع الفاتح والداكن",
+    "language": "اللغة",
+    "languageDesc": "اختر لغتك المفضلة"
+  },
+  "common": {
+    "rentNow": "استأجر الآن",
+    "unavailable": "غير متاح",
+    "seeMore": "المزيد"
+  }
+}

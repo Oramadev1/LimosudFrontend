@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 
 import { QueryProvider } from "@/components/providers/QueryProvider";
 import ThemeProvider from "@/components/ThemeProvider";
@@ -19,25 +21,37 @@ const geistSans = Geist({
   display: "optional",
 });
 
-export const metadata: Metadata = createMetadata();
+export const metadata: Metadata = {
+  ...createMetadata(),
+  other: {
+    google: "notranslate",
+  },
+};
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+  const dir = locale === "ar" ? "rtl" : "ltr";
+
   return (
     <html
-      lang="en"
-      className={`${geistSans.variable} h-full antialiased`}
+      lang={locale}
+      dir={dir}
+      translate="no"
+      className={`${geistSans.variable} notranslate h-full antialiased`}
       suppressHydrationWarning
     >
       <head>
+        <meta name="google" content="notranslate" />
         <script
           dangerouslySetInnerHTML={{
             __html: `try{var t=localStorage.getItem('limosud-theme'),d=window.matchMedia('(prefers-color-scheme:dark)').matches;if(t==='dark'||(!t&&d))document.documentElement.classList.add('dark')}catch(e){}`,
           }}
         />
       </head>
-      <body className="flex min-h-full flex-col overflow-x-hidden bg-[#F6F7F9] transition-colors duration-300 dark:bg-gray-950">
+      <body className="notranslate flex min-h-full flex-col overflow-x-hidden bg-[#F6F7F9] transition-colors duration-300 dark:bg-gray-950">
         <JsonLd
           data={[
             getOrganizationSchema(),
@@ -45,9 +59,11 @@ export default function RootLayout({
             getLocalBusinessSchema(),
           ]}
         />
-        <QueryProvider>
-          <ThemeProvider>{children}</ThemeProvider>
-        </QueryProvider>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <QueryProvider>
+            <ThemeProvider>{children}</ThemeProvider>
+          </QueryProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
