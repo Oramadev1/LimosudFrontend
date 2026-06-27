@@ -40,9 +40,7 @@ export default function Navbar() {
   return (
     <header
       className={`sticky top-0 z-50 ${
-        isHome
-          ? "border-b border-white/30 bg-white/90 backdrop-blur-md"
-          : "bg-white"
+        isHome ? "bg-transparent shadow-none" : "bg-white shadow-[0_1px_4px_rgba(0,0,0,0.08)]"
       }`}
     >
       <div className="mx-auto flex h-[72px] max-w-[1200px] items-center justify-between gap-4 px-6">
@@ -57,11 +55,19 @@ export default function Navbar() {
               <li key={link.label}>
                 <Link
                   href={href}
-                  className={`text-sm transition hover:text-[#CC0000] ${
-                    active
-                      ? "border-b-2 border-[#1A1A1A] pb-1 font-semibold text-[#1A1A1A]"
-                      : "text-[#666666]"
-                  }`}
+                  className={
+                    isHome
+                      ? `text-sm transition hover:text-[#CC0000] ${
+                          active
+                            ? "border-b-2 border-white pb-1 font-semibold text-white"
+                            : "text-white/90"
+                        }`
+                      : `text-sm transition hover:text-[#CC0000] ${
+                          active
+                            ? "border-b-2 border-[#1A1A1A] pb-1 font-semibold text-[#1A1A1A]"
+                            : "text-[#666666]"
+                        }`
+                  }
                 >
                   {link.label}
                 </Link>
@@ -72,7 +78,7 @@ export default function Navbar() {
 
         <button
           type="button"
-          className="text-[#666666] md:hidden"
+          className={isHome ? "text-white md:hidden" : "text-[#666666] md:hidden"}
           onClick={() => setOpen((value) => !value)}
           aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
         >
@@ -81,7 +87,11 @@ export default function Navbar() {
       </div>
 
       {open ? (
-        <div className="border-t border-[#E5E5E5] bg-white px-6 py-4 md:hidden">
+        <div
+          className={`px-6 py-4 md:hidden ${
+            isHome ? "bg-white/95 backdrop-blur-sm" : "border-t border-[#E5E5E5] bg-white"
+          }`}
+        >
           <ul className="space-y-3">
             {navLinks.map((link) => {
               const href = navHref[link.label] ?? routes.home;

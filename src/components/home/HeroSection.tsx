@@ -4,23 +4,33 @@ import Image from "next/image";
 
 import { heroStats, siteConfig } from "@/config/site";
 
-function HeroCopy() {
+function HeroCopy({ onImage = false }: { onImage?: boolean }) {
+  const titleClass = onImage
+    ? "text-white drop-shadow-sm"
+    : "text-[#111111]";
+  const accentClass = onImage ? "text-[#FFCCCC]" : "text-[#CC0000]";
+  const bodyClass = onImage ? "text-white/90 drop-shadow-sm" : "text-[#666666]";
+  const statValueClass = onImage ? "text-white drop-shadow-sm" : "text-[#111111]";
+  const statLabelClass = onImage ? "text-white/80" : "text-[#666666]";
+
   return (
     <div className="animate-fade-in-left max-w-xl">
-      <h1 className="text-3xl leading-tight font-extrabold text-[#111111] sm:text-4xl lg:text-5xl xl:text-[3.25rem]">
+      <h1
+        className={`text-3xl leading-tight font-extrabold sm:text-4xl lg:text-5xl xl:text-[3.25rem] ${titleClass}`}
+      >
         Louez des voitures
         <br />
-        <span className="text-[#CC0000]">de confiance</span>
+        <span className={accentClass}>de confiance</span>
       </h1>
-      <p className="mt-4 max-w-md text-sm leading-relaxed text-[#666666] sm:text-base">
+      <p className={`mt-4 max-w-md text-sm leading-relaxed sm:text-base ${bodyClass}`}>
         {siteConfig.description}
       </p>
 
       <div className="mt-8 flex gap-10">
         {heroStats.map((stat) => (
           <div key={stat.label}>
-            <span className="text-2xl font-bold text-[#111111]">{stat.value}</span>
-            <p className="mt-0.5 text-xs text-[#666666]">{stat.label}</p>
+            <span className={`text-2xl font-bold ${statValueClass}`}>{stat.value}</span>
+            <p className={`mt-0.5 text-xs ${statLabelClass}`}>{stat.label}</p>
           </div>
         ))}
       </div>
@@ -30,10 +40,10 @@ function HeroCopy() {
 
 export function HeroSection() {
   return (
-    <section className="relative -mt-[72px] w-full overflow-hidden bg-[#E8F4FC] pt-[72px] lg:bg-[#F5F5F5]">
-      {/* Mobile: full panoramic image, then text below */}
+    <section className="relative -mt-[72px] w-full overflow-hidden bg-[#E8F4FC]">
+      {/* Mobile: image starts under transparent navbar */}
       <div className="lg:hidden">
-        <div className="relative w-full bg-[#E8F4FC]">
+        <div className="relative w-full">
           <Image
             src={siteConfig.heroBanner}
             alt="Limosud Cars — location de voitures à Dakhla"
@@ -49,8 +59,8 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Desktop: widescreen banner with text overlay */}
-      <div className="relative hidden aspect-[21/9] min-h-[480px] w-full lg:block xl:min-h-[560px]">
+      {/* Desktop: banner with text overlay on image */}
+      <div className="relative hidden min-h-[520px] w-full lg:block xl:min-h-[600px]">
         <Image
           src={siteConfig.heroBanner}
           alt="Limosud Cars — location de voitures à Dakhla"
@@ -61,13 +71,13 @@ export function HeroSection() {
         />
 
         <div
-          className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/75 to-transparent"
+          className="absolute inset-0 bg-gradient-to-r from-black/35 via-black/10 to-transparent"
           aria-hidden="true"
         />
 
-        <div className="absolute inset-0 flex items-center">
+        <div className="absolute inset-0 flex items-center pt-[72px]">
           <div className="mx-auto w-full max-w-[1200px] px-6 py-12">
-            <HeroCopy />
+            <HeroCopy onImage />
           </div>
         </div>
       </div>
