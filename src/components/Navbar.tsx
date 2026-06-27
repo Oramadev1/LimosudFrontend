@@ -63,8 +63,8 @@ export default function Navbar() {
           : "sticky top-0 bg-white shadow-[0_1px_4px_rgba(0,0,0,0.08)]"
       }`}
     >
-      <div className="mx-auto flex h-[108px] max-w-[1200px] items-center justify-between gap-4 px-6">
-        <BrandLogo href={routes.home} height={80} onDark={overlayOnHero} />
+      <div className="mx-auto flex h-[100px] max-w-[1200px] items-center justify-between gap-4 px-6">
+        <BrandLogo href={routes.home} height={72} onDark={overlayOnHero} />
 
         <ul className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => {
