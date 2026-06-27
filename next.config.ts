@@ -1,8 +1,10 @@
 import type { NextConfig } from "next";
 
 const laravelApiUrl =
-  process.env.LARAVEL_API_URL ?? "https://api.limosudcars.com/api";
-const apiOrigin = new URL(laravelApiUrl);
+  process.env.NEXT_PUBLIC_API_URL?.startsWith("http")
+    ? process.env.NEXT_PUBLIC_API_URL
+    : process.env.LARAVEL_API_URL ?? "https://api.limosudcars.com/api";
+const apiOrigin = new URL(laravelApiUrl.replace(/\/api\/?$/, "") || laravelApiUrl);
 const lanHost = process.env.DEV_LAN_HOST ?? "192.168.1.4";
 
 const storageRemotePattern = {
@@ -15,25 +17,9 @@ const storageRemotePattern = {
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   compress: true,
-  // Allow HMR WebSocket when teammates open the dev server via your LAN IP.
   allowedDevOrigins: [lanHost, `http://${lanHost}:3000`],
   async redirects() {
     return [];
-  },
-  async rewrites() {
-    const upstream = laravelApiUrl.replace(/\/$/, "");
-    const storageOrigin = upstream.replace(/\/api\/?$/, "");
-
-    return [
-      {
-        source: "/api/:path*",
-        destination: `${upstream}/:path*`,
-      },
-      {
-        source: "/storage/:path*",
-        destination: `${storageOrigin}/storage/:path*`,
-      },
-    ];
   },
   turbopack: {
     root: import.meta.dirname,

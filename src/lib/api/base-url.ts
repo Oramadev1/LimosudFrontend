@@ -1,14 +1,15 @@
 import { siteConfig } from "@/config/site";
 
-export function resolveApiUrl(path: string): string {
-  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
-
-  if (typeof window !== "undefined") {
-    return `${siteConfig.apiUrl.replace(/\/$/, "")}${normalizedPath}`;
+function apiBaseUrl(): string {
+  const publicUrl = siteConfig.apiUrl;
+  if (publicUrl.startsWith("http")) {
+    return publicUrl.replace(/\/$/, "");
   }
 
-  const upstream =
-    process.env.LARAVEL_API_URL ?? "https://api.limosudcars.com/api";
+  return "https://api.limosudcars.com/api";
+}
 
-  return `${upstream.replace(/\/$/, "")}${normalizedPath}`;
+export function resolveApiUrl(path: string): string {
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  return `${apiBaseUrl()}${normalizedPath}`;
 }
