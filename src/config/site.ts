@@ -3,8 +3,9 @@ export const siteConfig = {
   shortName: "Limosud",
   brand: "LIMOSUD CARS",
   logo: "/logo.jpg",
+  heroBanner: "/heroandnavbarimge.jpeg",
   description:
-    "Louer une voiture est simple et rapide avec Limosud Cars. Flotte premium à Dakhla.",
+    "Buy and sell reputable cars. Renting a car is easy and fast with Limosud Cars",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   apiUrl: process.env.NEXT_PUBLIC_API_URL ?? "https://api.limosudcars.com/api",
   adminUrl: process.env.NEXT_PUBLIC_ADMIN_URL ?? "http://localhost:3001/login",
@@ -18,3 +19,15 @@ export const siteConfig = {
   phone: "06 61 04 09 67",
   address: "Hay alqods N10 - Dakhla",
 } as const;
+
+export const heroStats = [
+  { value: "50+", label: "Car brands" },
+  { value: "10k+", label: "Clients" },
+] as const;
+
+export const navLinks = [
+  { label: "Home Page" },
+  { label: "Rent Car" },
+  { label: "Buy Car" },
+  { label: "News" },
+] as const;

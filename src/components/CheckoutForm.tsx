@@ -15,6 +15,7 @@ import {
   billingSchema,
   rentalSchema,
   confirmSchema,
+  PENDING_CUSTOMER_NATIONALITY,
   isRentalPeriodValid,
   type BillingData,
   type RentalData,
@@ -43,7 +44,6 @@ function applyApiValidationErrors(
   const fieldMap: Record<string, { form: "billing" | "rental"; field: string }> = {
     "customer.full_name": { form: "billing", field: "name" },
     "customer.phone": { form: "billing", field: "phone" },
-    "customer.nationality": { form: "billing", field: "nationality" },
     pickup_location_id: { form: "rental", field: "pickupCity" },
     dropoff_location_id: { form: "rental", field: "dropoffCity" },
     start_datetime: { form: "rental", field: "pickupDate" },
@@ -357,7 +357,7 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
         const response = await createReservationMutation.mutateAsync({
           customer: {
             full_name: billingData.name,
-            nationality: billingData.nationality,
+            nationality: PENDING_CUSTOMER_NATIONALITY,
             phone: billingData.phone,
           },
           vehicle_id: vehicle.id,
@@ -365,9 +365,6 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
           dropoff_location_id: Number(rentalData.dropoffCity),
           start_datetime: startDatetime,
           end_datetime: endDatetime,
-          customer_notes: billingData.address
-            ? `Address: ${billingData.address}`
-            : undefined,
         });
 
         if (!response) {
@@ -412,7 +409,7 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
         <SectionCard
           step="Step 1 of 3"
           title="Billing Info"
-          subtitle="Please enter your billing info"
+          subtitle="Please enter your name and phone number"
           done={step1Done}
         >
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -427,18 +424,6 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
               placeholder="Phone number"
               error={billing.formState.errors.phone?.message}
               registration={billing.register("phone")}
-            />
-            <InputField
-              label="Address"
-              placeholder="Address"
-              error={billing.formState.errors.address?.message}
-              registration={billing.register("address")}
-            />
-            <InputField
-              label="Nationality"
-              placeholder="Your nationality"
-              error={billing.formState.errors.nationality?.message}
-              registration={billing.register("nationality")}
             />
           </div>
         </SectionCard>

@@ -11,11 +11,11 @@ function rentalDatetime(date: string, time: string): Date | null {
   return Number.isNaN(parsed.getTime()) ? null : parsed;
 }
 
+export const PENDING_CUSTOMER_NATIONALITY = "Pending";
+
 export const billingSchema = z.object({
-  name:        z.string().min(2, "Name must be at least 2 characters"),
-  phone:       z.string().min(1, "Phone number is required").regex(/^\+?[\d\s\-]{7,15}$/, "Enter a valid phone number"),
-  address:     z.string().min(5, "Address must be at least 5 characters"),
-  nationality: z.string().min(2, "Nationality is required"),
+  name:  z.string().min(2, "Name must be at least 2 characters"),
+  phone: z.string().min(1, "Phone number is required").regex(/^\+?[\d\s\-]{7,15}$/, "Enter a valid phone number"),
 });
 
 export const rentalSchema = z

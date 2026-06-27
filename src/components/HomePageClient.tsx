@@ -12,14 +12,14 @@ import { CarGridSkeleton } from "@/components/CarCardSkeleton";
 import { vehicleToMarketingCar } from "@/lib/marketing/vehicles";
 import { useAllVehiclesQuery } from "@/lib/query/hooks";
 
-export default function HomePageClient({ heroImages }: { heroImages: string[] }) {
+export default function HomePageClient() {
   const { data: vehicles = [], isPending, isError } = useAllVehiclesQuery();
 
   const rentCars = vehicles.slice(0, 6).map((vehicle) => vehicleToMarketingCar(vehicle));
 
   return (
     <div className="min-w-0 bg-[#F5F5F5]">
-      <HeroSection heroImages={heroImages} />
+      <HeroSection />
 
       <BrandStrip />
 

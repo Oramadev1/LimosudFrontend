@@ -1,37 +1,49 @@
 "use client";
 
-import { siteConfig } from "@/config/site";
+import Image from "next/image";
 
-import { HeroCarShowcase } from "./HeroCarShowcase";
+import { heroStats, siteConfig } from "@/config/site";
 
-export function HeroSection({ heroImages }: { heroImages: string[] }) {
+export function HeroSection() {
   return (
-    <section className="overflow-hidden bg-white py-16 sm:py-20 lg:py-24">
-      <div className="mx-auto grid max-w-[1200px] grid-cols-1 items-center gap-12 px-6 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-8">
-        <div className="animate-fade-in-left">
-          <h1 className="text-4xl leading-tight font-extrabold text-[#1A1A1A] sm:text-5xl">
-            Louez des voitures
-            <br />
-            <span className="text-[#E8192C]">de confiance</span>
-          </h1>
-          <p className="mt-4 max-w-sm text-sm leading-relaxed text-[#666]">
-            {siteConfig.description}
-          </p>
+    <section className="relative -mt-[72px] w-full overflow-hidden bg-[#F5F5F5] pt-[72px]">
+      <div className="relative aspect-[21/9] min-h-[320px] w-full sm:min-h-[400px] lg:min-h-[480px] xl:min-h-[560px]">
+        <Image
+          src={siteConfig.heroBanner}
+          alt="Limosud Cars rental fleet — airport, business, and scenic travel"
+          fill
+          priority
+          className="object-cover object-center"
+          sizes="100vw"
+        />
 
-          <div className="mt-8 flex gap-10">
-            <div>
-              <span className="text-2xl font-bold text-[#1A1A1A]">50+</span>
-              <p className="mt-0.5 text-xs text-[#888]">Marques</p>
-            </div>
-            <div>
-              <span className="text-2xl font-bold text-[#1A1A1A]">10k+</span>
-              <p className="mt-0.5 text-xs text-[#888]">Clients</p>
+        <div
+          className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-white/10 sm:from-white/92 sm:via-white/65 sm:to-transparent"
+          aria-hidden="true"
+        />
+
+        <div className="absolute inset-0 flex items-center">
+          <div className="mx-auto w-full max-w-[1200px] px-6 py-10 sm:py-12">
+            <div className="animate-fade-in-left max-w-xl">
+              <h1 className="text-3xl leading-tight font-extrabold text-[#111111] sm:text-4xl lg:text-5xl xl:text-[3.25rem]">
+                Buy, sell &amp; rent
+                <br />
+                <span className="text-[#CC0000]">reputable cars</span>
+              </h1>
+              <p className="mt-4 max-w-md text-sm leading-relaxed text-[#666666] sm:text-base">
+                {siteConfig.description}
+              </p>
+
+              <div className="mt-8 flex gap-10">
+                {heroStats.map((stat) => (
+                  <div key={stat.label}>
+                    <span className="text-2xl font-bold text-[#111111]">{stat.value}</span>
+                    <p className="mt-0.5 text-xs text-[#666666]">{stat.label}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-
-        <div className="animate-fade-in-right flex items-center justify-center lg:justify-end">
-          <HeroCarShowcase images={heroImages} />
         </div>
       </div>
     </section>
