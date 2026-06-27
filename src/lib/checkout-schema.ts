@@ -15,9 +15,7 @@ export const billingSchema = z.object({
   name:        z.string().min(2, "Name must be at least 2 characters"),
   phone:       z.string().min(1, "Phone number is required").regex(/^\+?[\d\s\-]{7,15}$/, "Enter a valid phone number"),
   address:     z.string().min(5, "Address must be at least 5 characters"),
-  city:        z.string().min(2, "City must be at least 2 characters"),
   nationality: z.string().min(2, "Nationality is required"),
-  email:       z.string().email("Enter a valid email").optional().or(z.literal("")),
 });
 
 export const rentalSchema = z
@@ -51,14 +49,8 @@ export const rentalSchema = z
     }
   });
 
-export const confirmSchema = z.object({
-  agreeMarketing: z.boolean(),
-  agreeTerms:     z.boolean().refine((v) => v, "You must agree to the terms and conditions"),
-});
-
 export type BillingData  = z.infer<typeof billingSchema>;
 export type RentalData   = z.infer<typeof rentalSchema>;
-export type ConfirmData  = z.infer<typeof confirmSchema>;
 
 export function isRentalPeriodValid(
   pickupDate: string,

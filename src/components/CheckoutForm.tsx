@@ -13,11 +13,9 @@ import { checkVehicleAvailability } from "@/lib/api/public";
 import {
   billingSchema,
   rentalSchema,
-  confirmSchema,
   isRentalPeriodValid,
   type BillingData,
   type RentalData,
-  type ConfirmData,
 } from "@/lib/checkout-schema";
 import {
   combineDatetime,
@@ -43,7 +41,6 @@ function applyApiValidationErrors(
     "customer.full_name": { form: "billing", field: "name" },
     "customer.phone": { form: "billing", field: "phone" },
     "customer.nationality": { form: "billing", field: "nationality" },
-    "customer.email": { form: "billing", field: "email" },
     pickup_location_id: { form: "rental", field: "pickupCity" },
     dropoff_location_id: { form: "rental", field: "dropoffCity" },
     start_datetime: { form: "rental", field: "pickupDate" },
@@ -261,10 +258,6 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
     resolver: zodResolver(rentalSchema),
     mode: "onTouched",
   });
-  const confirm = useForm<ConfirmData>({
-    resolver: zodResolver(confirmSchema),
-    mode: "onTouched",
-  });
 
   useEffect(() => {
     const rentalParams = rentalSearchFromQuery(searchParams);
@@ -296,10 +289,9 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
   async function handleSubmit() {
     setSubmitError(null);
 
-    const [billingOk, rentalOk, confirmOk] = await Promise.all([
+    const [billingOk, rentalOk] = await Promise.all([
       billing.trigger(),
       rental.trigger(),
-      confirm.trigger(),
     ]);
 
     if (!billingOk) {
@@ -320,16 +312,6 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
       setSubmitError(message);
       toast.error(message);
       document.getElementById("checkout-rental")?.scrollIntoView({ behavior: "smooth", block: "start" });
-      return;
-    }
-    if (!confirmOk) {
-      const parsed = confirmSchema.safeParse(confirm.getValues());
-      const message = parsed.success
-        ? "Please agree to the terms and conditions."
-        : parsed.error.issues[0]?.message ?? "Please agree to the terms and conditions.";
-      setSubmitError(message);
-      toast.error(message);
-      document.getElementById("checkout-confirm")?.scrollIntoView({ behavior: "smooth", block: "start" });
       return;
     }
 
@@ -359,7 +341,6 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
             full_name: billingData.name,
             nationality: billingData.nationality,
             phone: billingData.phone,
-            email: billingData.email || undefined,
           },
           vehicle_id: vehicle.id,
           pickup_location_id: Number(rentalData.pickupCity),
@@ -367,7 +348,7 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
           start_datetime: startDatetime,
           end_datetime: endDatetime,
           customer_notes: billingData.address
-            ? `Address: ${billingData.address}, ${billingData.city}`
+            ? `Address: ${billingData.address}`
             : undefined,
         });
 
@@ -436,25 +417,10 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
               registration={billing.register("address")}
             />
             <InputField
-              label="Town / City"
-              placeholder="Town or city"
-              error={billing.formState.errors.city?.message}
-              registration={billing.register("city", {
-                onBlur: () => billing.trigger().then((valid) => setStep1Done(valid)),
-              })}
-            />
-            <InputField
               label="Nationality"
               placeholder="Your nationality"
               error={billing.formState.errors.nationality?.message}
               registration={billing.register("nationality")}
-            />
-            <InputField
-              label="Email"
-              placeholder="Email (optional)"
-              type="email"
-              error={billing.formState.errors.email?.message}
-              registration={billing.register("email")}
             />
           </div>
         </SectionCard>
@@ -559,27 +525,6 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
           subtitle="We are getting to the end. Just few clicks and your rental is ready!"
         >
           <div className="flex flex-col gap-3">
-            <label className="flex cursor-pointer items-start gap-3 rounded-[8px] bg-[#F6F7F9] px-4 py-3.5 dark:bg-gray-800">
-              <input
-                type="checkbox"
-                {...confirm.register("agreeMarketing")}
-                className="mt-0.5 h-4 w-4 shrink-0 accent-[#3563E9]"
-              />
-              <span className="text-sm text-gray-600 dark:text-gray-300">
-                I agree with sending Marketing and newsletter emails. No spam, promised!
-              </span>
-            </label>
-            <label className="flex cursor-pointer items-start gap-3 rounded-[8px] bg-[#F6F7F9] px-4 py-3.5 dark:bg-gray-800">
-              <input
-                type="checkbox"
-                {...confirm.register("agreeTerms")}
-                className="mt-0.5 h-4 w-4 shrink-0 accent-[#3563E9]"
-              />
-              <span className="text-sm text-gray-600 dark:text-gray-300">
-                I agree with our terms and conditions and privacy policy.
-              </span>
-            </label>
-            <FieldError msg={confirm.formState.errors.agreeTerms?.message} />
             <button
               type="button"
               onClick={handleSubmit}
@@ -615,27 +560,26 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
           </p>
         </div>
 
-        <div className="flex items-center gap-4">
-          <div className="relative h-[70px] w-[100px] shrink-0 overflow-hidden rounded-[8px] bg-gradient-to-br from-[#1C3FA8] to-[#3563E9]">
-            {imageUrl ? (
-              <StorageImage
-                src={imageUrl}
-                alt={vehicle.name}
-                fill
-                className="object-contain p-2"
-              />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center text-xs text-white/70">
-                No image
-              </div>
-            )}
-          </div>
-          <div>
-            <h3 className="text-base font-bold text-gray-900 dark:text-white">
-              {vehicle.name}
-            </h3>
-            <p className="text-xs text-gray-400">{categoryLabel}</p>
-          </div>
+        <div className="relative h-[200px] w-full overflow-hidden rounded-[10px] bg-gray-50 dark:bg-gray-900">
+          {imageUrl ? (
+            <StorageImage
+              src={imageUrl}
+              alt={vehicle.name}
+              fill
+              className="object-contain p-2"
+            />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center text-xs text-gray-400">
+              No image
+            </div>
+          )}
+        </div>
+
+        <div>
+          <h3 className="text-base font-bold text-gray-900 dark:text-white">
+            {vehicle.name}
+          </h3>
+          <p className="text-xs text-gray-400">{categoryLabel}</p>
         </div>
 
         <div className="border-t border-gray-100 dark:border-gray-800" />
