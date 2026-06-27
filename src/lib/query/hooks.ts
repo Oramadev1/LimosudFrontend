@@ -10,6 +10,7 @@ import {
   getLocations,
   getLookups,
   getVehicle,
+  getVehicleSchedule,
 } from "@/lib/api/public";
 import { queryKeys } from "@/lib/query/keys";
 import type { CreateReservationPayload } from "@/types/api";
@@ -29,6 +30,15 @@ export function useVehicleQuery(slug: string) {
       return response.data;
     },
     enabled: Boolean(slug),
+  });
+}
+
+export function useVehicleScheduleQuery(vehicleId: number) {
+  return useQuery({
+    queryKey: queryKeys.vehicleSchedule(vehicleId),
+    queryFn: () => getVehicleSchedule(vehicleId),
+    enabled: vehicleId > 0,
+    staleTime: 60_000,
   });
 }
 

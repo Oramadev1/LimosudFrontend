@@ -15,7 +15,7 @@ export function getVehicleAvailabilityInfo(vehicle: Vehicle): VehicleAvailabilit
     case "rented":
       return {
         label: "Currently rented",
-        rentable: false,
+        rentable: true,
         tone: "rented",
       };
     case "reserved":

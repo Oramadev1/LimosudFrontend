@@ -3,10 +3,11 @@
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ShieldCheck, ChevronDown, CheckCircle2, AlertCircle } from "lucide-react";
 
+import { RentalDateField } from "@/components/RentalDateField";
 import StorageImage from "@/components/StorageImage";
 
 import { ApiError, isValidationError } from "@/lib/api/client";
@@ -33,7 +34,12 @@ import { rentalSearchFromQuery } from "@/lib/rental-search";
 import { toast } from "@/lib/toast";
 import { useSubmitLock } from "@/lib/use-submit-lock";
 import { getVehicleCategoryLabel } from "@/lib/vehicle-catalog";
-import { useCreateReservationMutation } from "@/lib/query/hooks";
+import { useCreateReservationMutation, useVehicleScheduleQuery } from "@/lib/query/hooks";
+import {
+  isCalendarDayBlocked,
+  rentalRangeOverlapsBlocked,
+  todayYmd,
+} from "@/lib/vehicle-schedule";
 import type { ApiValidationError, Location, Vehicle } from "@/types/api";
 
 function applyApiValidationErrors(
@@ -250,6 +256,8 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
   const [step2Done, setStep2Done] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const createReservationMutation = useCreateReservationMutation();
+  const { data: schedule } = useVehicleScheduleQuery(vehicle.id);
+  const blockedPeriods = schedule?.blocked_periods ?? [];
   const { runOnce, busy: submitBusy } = useSubmitLock();
   const submitting = submitBusy || createReservationMutation.isPending;
 
@@ -288,7 +296,16 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
   const pickupCity = rental.watch("pickupCity") ?? "";
   const dropoffCity = rental.watch("dropoffCity") ?? "";
   const rentalPeriodValid = isRentalPeriodValid(pickupDate, pickupTime, dropoffDate, dropoffTime);
-  const days = rentalPeriodValid ? daysBetween(pickupDate, dropoffDate) : 0;
+  const rentalPeriodBlocked =
+    rentalPeriodValid &&
+    rentalRangeOverlapsBlocked(
+      pickupDate,
+      pickupTime,
+      dropoffDate,
+      dropoffTime,
+      blockedPeriods,
+    );
+  const days = rentalPeriodValid && !rentalPeriodBlocked ? daysBetween(pickupDate, dropoffDate) : 0;
   const pickupLocation = locations.find((location) => String(location.id) === pickupCity);
   const dropoffLocation = locations.find((location) => String(location.id) === dropoffCity);
   const pricePerDay = pricePerDayForRental(vehicle, Math.max(days, 1));
@@ -323,6 +340,26 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
       document.getElementById("checkout-rental")?.scrollIntoView({ behavior: "smooth", block: "start" });
       return;
     }
+
+    const rentalData = rental.getValues();
+    if (
+      isCalendarDayBlocked(rentalData.pickupDate, blockedPeriods) ||
+      isCalendarDayBlocked(rentalData.dropoffDate, blockedPeriods) ||
+      rentalRangeOverlapsBlocked(
+        rentalData.pickupDate,
+        rentalData.pickupTime,
+        rentalData.dropoffDate,
+        rentalData.dropoffTime,
+        blockedPeriods,
+      )
+    ) {
+      const message = "This vehicle is not available for the selected dates. Please choose different dates.";
+      setSubmitError(message);
+      toast.error(message);
+      document.getElementById("checkout-rental")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+
     if (!confirmOk) {
       const message =
         confirm.formState.errors.agreeTerms?.message ??
@@ -334,7 +371,6 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
     }
 
     const billingData = billing.getValues();
-    const rentalData = rental.getValues();
     const startDatetime = combineDatetime(rentalData.pickupDate, rentalData.pickupTime);
     const endDatetime = combineDatetime(rentalData.dropoffDate, rentalData.dropoffTime);
 
@@ -452,12 +488,21 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
                   registration={rental.register("pickupCity")}
                   locations={locations}
                 />
-                <DateTimeField
-                  label="Date"
-                  placeholder="YYYY-MM-DD"
-                  error={rental.formState.errors.pickupDate?.message}
-                  registration={rental.register("pickupDate")}
-                  inputType="date"
+                <Controller
+                  control={rental.control}
+                  name="pickupDate"
+                  render={({ field }) => (
+                    <RentalDateField
+                      label="Date"
+                      value={field.value ?? ""}
+                      onChange={field.onChange}
+                      onBlur={field.onBlur}
+                      blockedPeriods={blockedPeriods}
+                      minDate={todayYmd()}
+                      error={rental.formState.errors.pickupDate?.message}
+                      name={field.name}
+                    />
+                  )}
                 />
               </div>
               <DateTimeField
@@ -486,12 +531,24 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
                   registration={rental.register("dropoffCity")}
                   locations={locations}
                 />
-                <DateTimeField
-                  label="Date"
-                  placeholder="YYYY-MM-DD"
-                  error={rental.formState.errors.dropoffDate?.message}
-                  registration={rental.register("dropoffDate")}
-                  inputType="date"
+                <Controller
+                  control={rental.control}
+                  name="dropoffDate"
+                  render={({ field }) => (
+                    <RentalDateField
+                      label="Date"
+                      value={field.value ?? ""}
+                      onChange={field.onChange}
+                      onBlur={() => {
+                        field.onBlur();
+                        rental.trigger().then((valid) => setStep2Done(valid));
+                      }}
+                      blockedPeriods={blockedPeriods}
+                      minDate={pickupDate || todayYmd()}
+                      error={rental.formState.errors.dropoffDate?.message}
+                      name={field.name}
+                    />
+                  )}
                 />
               </div>
               <DateTimeField
@@ -509,6 +566,13 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
               <p className="flex items-start gap-2 text-xs font-medium text-red-500">
                 <AlertCircle size={14} className="mt-0.5 shrink-0" />
                 Drop-off must be after pick-up date and time.
+              </p>
+            ) : null}
+
+            {rentalPeriodValid && rentalPeriodBlocked ? (
+              <p className="flex items-start gap-2 text-xs font-medium text-red-500">
+                <AlertCircle size={14} className="mt-0.5 shrink-0" />
+                These dates overlap with an existing booking. Please choose available dates.
               </p>
             ) : null}
 
@@ -610,6 +674,11 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
           {!rentalPeriodValid && pickupDate && dropoffDate ? (
             <p className="rounded-[8px] bg-red-50 px-3 py-2 text-xs font-medium text-red-600">
               Drop-off must be after pick-up before you can submit.
+            </p>
+          ) : null}
+          {rentalPeriodValid && rentalPeriodBlocked ? (
+            <p className="rounded-[8px] bg-red-50 px-3 py-2 text-xs font-medium text-red-600">
+              Selected dates are not available for this vehicle.
             </p>
           ) : null}
           <div className="flex justify-between">

@@ -96,6 +96,10 @@ export default function VehicleDetailPanel({ vehicle }: { vehicle: Vehicle }) {
             <p className="mt-2 text-sm font-medium text-red-500">
               This vehicle is not available for new bookings right now.
             </p>
+          ) : availability.tone === "rented" ? (
+            <p className="mt-2 text-sm font-medium text-amber-600">
+              Currently rented — choose available dates when booking.
+            </p>
           ) : null}
         </div>
 

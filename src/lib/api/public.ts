@@ -52,6 +52,19 @@ export function checkVehicleAvailability(
   );
 }
 
+export function getVehicleSchedule(vehicleId: number, from?: string, to?: string) {
+  const params = new URLSearchParams();
+  if (from) params.set("from", from);
+  if (to) params.set("to", to);
+
+  const query = params.toString();
+
+  return apiFetch<import("@/lib/vehicle-schedule").VehicleSchedule>(
+    `/public/vehicles/${vehicleId}/schedule${query ? `?${query}` : ""}`,
+    { cache: "no-store" },
+  );
+}
+
 export function createReservation(body: CreateReservationPayload) {
   return apiFetch<{ data: Reservation }>("/public/reservations", {
     method: "POST",
