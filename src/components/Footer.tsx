@@ -24,7 +24,7 @@ export default async function Footer() {
   ];
 
   const companyLinks = [
-    { label: t("about"), href: routes.home },
+    { label: t("about"), href: routes.about },
     { label: t("blog"), href: routes.blog },
     { label: t("contact"), href: "#contact" },
     { label: t("terms"), href: routes.terms },

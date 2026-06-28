@@ -3,16 +3,39 @@
 import { FormEvent, useState } from "react";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
 
+import { submitContactMessage } from "@/lib/api/public";
+import { ApiError } from "@/lib/api/client";
 import { siteConfig } from "@/config/site";
 
 export function ContactSection() {
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
 
-  function handleSubmit(event: FormEvent) {
+  async function handleSubmit(event: FormEvent) {
     event.preventDefault();
-    setSent(true);
-    setForm({ name: "", email: "", phone: "", message: "" });
+    setError(null);
+    setSubmitting(true);
+
+    try {
+      await submitContactMessage({
+        name: form.name,
+        email: form.email,
+        phone: form.phone || undefined,
+        message: form.message,
+      });
+      setSent(true);
+      setForm({ name: "", email: "", phone: "", message: "" });
+    } catch (err) {
+      setError(
+        err instanceof ApiError
+          ? err.message
+          : "Impossible d'envoyer le message. Réessayez dans un instant.",
+      );
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -27,6 +50,12 @@ export function ContactSection() {
             {sent ? (
               <p className="rounded-lg border border-green-100 bg-green-50 px-4 py-3 text-sm text-green-700">
                 Message envoyé ! Nous vous répondrons sous 24h.
+              </p>
+            ) : null}
+
+            {error ? (
+              <p className="rounded-lg border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-700">
+                {error}
               </p>
             ) : null}
 
@@ -64,9 +93,10 @@ export function ContactSection() {
             />
             <button
               type="submit"
-              className="w-full rounded bg-[#E8192C] py-3 font-semibold text-white transition hover:bg-red-700"
+              disabled={submitting}
+              className="w-full rounded bg-[#E8192C] py-3 font-semibold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Envoyer le message
+              {submitting ? "Envoi..." : "Envoyer le message"}
             </button>
           </form>
 

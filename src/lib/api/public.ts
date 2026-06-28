@@ -73,3 +73,17 @@ export function createReservation(body: CreateReservationPayload) {
     cache: "no-store",
   });
 }
+
+export function submitContactMessage(body: {
+  name: string;
+  email: string;
+  phone?: string;
+  message: string;
+}) {
+  return apiFetch<{ data: { id: number } }>("/public/contact-messages", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+    cache: "no-store",
+  });
+}
