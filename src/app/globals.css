@@ -50,6 +50,11 @@ body {
 .booking-field[type="datetime-local"] {
   max-width: 100%;
   min-width: 0;
+  color-scheme: light;
+}
+
+.booking-field {
+  color-scheme: light;
 }
 
 @media (max-width: 639px) {

@@ -49,7 +49,7 @@ function RentalSummary() {
   }
 
   return (
-    <p className="rounded-lg border border-blue-100 bg-blue-50 px-4 py-3 text-sm text-blue-900 dark:border-blue-900/40 dark:bg-blue-950/30 dark:text-blue-100">
+    <p className="rounded-lg border border-blue-100 bg-blue-50 px-4 py-3 text-sm text-blue-900">
       Showing cars for your rental period:{" "}
       <span className="font-semibold">{summary.start}</span> to{" "}
       <span className="font-semibold">{summary.end}</span>

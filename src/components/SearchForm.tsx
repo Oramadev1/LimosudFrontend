@@ -42,7 +42,7 @@ function mergeSearchValues(
 
 function FieldLabel({ children }: { children: string }) {
   return (
-    <label className="mb-1.5 block text-[13px] font-medium text-slate-600 dark:text-slate-300">
+    <label className="mb-1.5 block text-[13px] font-medium text-slate-600">
       {children}
     </label>
   );
@@ -136,12 +136,12 @@ export default function SearchForm({
   }
 
   const fieldClass =
-    "booking-field w-full min-w-0 max-w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10 dark:border-slate-700 dark:bg-slate-950 dark:text-white dark:focus:border-slate-400";
+    "booking-field w-full min-w-0 max-w-full rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition placeholder:text-slate-400 focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10";
 
   const shellClass =
     embedded || heroFooter
       ? ""
-      : "rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm sm:p-5 lg:p-6 dark:border-slate-800 dark:bg-slate-950";
+      : "rounded-2xl border border-slate-200/90 bg-white p-4 shadow-sm sm:p-5 lg:p-6";
 
   const submitClass =
     "inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#CC0000] px-5 text-sm font-semibold text-white transition hover:bg-[#a80000] disabled:cursor-not-allowed disabled:bg-slate-300 disabled:text-slate-500";
@@ -171,13 +171,13 @@ export default function SearchForm({
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         {embedded ? (
           <div>
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500 dark:text-slate-400">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-500">
               {t("step")}
             </p>
-            <h2 className="mt-1 text-lg font-bold text-slate-900 dark:text-white">
+            <h2 className="mt-1 text-lg font-bold text-slate-900">
               {t("whenWhere")}
             </h2>
-            <label className="mt-3 inline-flex cursor-pointer items-center gap-2.5 text-sm text-slate-600 dark:text-slate-300">
+            <label className="mt-3 inline-flex cursor-pointer items-center gap-2.5 text-sm text-slate-600">
               <button
                 type="button"
                 role="switch"
@@ -185,7 +185,7 @@ export default function SearchForm({
                 aria-label={t("sameDropoff")}
                 onClick={() => setSameLocation((value) => !value)}
                 className={`relative inline-flex h-7 w-12 shrink-0 items-center rounded-full transition-colors ${
-                  sameLocation ? "bg-slate-900 dark:bg-amber-500" : "bg-slate-300 dark:bg-slate-600"
+                  sameLocation ? "bg-slate-900" : "bg-slate-300"
                 }`}
               >
                 <span
@@ -215,13 +215,13 @@ export default function SearchForm({
           </div>
         ) : (
           <div>
-            <h2 className="text-lg font-bold text-slate-900 dark:text-white">{t("title")}</h2>
-            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{t("subtitle")}</p>
+            <h2 className="text-lg font-bold text-slate-900">{t("title")}</h2>
+            <p className="mt-1 text-sm text-slate-500">{t("subtitle")}</p>
           </div>
         )}
 
         {!embedded && !heroFooter ? (
-          <label className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300">
+          <label className="flex items-center gap-2 text-sm text-slate-600">
             <input
               type="checkbox"
               checked={sameLocation}
