@@ -68,7 +68,7 @@ export function HeroSection() {
           aria-hidden="true"
         />
 
-        <div className="relative z-10 flex min-h-[inherit] flex-col justify-between pt-[108px]">
+        <div className="relative z-10 flex min-h-[inherit] flex-col justify-between pt-[96px]">
           <div className="px-6 pb-6 pt-2">
             <div className="mx-auto w-full max-w-[1200px]">
               <HeroCopy />

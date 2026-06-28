@@ -1,62 +1,46 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
-import { Globe, Link2, Mail, MessageCircle, Share2 } from "lucide-react";
+import { Mail, MapPin, Phone } from "lucide-react";
 
 import { routes } from "@/config/routes";
 import { siteConfig } from "@/config/site";
 
-const socialIcons = [Share2, Globe, MessageCircle, Mail, Link2];
-
 export default async function Footer() {
   const t = await getTranslations("footer");
 
-  const fleetLinks = [
+  const navLinks = [
     { label: t("vehicles"), href: routes.vehicles },
-    { label: t("booking"), href: routes.vehicles },
-    { label: t("rental"), href: routes.vehicles },
-  ];
-
-  const serviceLinks = [
-    { label: t("delivery"), href: "#" },
-    { label: t("insurance"), href: "#" },
-    { label: t("warranty"), href: "#" },
-    { label: t("financing"), href: "#" },
-  ];
-
-  const companyLinks = [
     { label: t("about"), href: routes.about },
     { label: t("blog"), href: routes.blog },
-    { label: t("contact"), href: "#contact" },
+    { label: t("contact"), href: routes.contact },
     { label: t("terms"), href: routes.terms },
   ];
 
+  const phoneHref = `tel:${siteConfig.phone.replace(/\s/g, "")}`;
+  const secondaryPhoneHref = `tel:${siteConfig.secondaryPhone.replace(/\s/g, "")}`;
+
   return (
-    <footer className="border-t border-[#E5E5E5] bg-white py-12">
-      <div className="mx-auto max-w-[1200px] px-6">
-        <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
+    <footer className="border-t border-[#ECECEC] bg-[#FAFAFA]">
+      <div className="mx-auto max-w-[1200px] px-6 py-12">
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
           <div>
-            <p className="mb-3 text-lg font-bold text-[#E8192C]">{siteConfig.brand}</p>
-            <p className="mb-4 text-xs leading-relaxed text-[#666]">{t("description")}</p>
-            <div className="flex gap-2">
-              {socialIcons.map((Icon, index) => (
-                <a
-                  key={index}
-                  href="#"
-                  className="flex h-8 w-8 items-center justify-center rounded-full border border-[#E5E5E5] text-[#888] transition hover:border-[#888] hover:text-[#333]"
-                  aria-label={t("social")}
-                >
-                  <Icon className="h-3.5 w-3.5" />
-                </a>
-              ))}
-            </div>
+            <p className="text-lg font-bold text-[#E8192C]">{siteConfig.brand}</p>
+            <p className="mt-3 max-w-sm text-sm leading-relaxed text-[#666]">
+              {t("description")}
+            </p>
           </div>
 
           <div>
-            <h4 className="mb-4 text-sm font-semibold text-[#1A1A1A]">{t("fleet")}</h4>
-            <ul className="space-y-2">
-              {fleetLinks.map((link) => (
-                <li key={link.label}>
-                  <Link href={link.href} className="block text-sm text-[#666] transition hover:text-[#1A1A1A]">
+            <h4 className="mb-4 text-sm font-semibold tracking-wide text-[#1A1A1A] uppercase">
+              {t("navigation")}
+            </h4>
+            <ul className="space-y-2.5">
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-sm text-[#666] transition hover:text-[#CC0000]"
+                  >
                     {link.label}
                   </Link>
                 </li>
@@ -65,28 +49,39 @@ export default async function Footer() {
           </div>
 
           <div>
-            <h4 className="mb-4 text-sm font-semibold text-[#1A1A1A]">{t("services")}</h4>
-            <ul className="space-y-2">
-              {serviceLinks.map((link) => (
-                <li key={link.label}>
-                  <a href={link.href} className="block text-sm text-[#666] transition hover:text-[#1A1A1A]">
-                    {link.label}
+            <h4 className="mb-4 text-sm font-semibold tracking-wide text-[#1A1A1A] uppercase">
+              {t("contactUs")}
+            </h4>
+            <ul className="space-y-3 text-sm text-[#666]">
+              <li className="flex items-start gap-3">
+                <MapPin size={16} className="mt-0.5 shrink-0 text-[#E8192C]" />
+                <span>
+                  {siteConfig.address}
+                  <br />
+                  Dakhla, Maroc
+                </span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Phone size={16} className="shrink-0 text-[#E8192C]" />
+                <span>
+                  <a href={phoneHref} className="hover:text-[#CC0000]">
+                    {siteConfig.phone}
                   </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="mb-4 text-sm font-semibold text-[#1A1A1A]">{t("company")}</h4>
-            <ul className="space-y-2">
-              {companyLinks.map((link) => (
-                <li key={link.label}>
-                  <Link href={link.href} className="block text-sm text-[#666] transition hover:text-[#1A1A1A]">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
+                  {" · "}
+                  <a href={secondaryPhoneHref} className="hover:text-[#CC0000]">
+                    {siteConfig.secondaryPhone}
+                  </a>
+                </span>
+              </li>
+              <li className="flex items-center gap-3">
+                <Mail size={16} className="shrink-0 text-[#E8192C]" />
+                <a
+                  href={`mailto:${siteConfig.contactEmail}`}
+                  className="hover:text-[#CC0000]"
+                >
+                  {siteConfig.contactEmail}
+                </a>
+              </li>
             </ul>
           </div>
         </div>

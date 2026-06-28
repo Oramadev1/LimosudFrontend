@@ -4,6 +4,8 @@
     "vehicles": "Véhicules",
     "blog": "Blog",
     "contact": "Contact",
+    "about": "À propos",
+    "rentCta": "Louer",
     "openMenu": "Ouvrir le menu",
     "closeMenu": "Fermer le menu",
     "language": "Langue"
@@ -49,7 +51,8 @@
     "blog": "Blog",
     "contact": "Contact",
     "terms": "Conditions d'utilisation",
-    "social": "Réseau social",
+    "navigation": "Navigation",
+    "contactUs": "Nous contacter",
     "rights": "Tous droits réservés."
   },
   "settings": {

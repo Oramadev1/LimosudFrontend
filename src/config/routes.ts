@@ -4,6 +4,7 @@ export const routes = {
   vehicle: (slug: string) => `/vehicles/${slug}`,
   blog: "/blog",
   about: "/about",
+  contact: "/contact",
   blogPost: (slug: string) => `/blog/${slug}`,
   terms: "/terms",
   book: (slug: string, query = "") =>

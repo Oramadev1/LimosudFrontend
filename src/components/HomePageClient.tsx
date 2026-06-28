@@ -2,7 +2,6 @@
 
 import { BlogSection } from "@/components/blog/BlogSection";
 import { BrandStrip } from "@/components/home/BrandStrip";
-import { ContactSection } from "@/components/home/ContactSection";
 import { FAQSection } from "@/components/home/FAQSection";
 import { HeroSection } from "@/components/home/HeroSection";
 import { ServicesSection } from "@/components/home/ServicesSection";
@@ -41,7 +40,6 @@ export default function HomePageClient() {
       <BlogSection />
       <TestimonialsSection />
       <FAQSection />
-      <ContactSection />
     </div>
   );
 }

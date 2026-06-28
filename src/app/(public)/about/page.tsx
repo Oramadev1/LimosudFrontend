@@ -327,7 +327,7 @@ export default function AboutPage() {
                   Réserver un véhicule
                 </Link>
                 <Link
-                  href={`${routes.home}#contact`}
+                  href={routes.contact}
                   className="inline-flex rounded border border-white/30 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
                 >
                   Nous contacter

@@ -7,7 +7,7 @@ import { submitContactMessage } from "@/lib/api/public";
 import { ApiError } from "@/lib/api/client";
 import { siteConfig } from "@/config/site";
 
-export function ContactSection() {
+export function ContactSection({ showHeading = true }: { showHeading?: boolean }) {
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -41,11 +41,13 @@ export function ContactSection() {
   return (
     <section id="contact" className="bg-white py-16">
       <div className="mx-auto max-w-[1200px] px-6">
-        <h2 className="mb-12 text-center text-2xl font-bold tracking-wide text-[#1A1A1A] uppercase">
-          Contact
-        </h2>
+        {showHeading ? (
+          <h2 className="mb-12 text-center text-2xl font-bold tracking-wide text-[#1A1A1A] uppercase">
+            Contact
+          </h2>
+        ) : null}
 
-        <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-2">
+        <div className={`grid grid-cols-1 items-start gap-12 lg:grid-cols-2 ${showHeading ? "" : "pt-2"}`}>
           <form className="space-y-4" onSubmit={handleSubmit}>
             {sent ? (
               <p className="rounded-lg border border-green-100 bg-green-50 px-4 py-3 text-sm text-green-700">
@@ -112,7 +114,7 @@ export function ContactSection() {
               {
                 icon: Phone,
                 title: "Téléphone",
-                text: siteConfig.phone,
+                text: `${siteConfig.phone} · ${siteConfig.secondaryPhone}`,
               },
               {
                 icon: Mail,
