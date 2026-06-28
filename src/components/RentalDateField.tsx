@@ -165,7 +165,7 @@ export function RentalDateField({
           width: panelStyle.width,
           zIndex: 9999,
         }}
-        className={`rounded-xl border border-gray-200 bg-white p-3 shadow-xl dark:border-gray-700 dark:bg-gray-900 ${
+        className={`rounded-xl border border-gray-200 bg-white p-3 shadow-xl dark:bg-white ${
           placement === "top" ? "origin-bottom" : "origin-top"
         }`}
       >
@@ -177,12 +177,12 @@ export function RentalDateField({
                 (current) => new Date(current.getFullYear(), current.getMonth() - 1, 1),
               )
             }
-            className="rounded-md p-1 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"
+            className="rounded-md p-1 text-gray-500 hover:bg-gray-100"
             aria-label="Previous month"
           >
             <ChevronLeft size={16} />
           </button>
-          <p className="text-sm font-semibold text-gray-800 dark:text-gray-100">{monthLabel}</p>
+          <p className="text-sm font-semibold text-gray-800">{monthLabel}</p>
           <button
             type="button"
             onClick={() =>
@@ -190,7 +190,7 @@ export function RentalDateField({
                 (current) => new Date(current.getFullYear(), current.getMonth() + 1, 1),
               )
             }
-            className="rounded-md p-1 text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800"
+            className="rounded-md p-1 text-gray-500 hover:bg-gray-100"
             aria-label="Next month"
           >
             <ChevronRight size={16} />
@@ -221,10 +221,10 @@ export function RentalDateField({
                 onClick={() => selectDate(date)}
                 className={`h-8 rounded-md text-sm transition ${
                   disabled
-                    ? "cursor-not-allowed text-gray-300 line-through dark:text-gray-600"
+                    ? "cursor-not-allowed text-gray-300 line-through"
                     : selected
                       ? "bg-[#3563E9] font-semibold text-white"
-                      : "text-gray-700 hover:bg-[#3563E9]/10 dark:text-gray-200"
+                      : "text-gray-700 hover:bg-[#3563E9]/10"
                 }`}
               >
                 {date.getDate()}
@@ -243,7 +243,7 @@ export function RentalDateField({
     <div ref={containerRef} className="relative">
       <label
         htmlFor={id}
-        className="mb-1.5 block text-sm font-semibold text-gray-700 dark:text-gray-300"
+        className="mb-1.5 block text-sm font-semibold text-gray-700"
       >
         {label}
       </label>
@@ -254,10 +254,10 @@ export function RentalDateField({
         name={name}
         onClick={toggleOpen}
         onBlur={onBlur}
-        className={`flex w-full items-center justify-between rounded-[8px] border bg-[#F6F7F9] px-4 py-3 text-left text-sm outline-none transition-colors dark:bg-gray-800 ${
+        className={`flex w-full items-center justify-between rounded-[8px] border bg-[#F6F7F9] px-4 py-3 text-left text-sm outline-none transition-colors ${
           error
             ? "border-red-400 text-red-700"
-            : "border-gray-200 text-gray-700 focus:border-[#3563E9] dark:border-gray-700 dark:text-gray-200"
+            : "border-gray-200 text-gray-700 focus:border-[#3563E9]"
         }`}
       >
         <span>{value || "YYYY-MM-DD"}</span>

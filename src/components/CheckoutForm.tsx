@@ -71,7 +71,7 @@ function applyApiValidationErrors(
 
 function FormErrorBanner({ message }: { message: string }) {
   return (
-    <div className="animate-fade-in-down flex items-start gap-3 rounded-[10px] border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-900/50 dark:bg-red-950/40 dark:text-red-300">
+    <div className="animate-fade-in-down flex items-start gap-3 rounded-[10px] border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
       <AlertCircle size={18} className="mt-0.5 shrink-0" />
       <p>{message}</p>
     </div>
@@ -97,10 +97,10 @@ function SectionCard({
   children: React.ReactNode;
 }) {
   return (
-    <div className="animate-fade-in-up flex flex-col gap-5 rounded-[10px] border border-transparent bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
+    <div className="animate-fade-in-up flex flex-col gap-5 rounded-[10px] border border-transparent bg-white p-6 dark:bg-white">
       <div className="flex items-start justify-between">
         <div>
-          <h2 className="text-lg font-bold text-gray-900 dark:text-white">{title}</h2>
+          <h2 className="text-lg font-bold text-gray-900">{title}</h2>
           <p className="mt-0.5 text-xs text-gray-400">{subtitle}</p>
         </div>
         <div className="flex items-center gap-2">
@@ -132,7 +132,7 @@ function InputField({
     <div>
       <label
         htmlFor={id}
-        className="mb-1.5 block text-sm font-semibold text-gray-700 dark:text-gray-300"
+        className="mb-1.5 block text-sm font-semibold text-gray-700"
       >
         {label}
       </label>
@@ -141,10 +141,10 @@ function InputField({
         type={type}
         placeholder={placeholder}
         {...registration}
-        className={`w-full rounded-[8px] border bg-[#F6F7F9] px-4 py-3 text-sm text-gray-700 outline-none transition-colors placeholder:text-gray-300 dark:bg-gray-800 dark:text-gray-200 dark:placeholder:text-gray-600 ${
+        className={`w-full rounded-[8px] border bg-[#F6F7F9] px-4 py-3 text-sm text-gray-700 outline-none transition-colors placeholder:text-gray-300 ${
           error
             ? "border-red-400 focus:border-red-500"
-            : "border-gray-200 focus:border-[#3563E9] dark:border-gray-700"
+            : "border-gray-200 focus:border-[#3563E9]"
         }`}
       />
       <FieldError msg={error} />
@@ -171,19 +171,19 @@ function LocationSelect({
     <div>
       <label
         htmlFor={id}
-        className="mb-1.5 block text-sm font-semibold text-gray-700 dark:text-gray-300"
+        className="mb-1.5 block text-sm font-semibold text-gray-700"
       >
         {label}
       </label>
       <div
-        className={`flex items-center gap-2 rounded-[8px] border bg-[#F6F7F9] px-4 py-3 transition-colors dark:bg-gray-800 ${
-          error ? "border-red-400" : "border-gray-200 dark:border-gray-700"
+        className={`flex items-center gap-2 rounded-[8px] border bg-[#F6F7F9] px-4 py-3 transition-colors ${
+          error ? "border-red-400" : "border-gray-200"
         }`}
       >
         <select
           id={id}
           {...registration}
-          className="flex-1 bg-transparent text-sm text-gray-500 outline-none dark:text-gray-300"
+          className="flex-1 bg-transparent text-sm text-gray-500 outline-none"
           defaultValue=""
         >
           <option value="" disabled>
@@ -221,7 +221,7 @@ function DateTimeField({
     <div>
       <label
         htmlFor={id}
-        className="mb-1.5 block text-sm font-semibold text-gray-700 dark:text-gray-300"
+        className="mb-1.5 block text-sm font-semibold text-gray-700"
       >
         {label}
       </label>
@@ -230,10 +230,10 @@ function DateTimeField({
         type={inputType}
         placeholder={placeholder}
         {...registration}
-        className={`w-full rounded-[8px] border bg-[#F6F7F9] px-4 py-3 text-sm text-gray-700 outline-none transition-colors placeholder:text-gray-300 dark:bg-gray-800 dark:text-gray-200 dark:placeholder:text-gray-600 ${
+        className={`w-full rounded-[8px] border bg-[#F6F7F9] px-4 py-3 text-sm text-gray-700 outline-none transition-colors placeholder:text-gray-300 ${
           error
             ? "border-red-400 focus:border-red-500"
-            : "border-gray-200 focus:border-[#3563E9] dark:border-gray-700"
+            : "border-gray-200 focus:border-[#3563E9]"
         }`}
       />
       <FieldError msg={error} />
@@ -475,7 +475,7 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-2">
                 <div className="h-3.5 w-3.5 rounded-full border-4 border-[#3563E9] bg-[#3563E9]" />
-                <span className="text-sm font-semibold text-gray-900 dark:text-white">
+                <span className="text-sm font-semibold text-gray-900">
                   Pick – Up
                 </span>
               </div>
@@ -513,12 +513,12 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
               />
             </div>
 
-            <div className="border-t border-gray-100 dark:border-gray-800" />
+            <div className="border-t border-gray-100" />
 
             <div className="flex flex-col gap-3">
               <div className="flex items-center gap-2">
                 <div className="h-3.5 w-3.5 rounded-full border-4 border-[#54A6D4] bg-[#54A6D4]" />
-                <span className="text-sm font-semibold text-gray-900 dark:text-white">
+                <span className="text-sm font-semibold text-gray-900">
                   Drop – Off
                 </span>
               </div>
@@ -590,13 +590,13 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
           subtitle="We are getting to the end. Just few clicks and your rental is ready!"
         >
           <div className="flex flex-col gap-3">
-            <label className="flex cursor-pointer items-start gap-3 rounded-[8px] bg-[#F6F7F9] px-4 py-3.5 dark:bg-gray-800">
+            <label className="flex cursor-pointer items-start gap-3 rounded-[8px] bg-[#F6F7F9] px-4 py-3.5">
               <input
                 type="checkbox"
                 {...confirm.register("agreeTerms")}
                 className="mt-0.5 h-4 w-4 shrink-0 accent-[#3563E9]"
               />
-              <span className="text-sm text-gray-600 dark:text-gray-300">
+              <span className="text-sm text-gray-600">
                 I agree with our{" "}
                 <Link
                   href={routes.terms}
@@ -620,7 +620,7 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
             <div className="mt-2 flex items-start gap-3">
               <ShieldCheck size={20} className="mt-0.5 shrink-0 text-gray-400" />
               <div>
-                <p className="text-sm font-semibold text-gray-700 dark:text-gray-200">
+                <p className="text-sm font-semibold text-gray-700">
                   All your data are safe
                 </p>
                 <p className="mt-0.5 text-xs text-gray-400">
@@ -633,9 +633,9 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
         </div>
       </div>
 
-      <div className="flex w-full shrink-0 flex-col gap-6 rounded-[10px] border border-transparent bg-white p-6 dark:border-gray-800 dark:bg-gray-900 lg:sticky lg:top-6 lg:w-[340px]">
+      <div className="flex w-full shrink-0 flex-col gap-6 rounded-[10px] border border-transparent bg-white p-6 dark:bg-white lg:sticky lg:top-6 lg:w-[340px]">
         <div>
-          <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+          <h2 className="text-lg font-bold text-gray-900">
             Rental Summary
           </h2>
           <p className="mt-1 text-xs text-gray-400">
@@ -644,7 +644,7 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
           </p>
         </div>
 
-        <div className="relative h-[200px] w-full overflow-hidden rounded-[10px] bg-gray-50 dark:bg-gray-900">
+        <div className="relative h-[200px] w-full overflow-hidden rounded-[10px] bg-gray-50">
           {imageUrl ? (
             <StorageImage
               src={imageUrl}
@@ -660,13 +660,13 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
         </div>
 
         <div>
-          <h3 className="text-base font-bold text-gray-900 dark:text-white">
+          <h3 className="text-base font-bold text-gray-900">
             {vehicle.name}
           </h3>
           <p className="text-xs text-gray-400">{categoryLabel}</p>
         </div>
 
-        <div className="border-t border-gray-100 dark:border-gray-800" />
+        <div className="border-t border-gray-100" />
 
         <div className="flex flex-col gap-3 text-sm">
           {!rentalPeriodValid && pickupDate && dropoffDate ? (
@@ -683,14 +683,14 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
             <span className="text-gray-400">
               {Math.max(days, 1)} day{days > 1 ? "s" : ""} × {formatCurrency(pricePerDay)}/day
             </span>
-            <span className="font-semibold text-gray-900 dark:text-white">
+            <span className="font-semibold text-gray-900">
               {formatCurrency(pricing.rentalSubtotal)}
             </span>
           </div>
           {pricing.deliveryFee > 0 ? (
             <div className="flex justify-between">
               <span className="text-gray-400">Delivery fees</span>
-              <span className="font-semibold text-gray-900 dark:text-white">
+              <span className="font-semibold text-gray-900">
                 {formatCurrency(pricing.deliveryFee)}
               </span>
             </div>
@@ -698,7 +698,7 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
           {pricing.depositAmount > 0 ? (
             <div className="flex justify-between">
               <span className="text-gray-400">Deposit</span>
-              <span className="font-semibold text-gray-900 dark:text-white">
+              <span className="font-semibold text-gray-900">
                 {formatCurrency(pricing.depositAmount)}
               </span>
             </div>
@@ -707,12 +707,12 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
 
         <div className="flex items-center justify-between">
           <div>
-            <p className="font-bold text-gray-900 dark:text-white">Estimated Total</p>
+            <p className="font-bold text-gray-900">Estimated Total</p>
             <p className="mt-0.5 text-xs text-gray-400">
               Includes rental, delivery, and deposit when locations are selected
             </p>
           </div>
-          <span className="text-2xl font-bold text-gray-900 dark:text-white">
+          <span className="text-2xl font-bold text-gray-900">
             {formatCurrency(pricing.estimatedTotal)}
           </span>
         </div>

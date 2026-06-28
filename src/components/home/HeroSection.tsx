@@ -77,7 +77,7 @@ export function HeroSection() {
 
           <div className="px-4 pb-8 pt-2 sm:px-6 sm:pb-10">
             <div className="animate-fade-in-up mx-auto w-full max-w-[980px]">
-              <div className="rounded-2xl border border-[#E5E5E5] bg-white px-4 py-5 shadow-[0_20px_50px_rgba(0,0,0,0.12)] sm:px-6 sm:py-6">
+              <div className="rounded-2xl border border-[#E5E5E5] bg-white px-4 py-5 text-[#1A1A1A] shadow-[0_20px_50px_rgba(0,0,0,0.12)] sm:px-6 sm:py-6">
                 <HeroSearchFooter />
               </div>
             </div>

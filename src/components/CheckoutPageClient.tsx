@@ -13,11 +13,11 @@ function CheckoutSkeleton() {
         {[1, 2, 3].map((step) => (
           <div
             key={step}
-            className="h-48 rounded-[10px] bg-white dark:bg-gray-900"
+            className="h-48 rounded-[10px] bg-white dark:bg-white"
           />
         ))}
       </div>
-      <div className="h-80 w-full rounded-[10px] bg-white lg:w-[340px] dark:bg-gray-900" />
+      <div className="h-80 w-full rounded-[10px] bg-white lg:w-[340px] dark:bg-white" />
     </div>
   );
 }
@@ -42,7 +42,7 @@ export default function CheckoutPageClient({ slug }: { slug: string }) {
 
   if (vehiclePending || locationsPending) {
     return (
-      <div className="w-full px-6 py-8">
+      <div className="checkout-light w-full px-6 py-8">
         <CheckoutSkeleton />
       </div>
     );
@@ -53,7 +53,7 @@ export default function CheckoutPageClient({ slug }: { slug: string }) {
   }
 
   return (
-    <div className="w-full px-6 py-8">
+    <div className="checkout-light w-full px-6 py-8">
       <Suspense fallback={<CheckoutSkeleton />}>
         <CheckoutForm vehicle={vehicle} locations={locations} />
       </Suspense>

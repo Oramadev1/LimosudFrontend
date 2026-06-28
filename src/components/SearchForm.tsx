@@ -40,9 +40,13 @@ function mergeSearchValues(
   };
 }
 
-function FieldLabel({ children }: { children: string }) {
+function FieldLabel({ children, strong = false }: { children: string; strong?: boolean }) {
   return (
-    <label className="mb-1.5 block text-[13px] font-medium text-slate-600">
+    <label
+      className={`mb-1.5 block text-[13px] ${
+        strong ? "font-semibold text-[#333333]" : "font-medium text-slate-600"
+      }`}
+    >
       {children}
     </label>
   );
@@ -167,7 +171,10 @@ export default function SearchForm({
       : "min-w-0 sm:col-span-2 xl:col-span-2";
 
   return (
-    <section id={id} className={`min-w-0 max-w-full ${shellClass} ${className}`.trim()}>
+    <section
+      id={id}
+      className={`min-w-0 max-w-full ${shellClass} ${heroFooter ? "text-[#1A1A1A]" : ""} ${className}`.trim()}
+    >
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         {embedded ? (
           <div>
@@ -200,10 +207,10 @@ export default function SearchForm({
         ) : heroFooter ? (
           <div className="flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <h2 className="text-lg font-bold text-slate-900">{t("title")}</h2>
-              <p className="mt-1 text-sm text-slate-500">{t("subtitle")}</p>
+              <h2 className="text-lg font-bold text-[#1A1A1A]">{t("title")}</h2>
+              <p className="mt-1 text-sm text-[#666666]">{t("subtitle")}</p>
             </div>
-            <label className="flex shrink-0 items-center gap-2 text-sm text-slate-600">
+            <label className="flex shrink-0 items-center gap-2 text-sm text-[#444444]">
               <input
                 type="checkbox"
                 checked={sameLocation}
@@ -246,7 +253,7 @@ export default function SearchForm({
 
         <div className={gridClass}>
           <div className={pickupColClass}>
-            <FieldLabel>{t("pickupLocation")}</FieldLabel>
+            <FieldLabel strong={heroFooter}>{t("pickupLocation")}</FieldLabel>
             <div className="relative">
               <MapPin
                 size={16}
@@ -271,7 +278,7 @@ export default function SearchForm({
           </div>
 
           <div className={dateColClass}>
-            <FieldLabel>{t("pickupDate")}</FieldLabel>
+            <FieldLabel strong={heroFooter}>{t("pickupDate")}</FieldLabel>
             <div className="relative">
               <Calendar
                 size={16}
@@ -290,7 +297,7 @@ export default function SearchForm({
           </div>
 
           <div className={dateColClass}>
-            <FieldLabel>{t("dropoffDate")}</FieldLabel>
+            <FieldLabel strong={heroFooter}>{t("dropoffDate")}</FieldLabel>
             <div className="relative">
               <Calendar
                 size={16}
@@ -322,7 +329,7 @@ export default function SearchForm({
 
         {!sameLocation ? (
           <div className={`min-w-0 ${embedded ? "sm:max-w-xs" : heroFooter ? "lg:max-w-sm" : "max-w-md"}`}>
-            <FieldLabel>{t("dropoffLocation")}</FieldLabel>
+            <FieldLabel strong={heroFooter}>{t("dropoffLocation")}</FieldLabel>
             <div className="relative">
               <MapPin
                 size={16}

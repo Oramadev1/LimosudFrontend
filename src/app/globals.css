@@ -57,6 +57,17 @@ body {
   color-scheme: light;
 }
 
+.checkout-light {
+  color-scheme: light;
+}
+
+.checkout-light input,
+.checkout-light select,
+.checkout-light textarea,
+.checkout-light button {
+  color-scheme: light;
+}
+
 @media (max-width: 639px) {
   .booking-field[type="datetime-local"] {
     font-size: 16px;
