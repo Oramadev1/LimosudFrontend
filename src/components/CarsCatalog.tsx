@@ -192,11 +192,15 @@ function CarsContent({ vehicles }: { vehicles: Vehicle[] }) {
   );
 }
 
-export default function CarsCatalog() {
+export default function CarsCatalog({
+  initialVehicles = [],
+}: {
+  initialVehicles?: Vehicle[];
+}) {
   const t = useTranslations("catalog");
-  const { data: vehicles = [], isPending, isError } = useAllVehiclesQuery();
+  const { data: vehicles = [], isPending, isError } = useAllVehiclesQuery(initialVehicles);
 
-  if (isPending) {
+  if (isPending && !initialVehicles.length) {
     return (
       <div className="flex w-full min-w-0 max-w-full flex-col gap-6 px-4 py-4 sm:px-6 sm:py-6 lg:flex-row lg:items-start">
         <div className="h-64 w-full shrink-0 animate-pulse rounded-[10px] bg-white dark:bg-white lg:w-[260px]" />

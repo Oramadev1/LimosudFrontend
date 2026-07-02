@@ -12,15 +12,25 @@ import FilterSidebar, {
 import RecentCars from "@/components/RecentCars";
 import VehicleDetailPanel from "@/components/VehicleDetailPanel";
 import { getMaxVehiclePrice } from "@/lib/vehicle-catalog";
+import type { Vehicle } from "@/types/api";
 import { useAllVehiclesQuery, useVehicleQuery } from "@/lib/query/hooks";
 
-export default function CarDetailPageClient({ slug }: { slug: string }) {
+export default function CarDetailPageClient({
+  slug,
+  initialVehicle,
+  initialVehicles = [],
+}: {
+  slug: string;
+  initialVehicle?: Vehicle;
+  initialVehicles?: Vehicle[];
+}) {
   const {
     data: vehicle,
     isPending: vehiclePending,
     isError: vehicleError,
-  } = useVehicleQuery(slug);
-  const { data: allVehicles = [], isPending: listPending } = useAllVehiclesQuery();
+  } = useVehicleQuery(slug, initialVehicle);
+  const { data: allVehicles = [], isPending: listPending } =
+    useAllVehiclesQuery(initialVehicles);
   const maxPrice = getMaxVehiclePrice(allVehicles);
   const [filters, setFilters] = useState<FilterState>({
     ...defaultFilters,
@@ -42,7 +52,7 @@ export default function CarDetailPageClient({ slug }: { slug: string }) {
     }
   }, [vehiclePending, listPending, vehicleError, vehicle]);
 
-  if (vehiclePending || listPending) {
+  if ((vehiclePending && !initialVehicle) || (listPending && !initialVehicles.length)) {
     return (
       <div className="flex w-full flex-col gap-6 px-4 py-4 sm:px-6 sm:py-6 lg:flex-row lg:items-start">
         <div className="h-64 w-full shrink-0 animate-pulse rounded-[10px] bg-white dark:bg-white lg:w-[260px]" />

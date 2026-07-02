@@ -25,8 +25,6 @@ export interface Vehicle {
   seats: number;
   doors: number;
   daily_price: string;
-  weekly_price: string;
-  monthly_price: string;
   deposit_amount: string;
   description: string | null;
   is_featured: boolean;

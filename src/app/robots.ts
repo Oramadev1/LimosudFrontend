@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import { siteConfig } from "@/config/site";
+import { absoluteUrl } from "@/lib/seo/urls";
 
 export default function robots(): MetadataRoute.Robots {
   const isProduction = process.env.NODE_ENV === "production";
@@ -10,12 +10,12 @@ export default function robots(): MetadataRoute.Robots {
       ? {
           userAgent: "*",
           allow: "/",
-          disallow: ["/api/", "/_next/"],
+          disallow: ["/api/", "/_next/", "/book/", "/settings", "/checkout"],
         }
       : {
           userAgent: "*",
           disallow: "/",
         },
-    sitemap: `${siteConfig.url}/sitemap.xml`,
+    sitemap: `${absoluteUrl()}/sitemap.xml`,
   };
 }

@@ -1,17 +1,21 @@
 import Link from "next/link";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import { routes } from "@/config/routes";
 import { siteConfig } from "@/config/site";
+import type { Locale } from "@/i18n/config";
+import { intlLocale } from "@/lib/i18n/locale-tags";
 import { createMetadata } from "@/lib/seo/metadata";
 
 export async function generateMetadata() {
+  const locale = (await getLocale()) as Locale;
   const t = await getTranslations("terms");
 
   return createMetadata({
     title: t("metadataTitle"),
     description: t("metadataDescription"),
     path: routes.terms,
+    locale: intlLocale(locale),
   });
 }
 

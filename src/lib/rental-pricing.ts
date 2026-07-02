@@ -1,14 +1,6 @@
 import type { Location, Vehicle } from "@/types/api";
 
-export function pricePerDayForRental(vehicle: Vehicle, totalDays: number): number {
-  if (totalDays >= 30 && parseFloat(vehicle.monthly_price) > 0) {
-    return parseFloat(vehicle.monthly_price) / 30;
-  }
-
-  if (totalDays >= 7 && parseFloat(vehicle.weekly_price) > 0) {
-    return parseFloat(vehicle.weekly_price) / 7;
-  }
-
+export function pricePerDayForRental(vehicle: Vehicle, _totalDays: number): number {
   return parseFloat(vehicle.daily_price);
 }
 

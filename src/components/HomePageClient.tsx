@@ -11,9 +11,15 @@ import { vehicleToMarketingCar } from "@/lib/marketing/vehicles";
 import { useAllVehiclesQuery } from "@/lib/query/hooks";
 import { useTranslations } from "next-intl";
 
-export default function HomePageClient({ blogSection }: { blogSection?: React.ReactNode }) {
+export default function HomePageClient({
+  blogSection,
+  initialVehicles = [],
+}: {
+  blogSection?: React.ReactNode;
+  initialVehicles?: import("@/types/api").Vehicle[];
+}) {
   const t = useTranslations("home");
-  const { data: vehicles = [], isPending, isError } = useAllVehiclesQuery();
+  const { data: vehicles = [], isPending, isError } = useAllVehiclesQuery(initialVehicles);
 
   const rentCars = vehicles.slice(0, 6).map((vehicle) => vehicleToMarketingCar(vehicle));
 
@@ -23,7 +29,7 @@ export default function HomePageClient({ blogSection }: { blogSection?: React.Re
 
       <BrandStrip />
 
-      {isPending ? (
+      {isPending && !initialVehicles.length ? (
         <section className="bg-[#F5F5F5] py-16">
           <div className="mx-auto max-w-[1200px] px-6">
             <CarGridSkeleton count={3} />

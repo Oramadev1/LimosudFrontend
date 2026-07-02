@@ -13,16 +13,22 @@ import {
   getVehicleSchedule,
 } from "@/lib/api/public";
 import { queryKeys } from "@/lib/query/keys";
-import type { CreateReservationPayload } from "@/types/api";
+import type { CreateReservationPayload, Vehicle } from "@/types/api";
 
-export function useAllVehiclesQuery() {
+export function useAllVehiclesQuery(initialData?: Vehicle[]) {
   return useQuery({
     queryKey: queryKeys.vehicles,
     queryFn: getAllVehicles,
+    ...(initialData?.length
+      ? {
+          initialData,
+          staleTime: 60_000,
+        }
+      : {}),
   });
 }
 
-export function useVehicleQuery(slug: string) {
+export function useVehicleQuery(slug: string, initialData?: Vehicle) {
   return useQuery({
     queryKey: queryKeys.vehicle(slug),
     queryFn: async () => {
@@ -30,6 +36,12 @@ export function useVehicleQuery(slug: string) {
       return response.data;
     },
     enabled: Boolean(slug),
+    ...(initialData
+      ? {
+          initialData,
+          staleTime: 60_000,
+        }
+      : {}),
   });
 }
 

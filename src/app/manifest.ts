@@ -14,5 +14,12 @@ export default function manifest(): MetadataRoute.Manifest {
     lang: siteConfig.language,
     orientation: "portrait-primary",
     categories: ["business", "travel"],
+    icons: [
+      {
+        src: "/icon",
+        sizes: "32x32",
+        type: "image/png",
+      },
+    ],
   };
 }

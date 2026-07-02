@@ -9,10 +9,12 @@ import {
   Sparkles,
   Users,
 } from "lucide-react";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import { routes } from "@/config/routes";
 import { siteConfig } from "@/config/site";
+import type { Locale } from "@/i18n/config";
+import { intlLocale } from "@/lib/i18n/locale-tags";
 import { createMetadata } from "@/lib/seo/metadata";
 
 const ABOUT_IMAGES_DIR = "/aboutpageimages";
@@ -31,12 +33,14 @@ const aboutImages = {
 const highlightIcons = [Car, Plane, Clock, ShieldCheck] as const;
 
 export async function generateMetadata() {
+  const locale = (await getLocale()) as Locale;
   const t = await getTranslations("about");
 
   return createMetadata({
     title: t("metadataTitle"),
     description: t("metadataDescription"),
     path: routes.about,
+    locale: intlLocale(locale),
     keywords: [
       "Limosud Cars",
       "location voiture Dakhla",
