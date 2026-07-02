@@ -2,10 +2,15 @@ import type { BlogPost } from "@/types/blog";
 
 export const BLOG_PAGE_SIZE = 6;
 
+const BLOG_IMAGES_DIR = "/blogsImages";
+
+function localBlogImage(fileName: string): string {
+  return `${BLOG_IMAGES_DIR}/${encodeURIComponent(fileName)}`;
+}
+
 /**
- * Blog cover images — use landscape photos (not car cutouts).
- * Replace Unsplash URLs with your own files in `/public/blog/` when ready.
- * Recommended: 1200×675px (16:9), JPG or WebP, under 300 KB.
+ * Blog cover images in `/public/blogsImages/` (filename = article title).
+ * Remaining posts use Unsplash until local photos are added.
  */
 export const blogPosts: BlogPost[] = [
   {
@@ -65,8 +70,7 @@ En cas de doute, l'équipe Limosud Cars peut vous conseiller selon la durée du 
     title: "Explorer la lagune et les spots de kitesurf en voiture",
     excerpt:
       "Dakhla est une capitale mondiale du kitesurf. Itinéraires, accès et conseils pour se déplacer librement avec une location Limosud Cars.",
-    coverImage:
-      "https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&h=675&q=80",
+    coverImage: localBlogImage("Explorer la lagune et les spots de kitesurf en voiture.jpg"),
     publishedAt: "2026-01-28",
     content: `La baie de Dakhla et ses lagunes offrent des conditions de vent exceptionnelles une grande partie de l'année. Pour un rider, avoir sa propre voiture change tout : vous choisissez vos sessions selon la météo et n'êtes pas dépendant des navettes.
 
@@ -82,8 +86,7 @@ Limosud Cars connaît bien les besoins des sportifs de glisse : espace coffre, h
     title: "Comment réserver votre voiture chez Limosud Cars",
     excerpt:
       "Étapes simples pour choisir un véhicule, vérifier les dates et confirmer votre location à Dakhla.",
-    coverImage:
-      "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&h=675&q=80",
+    coverImage: localBlogImage("Comment réserver votre voiture chez Limosud Cars.jpg"),
     publishedAt: "2026-01-15",
     content: `Réserver une voiture avec Limosud Cars prend quelques minutes. Commencez par parcourir la flotte disponible sur le site : chaque fiche indique le modèle, la capacité, le type de carburant et le tarif journalier.
 
@@ -99,8 +102,7 @@ Pour toute question avant de réserver, contactez limosudcars@gmail.com ou le 06
     title: "Assurance et caution : ce qu'il faut savoir avant de louer",
     excerpt:
       "CDW, franchise, dépôt de garantie : comprenez les options proposées lors d'une location avec Limosud Cars à Dakhla.",
-    coverImage:
-      "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=1200&h=675&q=80",
+    coverImage: localBlogImage("Assurance et caution  ce qu'il faut savoir avant de louer.jpg"),
     publishedAt: "2026-01-05",
     content: `La location d'un véhicule au Maroc inclut en général une assurance de base couvrant la responsabilité civile. Chez Limosud Cars, des options complémentaires peuvent réduire la franchise en cas de dommage à la carrosserie — un point important si vous roulez sur des pistes ou des parkings sablonneux.
 
@@ -116,8 +118,7 @@ Pour un voyage serein à Dakhla, anticipez ces points lors de la réservation pl
     title: "Road trip côtier au sud de Dakhla",
     excerpt:
       "Une journée type entre océan Atlantique, plages sauvages et pauses panoramiques — à faire en voiture de location.",
-    coverImage:
-      "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&h=675&q=80",
+    coverImage: localBlogImage("Road trip côtier au sud de Dakhla.jpg"),
     publishedAt: "2025-12-18",
     content: `Le littoral au sud de Dakhla réserve des paysages saisissants : mer turquoise, falaises, dunes blanches et longues plages désertes. Un road trip d'une journée est l'un des meilleurs moyens d'en profiter.
 
