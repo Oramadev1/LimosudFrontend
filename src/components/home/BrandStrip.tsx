@@ -10,14 +10,14 @@ type Brand = LookupRef & { is_active?: boolean; image_path?: string | null };
 
 function BrandLogo({ brand }: { brand: Brand }) {
   return (
-    <div className="flex h-16 w-[172px] shrink-0 items-center justify-center sm:h-20 sm:w-[220px]">
+    <div className="flex h-16 shrink-0 items-center justify-center px-3 sm:h-20 sm:px-5">
       {brand.image_path ? (
         <Image
           src={storageUrl(brand.image_path)}
           alt={brand.name}
           width={220}
           height={80}
-          className="h-14 w-auto max-h-full max-w-full object-contain sm:h-[72px]"
+          className="h-14 w-auto max-h-full max-w-[200px] object-contain sm:h-[72px] sm:max-w-[240px]"
         />
       ) : (
         <span className="text-center text-sm font-semibold tracking-wide text-[#555555] uppercase sm:text-base">
@@ -31,7 +31,7 @@ function BrandLogo({ brand }: { brand: Brand }) {
 function BrandTrack({ brands, ariaHidden = false }: { brands: Brand[]; ariaHidden?: boolean }) {
   return (
     <div
-      className="flex shrink-0 items-center gap-10 sm:gap-14"
+      className="flex shrink-0 items-center gap-5 sm:gap-7"
       aria-hidden={ariaHidden || undefined}
     >
       {brands.map((brand) => (
@@ -68,11 +68,11 @@ export function BrandStrip() {
   return (
     <section className="overflow-hidden border-y border-[#E5E5E5] bg-white py-9 dark:bg-white sm:py-12">
       {isPending ? (
-        <div className="flex flex-nowrap justify-center gap-10 overflow-hidden px-6 sm:gap-14">
+        <div className="flex flex-nowrap justify-center gap-5 overflow-hidden px-6 sm:gap-7">
           {Array.from({ length: 6 }).map((_, index) => (
             <div
               key={index}
-              className="h-16 w-[172px] shrink-0 animate-pulse rounded bg-[#F0F0F0] sm:h-20 sm:w-[220px]"
+              className="h-16 w-28 shrink-0 animate-pulse rounded bg-[#F0F0F0] sm:h-20 sm:w-36"
             />
           ))}
         </div>
