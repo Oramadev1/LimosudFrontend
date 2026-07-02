@@ -10,7 +10,7 @@ export function FAQSection() {
 
   return (
     <section className="bg-[#F5F5F5] py-16">
-      <div className="mx-auto max-w-[800px] px-6">
+      <div className="mx-auto max-w-[1200px] px-6">
         <h2 className="mb-12 text-center text-2xl font-bold tracking-wide text-[#1A1A1A] uppercase">
           FAQ
         </h2>
