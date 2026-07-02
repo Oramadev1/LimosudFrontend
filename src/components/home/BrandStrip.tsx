@@ -10,17 +10,17 @@ type Brand = LookupRef & { is_active?: boolean; image_path?: string | null };
 
 function BrandLogo({ brand }: { brand: Brand }) {
   return (
-    <div className="flex h-14 w-[156px] shrink-0 items-center justify-center sm:h-16 sm:w-[188px]">
+    <div className="flex h-16 w-[172px] shrink-0 items-center justify-center sm:h-20 sm:w-[220px]">
       {brand.image_path ? (
         <Image
           src={storageUrl(brand.image_path)}
           alt={brand.name}
-          width={188}
-          height={64}
-          className="h-12 w-auto max-h-full max-w-full object-contain opacity-60 transition-opacity duration-300 hover:opacity-100 sm:h-14"
+          width={220}
+          height={80}
+          className="h-14 w-auto max-h-full max-w-full object-contain sm:h-[72px]"
         />
       ) : (
-        <span className="text-center text-sm font-semibold tracking-wide text-[#9CA3AF] uppercase sm:text-base">
+        <span className="text-center text-sm font-semibold tracking-wide text-[#555555] uppercase sm:text-base">
           {brand.name}
         </span>
       )}
@@ -66,13 +66,13 @@ export function BrandStrip() {
   }
 
   return (
-    <section className="overflow-hidden border-y border-[#E5E5E5] bg-white py-8 dark:bg-white sm:py-10">
+    <section className="overflow-hidden border-y border-[#E5E5E5] bg-white py-9 dark:bg-white sm:py-12">
       {isPending ? (
         <div className="flex flex-nowrap justify-center gap-10 overflow-hidden px-6 sm:gap-14">
           {Array.from({ length: 6 }).map((_, index) => (
             <div
               key={index}
-              className="h-14 w-[156px] shrink-0 animate-pulse rounded bg-[#F0F0F0] sm:h-16 sm:w-[188px]"
+              className="h-16 w-[172px] shrink-0 animate-pulse rounded bg-[#F0F0F0] sm:h-20 sm:w-[220px]"
             />
           ))}
         </div>

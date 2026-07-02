@@ -14,12 +14,18 @@ import { routes } from "@/config/routes";
 import { siteConfig } from "@/config/site";
 import { createMetadata } from "@/lib/seo/metadata";
 
-/** Placeholder photos — replace with real Limosud Cars images when ready. */
+const ABOUT_IMAGES_DIR = "/aboutpageimages";
+
+function localAboutImage(fileName: string): string {
+  return `${ABOUT_IMAGES_DIR}/${encodeURIComponent(fileName)}`;
+}
+
+/** Local images in `/public/aboutpageimages/` — one per section. */
 const aboutImages = {
-  hero: "https://images.unsplash.com/photo-1586724190315-6a817a0fdd94?auto=format&fit=crop&w=1800&q=80",
-  fleet: "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=1200&q=80",
-  dakhla: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80",
-  service: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1200&q=80",
+  hero: localAboutImage("heroimage.png"),
+  history: localAboutImage("Notre histoire image.png"),
+  fleet: localAboutImage("Notre flotte image.jpeg"),
+  dakhla: localAboutImage("Explorer Dakhla.webp"),
 } as const;
 
 export const metadata = createMetadata({
@@ -146,8 +152,8 @@ export default function AboutPage() {
 
           <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.12)]">
             <Image
-              src={aboutImages.service}
-              alt="Remise des clés — service client Limosud Cars"
+              src={aboutImages.history}
+              alt="Notre histoire — équipe Limosud Cars à Dakhla"
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"
