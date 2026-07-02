@@ -18,8 +18,7 @@ export const blogPosts: BlogPost[] = [
     title: "Location de voiture à Dakhla : pourquoi choisir Limosud Cars ?",
     excerpt:
       "Agence locale, livraison à l'aéroport, flotte 4x4 et citadines, assistance 24h/24 : tout ce qui fait de Limosud Cars un partenaire fiable à Dakhla.",
-    coverImage:
-      "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1200&h=675&q=80",
+    coverImage: localBlogImage("Location de voiture à Dakhla  pourquoi choisir Limosud Cars.jpeg"),
     publishedAt: "2026-03-01",
     content: `Dakhla attire de plus en plus de voyageurs, kitesurfeurs et professionnels. Pour profiter pleinement de la région, une voiture de location est souvent indispensable. Limosud Cars est une agence de location basée à Dakhla, reconnue pour sa flotte variée et son service réactif.
 
