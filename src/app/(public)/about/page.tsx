@@ -17,9 +17,9 @@ import { createMetadata } from "@/lib/seo/metadata";
 /** Placeholder photos — replace with real Limosud Cars images when ready. */
 const aboutImages = {
   hero: "https://images.unsplash.com/photo-1586724190315-6a817a0fdd94?auto=format&fit=crop&w=1800&q=80",
-  fleet: "https://images.unsplash.com/photo-1519641471654-76cecb7b6827?auto=format&fit=crop&w=1200&q=80",
+  fleet: "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=1200&q=80",
   dakhla: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1200&q=80",
-  service: "https://images.unsplash.com/photo-1449965408869-eaa3f917e8ca?auto=format&fit=crop&w=1200&q=80",
+  service: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1200&q=80",
 } as const;
 
 export const metadata = createMetadata({

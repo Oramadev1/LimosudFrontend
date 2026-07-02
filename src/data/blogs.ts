@@ -15,7 +15,7 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       "Agence locale, livraison à l'aéroport, flotte 4x4 et citadines, assistance 24h/24 : tout ce qui fait de Limosud Cars un partenaire fiable à Dakhla.",
     coverImage:
-      "https://images.unsplash.com/photo-1449965408869-eaa3f917e8ca?auto=format&fit=crop&w=1200&h=675&q=80",
+      "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=1200&h=675&q=80",
     publishedAt: "2026-03-01",
     content: `Dakhla attire de plus en plus de voyageurs, kitesurfeurs et professionnels. Pour profiter pleinement de la région, une voiture de location est souvent indispensable. Limosud Cars est une agence de location basée à Dakhla, reconnue pour sa flotte variée et son service réactif.
 
@@ -32,7 +32,7 @@ Que vous veniez pour le kitesurf, le tourisme ou un déplacement professionnel, 
     excerpt:
       "Récupérez votre voiture dès l'atterrissage. Voici le déroulement type d'une prise en charge aéroport avec Limosud Cars.",
     coverImage:
-      "https://images.unsplash.com/photo-1436491865339-b721b61f5d72?auto=format&fit=crop&w=1200&h=675&q=80",
+      "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?auto=format&fit=crop&w=1200&h=675&q=80",
     publishedAt: "2026-02-20",
     content: `Vous atterrissez à Dakhla et souhaitez partir immédiatement vers votre hôtel, la lagune ou un spot de kitesurf ? La livraison aéroport est la solution la plus pratique.
 
@@ -49,7 +49,7 @@ Ce service évite les taxis imprévus et vous fait gagner du temps dès les prem
     excerpt:
       "Lagunes, dunes, ville et routes côtières : guide rapide pour choisir entre un SUV/4x4 et une voiture compacte.",
     coverImage:
-      "https://images.unsplash.com/photo-1519641471654-76cecb7b6827?auto=format&fit=crop&w=1200&h=675&q=80",
+      "https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=1200&h=675&q=80",
     publishedAt: "2026-02-10",
     content: `Le bon choix de véhicule dépend surtout de votre programme à Dakhla. Si vous restez en ville et sur routes goudronnées, une citadine ou un compact suffit : consommation réduite, stationnement facile, tarif journalier attractif.
 
@@ -134,7 +134,7 @@ Au retour à Dakhla, faites le plein si nécessaire et respectez l'heure convenu
     excerpt:
       "Robuste, économique et adapté aux routes marocaines, le Duster fait partie des favoris de la flotte Limosud Cars.",
     coverImage:
-      "https://images.unsplash.com/photo-1533474784555-75c964a0b6f0?auto=format&fit=crop&w=1200&h=675&q=80",
+      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1200&h=675&q=80",
     publishedAt: "2025-12-01",
     content: `Le Dacia Duster est l'un des véhicules les plus demandés chez Limosud Cars pour un séjour à Dakhla. Son rapport capacité / prix / robustesse en fait un excellent choix pour les familles, les couples ou les petits groupes d'amis.
 
