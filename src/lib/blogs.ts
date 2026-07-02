@@ -1,10 +1,19 @@
 import { BLOG_PAGE_SIZE, blogPosts } from "@/data/blogs";
+import { localizeBlogPosts } from "@/lib/localized-blog";
 import type { BlogPost } from "@/types/blog";
+import type { Locale } from "@/i18n/config";
 
 export function getAllBlogPosts(): BlogPost[] {
   return [...blogPosts].sort(
     (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime(),
   );
+}
+
+export function getLocalizedBlogPosts(
+  locale: Locale,
+  messages: Record<string, unknown>,
+): BlogPost[] {
+  return localizeBlogPosts(locale, messages);
 }
 
 export function getFeaturedBlogPosts(limit = 3): BlogPost[] {

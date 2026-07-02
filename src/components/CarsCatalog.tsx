@@ -2,6 +2,7 @@
 
 import { Suspense, useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 
 import CarCard from "@/components/CarCard";
 import CarCardSkeleton from "@/components/CarCardSkeleton";
@@ -21,8 +22,11 @@ import {
 } from "@/lib/vehicle-catalog";
 import { useAllVehiclesQuery } from "@/lib/query/hooks";
 import type { Vehicle } from "@/types/api";
+import type { Locale } from "@/i18n/config";
 
 function RentalSummary() {
+  const t = useTranslations("catalog");
+  const locale = useLocale() as Locale;
   const searchParams = useSearchParams();
   const rental = rentalSearchFromQuery(searchParams);
 
@@ -39,10 +43,10 @@ function RentalSummary() {
     }
 
     return {
-      start: formatDateTime(start.replace(" ", "T")),
-      end: formatDateTime(end.replace(" ", "T")),
+      start: formatDateTime(start.replace(" ", "T"), locale),
+      end: formatDateTime(end.replace(" ", "T"), locale),
     };
-  }, [rental.dropoffDate, rental.dropoffTime, rental.pickupDate, rental.pickupTime]);
+  }, [locale, rental.dropoffDate, rental.dropoffTime, rental.pickupDate, rental.pickupTime]);
 
   if (!summary) {
     return null;
@@ -50,8 +54,8 @@ function RentalSummary() {
 
   return (
     <p className="rounded-lg border border-blue-100 bg-blue-50 px-4 py-3 text-sm text-blue-900">
-      Showing cars for your rental period:{" "}
-      <span className="font-semibold">{summary.start}</span> to{" "}
+      {t("showingPeriod")}{" "}
+      <span className="font-semibold">{summary.start}</span> {t("to")}{" "}
       <span className="font-semibold">{summary.end}</span>
     </p>
   );
@@ -76,6 +80,7 @@ function parseMaxPrice(value: string | null): number | undefined {
 }
 
 function CarsContent({ vehicles }: { vehicles: Vehicle[] }) {
+  const t = useTranslations("catalog");
   const router = useRouter();
   const maxPrice = getMaxVehiclePrice(vehicles);
   const searchParams = useSearchParams();
@@ -130,7 +135,7 @@ function CarsContent({ vehicles }: { vehicles: Vehicle[] }) {
 
         {q ? (
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            Search results for:{" "}
+            {t("searchResults")}{" "}
             <span className="font-semibold text-gray-800 dark:text-gray-200">
               &quot;{q}&quot;
             </span>
@@ -141,15 +146,15 @@ function CarsContent({ vehicles }: { vehicles: Vehicle[] }) {
           <div className="animate-fade-in-up flex flex-col items-center justify-center gap-4 py-24 text-center">
             <span className="text-5xl">🚗</span>
             <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">
-              No cars found
+              {t("noCars")}
             </p>
-            <p className="text-sm text-gray-400">Try adjusting your filters</p>
+            <p className="text-sm text-gray-400">{t("tryFilters")}</p>
             <button
               type="button"
               onClick={clearFilters}
               className="mt-2 text-sm font-semibold text-[#3563E9] hover:underline"
             >
-              Clear filters
+              {t("clearFilters")}
             </button>
           </div>
         ) : (
@@ -173,11 +178,11 @@ function CarsContent({ vehicles }: { vehicles: Vehicle[] }) {
                 onClick={() => setVisibleCount(filtered.length)}
                 className="rounded-[4px] bg-[#3563E9] px-8 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#2a52c9]"
               >
-                Show more car
+                {t("showMore")}
               </button>
             ) : (
               <p className="text-sm text-gray-400">
-                Showing all {filtered.length} cars
+                {t("showingAll", { count: filtered.length })}
               </p>
             )}
           </div>
@@ -188,6 +193,7 @@ function CarsContent({ vehicles }: { vehicles: Vehicle[] }) {
 }
 
 export default function CarsCatalog() {
+  const t = useTranslations("catalog");
   const { data: vehicles = [], isPending, isError } = useAllVehiclesQuery();
 
   if (isPending) {
@@ -206,9 +212,9 @@ export default function CarsCatalog() {
       <div className="flex w-full flex-col items-center justify-center gap-3 px-6 py-24 text-center">
         <span className="text-5xl">🚗</span>
         <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">
-          Could not load vehicles
+          {t("loadError")}
         </p>
-        <p className="text-sm text-gray-400">Please refresh the page and try again.</p>
+        <p className="text-sm text-gray-400">{t("loadErrorHint")}</p>
       </div>
     );
   }

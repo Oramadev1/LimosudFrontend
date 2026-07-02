@@ -2,6 +2,7 @@
 
 import { Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 import { routes } from "@/config/routes";
 import { buildBookUrl, rentalSearchFromQuery } from "@/lib/rental-search";
@@ -15,6 +16,7 @@ function RentNowButtonInner({
   large?: boolean;
   disabled?: boolean;
 }) {
+  const t = useTranslations("common");
   const router = useRouter();
   const searchParams = useSearchParams();
   const rental = rentalSearchFromQuery(searchParams);
@@ -32,7 +34,7 @@ function RentNowButtonInner({
           : "bg-[#3563E9] hover:bg-[#2a52c9]"
       }`}
     >
-      {disabled ? "Unavailable" : "Rent Now"}
+      {disabled ? t("unavailable") : t("rentNow")}
     </button>
   );
 }
@@ -42,6 +44,8 @@ export default function RentNowButton(props: {
   large?: boolean;
   disabled?: boolean;
 }) {
+  const t = useTranslations("common");
+
   return (
     <Suspense
       fallback={
@@ -56,7 +60,7 @@ export default function RentNowButton(props: {
               : "bg-[#3563E9] hover:bg-[#2a52c9]"
           }`}
         >
-          {props.disabled ? "Unavailable" : "Rent Now"}
+          {props.disabled ? t("unavailable") : t("rentNow")}
         </button>
       }
     >

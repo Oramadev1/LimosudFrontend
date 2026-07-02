@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 import {
   CAPACITY_BUCKETS,
@@ -28,6 +29,7 @@ export default function FilterSidebar({
   filters: externalFilters,
   onChange,
 }: Props) {
+  const t = useTranslations("catalog");
   const maxCatalogPrice = getMaxVehiclePrice(vehicles);
   const [localFilters, setLocalFilters] = useState<FilterState>({
     ...defaultVehicleFilters,
@@ -59,7 +61,7 @@ export default function FilterSidebar({
     <aside className="flex w-full shrink-0 flex-col gap-8 self-start rounded-[10px] border border-transparent bg-white p-6 transition-colors dark:bg-white lg:w-[260px]">
       <div>
         <p className="mb-4 text-xs font-semibold tracking-widest text-gray-300 uppercase">
-          Type
+          {t("type")}
         </p>
         <ul className="flex flex-col gap-3">
           {carTypes.map((type) => {
@@ -103,11 +105,12 @@ export default function FilterSidebar({
 
       <div>
         <p className="mb-4 text-xs font-semibold tracking-widest text-gray-300 uppercase">
-          Capacity
+          {t("capacity")}
         </p>
         <ul className="flex flex-col gap-3">
           {CAPACITY_BUCKETS.map((cap) => {
-            const label = cap === 8 ? "8 or More" : `${cap} Person`;
+            const label =
+              cap === 8 ? t("capacity8Plus") : t("capacityPerson", { count: cap });
             const count = vehicles.filter((vehicle) =>
               vehicleMatchesCapacity(vehicle, cap),
             ).length;
@@ -148,7 +151,7 @@ export default function FilterSidebar({
 
       <div>
         <p className="mb-4 text-xs font-semibold tracking-widest text-gray-300 uppercase">
-          Price
+          {t("price")}
         </p>
         <input
           type="range"
@@ -164,7 +167,7 @@ export default function FilterSidebar({
           className="w-full cursor-pointer accent-[#3563E9]"
         />
         <p className="mt-2 text-sm font-semibold text-gray-700">
-          Max. {filters.maxPrice.toFixed(0)} MAD/day
+          {t("maxPrice")} {filters.maxPrice.toFixed(0)} MAD{t("perDay")}
         </p>
       </div>
 
@@ -178,7 +181,7 @@ export default function FilterSidebar({
         }
         className="w-full rounded-[8px] border border-[#3563E9] py-2 text-sm font-semibold text-[#3563E9] transition-colors hover:bg-[#3563E9] hover:text-white"
       >
-        Clear All Filters
+        {t("clearAllFilters")}
       </button>
     </aside>
   );

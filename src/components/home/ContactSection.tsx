@@ -2,12 +2,14 @@
 
 import { FormEvent, useState } from "react";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { submitContactMessage } from "@/lib/api/public";
 import { ApiError } from "@/lib/api/client";
 import { siteConfig } from "@/config/site";
 
 export function ContactSection({ showHeading = true }: { showHeading?: boolean }) {
+  const t = useTranslations("contactForm");
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -28,11 +30,7 @@ export function ContactSection({ showHeading = true }: { showHeading?: boolean }
       setSent(true);
       setForm({ name: "", email: "", phone: "", message: "" });
     } catch (err) {
-      setError(
-        err instanceof ApiError
-          ? err.message
-          : "Impossible d'envoyer le message. Réessayez dans un instant.",
-      );
+      setError(err instanceof ApiError ? err.message : t("error"));
     } finally {
       setSubmitting(false);
     }
@@ -43,7 +41,7 @@ export function ContactSection({ showHeading = true }: { showHeading?: boolean }
       <div className="mx-auto max-w-[1200px] px-6">
         {showHeading ? (
           <h2 className="mb-12 text-center text-2xl font-bold tracking-wide text-[#1A1A1A] uppercase">
-            Contact
+            {t("title")}
           </h2>
         ) : null}
 
@@ -51,7 +49,7 @@ export function ContactSection({ showHeading = true }: { showHeading?: boolean }
           <form className="space-y-4" onSubmit={handleSubmit}>
             {sent ? (
               <p className="rounded-lg border border-green-100 bg-green-50 px-4 py-3 text-sm text-green-700">
-                Message envoyé ! Nous vous répondrons sous 24h.
+                {t("success")}
               </p>
             ) : null}
 
@@ -66,7 +64,7 @@ export function ContactSection({ showHeading = true }: { showHeading?: boolean }
                 required
                 value={form.name}
                 onChange={(e) => setForm((c) => ({ ...c, name: e.target.value }))}
-                placeholder="Votre nom"
+                placeholder={t("namePlaceholder")}
                 className="w-full rounded-lg border border-[#E5E5E5] px-4 py-3 text-sm text-[#333] outline-none transition focus:border-[#E8192C]"
               />
               <input
@@ -74,7 +72,7 @@ export function ContactSection({ showHeading = true }: { showHeading?: boolean }
                 type="email"
                 value={form.email}
                 onChange={(e) => setForm((c) => ({ ...c, email: e.target.value }))}
-                placeholder="Votre email"
+                placeholder={t("emailPlaceholder")}
                 className="w-full rounded-lg border border-[#E5E5E5] px-4 py-3 text-sm text-[#333] outline-none transition focus:border-[#E8192C]"
               />
             </div>
@@ -82,7 +80,7 @@ export function ContactSection({ showHeading = true }: { showHeading?: boolean }
               type="tel"
               value={form.phone}
               onChange={(e) => setForm((c) => ({ ...c, phone: e.target.value }))}
-              placeholder="Téléphone"
+              placeholder={t("phonePlaceholder")}
               className="w-full rounded-lg border border-[#E5E5E5] px-4 py-3 text-sm text-[#333] outline-none transition focus:border-[#E8192C]"
             />
             <textarea
@@ -90,7 +88,7 @@ export function ContactSection({ showHeading = true }: { showHeading?: boolean }
               rows={5}
               value={form.message}
               onChange={(e) => setForm((c) => ({ ...c, message: e.target.value }))}
-              placeholder="Votre message"
+              placeholder={t("messagePlaceholder")}
               className="w-full rounded-lg border border-[#E5E5E5] px-4 py-3 text-sm text-[#333] outline-none transition focus:border-[#E8192C]"
             />
             <button
@@ -98,33 +96,33 @@ export function ContactSection({ showHeading = true }: { showHeading?: boolean }
               disabled={submitting}
               className="w-full rounded bg-[#E8192C] py-3 font-semibold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {submitting ? "Envoi..." : "Envoyer le message"}
+              {submitting ? t("sending") : t("send")}
             </button>
           </form>
 
           <div className="space-y-6">
-            <h3 className="text-lg font-bold text-[#1A1A1A]">Nos coordonnées</h3>
+            <h3 className="text-lg font-bold text-[#1A1A1A]">{t("coordinates")}</h3>
 
             {[
               {
                 icon: MapPin,
-                title: "Adresse",
+                title: t("address"),
                 text: siteConfig.address,
               },
               {
                 icon: Phone,
-                title: "Téléphone",
+                title: t("phone"),
                 text: `${siteConfig.phone} · ${siteConfig.secondaryPhone}`,
               },
               {
                 icon: Mail,
-                title: "Email",
+                title: t("email"),
                 text: siteConfig.contactEmail,
               },
               {
                 icon: Clock,
-                title: "Horaires",
-                text: "Lun–Sam : 8h00–19h00",
+                title: t("hours"),
+                text: t("hoursValue"),
               },
             ].map(({ icon: Icon, title, text }) => (
               <div key={title} className="flex items-start gap-3">

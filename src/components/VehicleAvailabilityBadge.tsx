@@ -1,3 +1,7 @@
+"use client";
+
+import { useLocale, useTranslations } from "next-intl";
+
 import {
   getVehicleAvailabilityInfo,
   vehicleAvailabilityBadgeClass,
@@ -5,6 +9,7 @@ import {
 import type { Vehicle } from "@/types/api";
 
 export function VehicleAvailabilityBadge({ vehicle }: { vehicle: Vehicle }) {
+  const t = useTranslations("vehicle");
   const availability = getVehicleAvailabilityInfo(vehicle);
 
   if (availability.tone === "available") {
@@ -15,7 +20,7 @@ export function VehicleAvailabilityBadge({ vehicle }: { vehicle: Vehicle }) {
     <span
       className={`inline-flex rounded-full px-2.5 py-1 text-[11px] font-semibold ${vehicleAvailabilityBadgeClass(availability.tone)}`}
     >
-      {availability.label}
+      {t(availability.labelKey)}
     </span>
   );
 }

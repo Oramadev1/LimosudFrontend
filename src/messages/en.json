@@ -53,7 +53,8 @@
     "terms": "Terms of use",
     "navigation": "Navigation",
     "contactUs": "Contact us",
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "countrySuffix": "Dakhla, Morocco"
   },
   "settings": {
     "title": "Settings",
@@ -68,5 +69,347 @@
     "rentNow": "Rent Now",
     "unavailable": "Unavailable",
     "seeMore": "See more"
+  },
+  "home": {
+    "fleetTitle": "Our fleet",
+    "rental": "Rental",
+    "viewAll": "View all",
+    "whyChooseUs": "Why choose us",
+    "features": {
+      "reliabilityTitle": "Guaranteed reliability",
+      "reliabilityText": "Every vehicle is inspected and maintained before each rental to keep you safe on the road.",
+      "choiceTitle": "Wide vehicle selection",
+      "choiceText": "From compact city cars to SUVs, our fleet covers every need in Dakhla.",
+      "supportTitle": "24/7 customer support",
+      "supportText": "Our team is available around the clock to assist you and answer your questions."
+    },
+    "testimonialsTitle": "Testimonials",
+    "loadVehiclesError": "Unable to load vehicles. Please refresh the page.",
+    "photoComingSoon": "Photo coming soon",
+    "featuredBadge": "Featured",
+    "seats": "seats",
+    "seeMore": "See more"
+  },
+  "faq": {
+    "title": "FAQ",
+    "items": [
+      {
+        "question": "How do I rent a vehicle with Limosud Cars?",
+        "answer": "Choose your vehicle, select your rental dates, then confirm your booking online. Our team will contact you within 24 hours."
+      },
+      {
+        "question": "What documents are required for rental?",
+        "answer": "A valid driving licence, a government-issued ID (national ID or passport), and a credit card in the main driver's name are required."
+      },
+      {
+        "question": "Can I cancel or modify my reservation?",
+        "answer": "Yes. Reservations can be cancelled free of charge up to 48 hours before pick-up. After that, fees may apply."
+      },
+      {
+        "question": "Are the vehicles insured?",
+        "answer": "All our vehicles include insurance. Optional add-ons (reduced excess, premium assistance) are available on request."
+      },
+      {
+        "question": "Where can I pick up the vehicle?",
+        "answer": "We offer delivery in downtown Dakhla and at Dakhla Airport. Delivery fees vary depending on the location chosen."
+      },
+      {
+        "question": "Is there a mileage limit on rentals?",
+        "answer": "Our standard packages include a daily mileage allowance. Unlimited mileage options are available on request."
+      }
+    ]
+  },
+  "testimonials": {
+    "title": "Testimonials",
+    "items": [
+      {
+        "role": "Loyal customer",
+        "quote": "Exceptional service! I rented a car for a weekend in Dakhla and the experience was perfect from start to finish."
+      },
+      {
+        "role": "Entrepreneur",
+        "quote": "Simple and transparent rental with Limosud Cars. The vehicle was immaculate and the team very responsive."
+      },
+      {
+        "role": "Project manager",
+        "quote": "Limosud Cars helped me find the ideal vehicle at a fair price. I recommend them without hesitation!"
+      }
+    ]
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Tips, routes, and news to prepare your rental in Dakhla.",
+    "viewAll": "View all articles",
+    "readArticle": "Read article",
+    "backToAll": "Back to all articles",
+    "pageTitle": "Blog",
+    "pageSubtitle": "Practical guides, road tips, and inspiration for your stay in Dakhla with Limosud Cars.",
+    "previous": "Previous",
+    "next": "Next",
+    "pageOf": "Page {page} / {lastPage}",
+    "notFound": "Article not found"
+  },
+  "blogPosts": {
+    "location-voiture-dakhla-limosud-cars": {
+      "title": "Car rental in Dakhla: why choose Limosud Cars?",
+      "excerpt": "Local agency, airport delivery, 4x4 and compact fleet, 24/7 assistance — everything that makes Limosud Cars a trusted partner in Dakhla.",
+      "content": "Dakhla attracts more and more travellers, kitesurfers, and business visitors. To make the most of the region, a rental car is often essential. Limosud Cars is a Dakhla-based rental agency known for its varied fleet and responsive service.\n\nAt Limosud Cars, you can rent 4x4 vehicles for tracks and excursions, as well as compact cars for city driving and daily trips. Booking is simple: choose your vehicle and dates, then the team confirms availability.\n\nOne of the biggest advantages is delivery to Dakhla Airport or directly to your accommodation. On arrival, the vehicle is waiting with the contract ready. Customer support is available 7 days a week to answer your questions before, during, and after your rental.\n\nWhether you come for kitesurfing, tourism, or business, Limosud Cars offers transparent pricing and a well-maintained fleet. Contact the agency at 06 61 04 09 67 or by email at limosudcars@gmail.com to plan your stay."
+    },
+    "livraison-aeroport-dakhla": {
+      "title": "Dakhla Airport delivery: how does it work?",
+      "excerpt": "Pick up your car as soon as you land. Here is the typical airport handover process with Limosud Cars.",
+      "content": "You land in Dakhla and want to head straight to your hotel, the lagoon, or a kitesurf spot? Airport delivery is the most convenient option.\n\nWhen booking, provide your flight number and expected arrival time. The Limosud Cars team tracks your flight and adjusts the handover if there is a delay. At the terminal exit, an advisor greets you with the contract and a prepared vehicle.\n\nBefore you leave, a quick condition check is carried out: bodywork, interior, and fuel level. You receive emergency contacts and return instructions. Within minutes, you are on the road.\n\nThis service avoids unexpected taxis and saves time in the first hours of your stay. To book airport delivery, browse the fleet online or call 06 55 75 09 46."
+    },
+    "4x4-ou-citadine-dakhla": {
+      "title": "4x4 or compact car: which vehicle to rent in Dakhla?",
+      "excerpt": "Lagoons, dunes, city streets, and coastal roads — a quick guide to choosing between an SUV/4x4 and a compact car.",
+      "content": "The right vehicle depends mainly on your plans in Dakhla. If you stay in town and on paved roads, a compact or city car is enough: lower fuel consumption, easy parking, and attractive daily rates.\n\nHowever, to reach isolated beaches, kitesurf spots off the main roads, or desert tracks, a 4x4 or SUV such as a Dacia Duster is strongly recommended. These vehicles offer better ground clearance and more confidence on mixed terrain.\n\nLimosud Cars offers both categories in its fleet. Plan ahead for the number of passengers and luggage — kitesurf boards and suitcases included. In high season, book early to secure the right model for your trip.\n\nIf you are unsure, the Limosud Cars team can advise you based on the length of your stay and the places you want to visit."
+    },
+    "explorer-lagune-kitesurf-dakhla": {
+      "title": "Explore the lagoon and kitesurf spots by car",
+      "excerpt": "Dakhla is a world kitesurfing capital. Routes, access tips, and advice for getting around freely with a Limosud Cars rental.",
+      "content": "Dakhla Bay and its lagoons offer exceptional wind conditions for much of the year. For riders, having your own car changes everything: you choose sessions based on the weather and are not dependent on shuttles.\n\nFrom downtown or your accommodation, it takes just a few minutes by car to reach the best-known areas. A 4x4 is useful if you explore more remote beaches or sandy tracks.\n\nAlways bring water, sunscreen, and an offline map. Respect protected areas and local communities. On return, a clean vehicle in good condition makes handover easier with no extra charges.\n\nLimosud Cars understands the needs of watersports travellers: boot space, flexible hours, and fast delivery. Book your vehicle before arrival to enjoy the wind from day one."
+    },
+    "comment-reserver-limosud-cars": {
+      "title": "How to book your car with Limosud Cars",
+      "excerpt": "Simple steps to choose a vehicle, check dates, and confirm your rental in Dakhla.",
+      "content": "Booking a car with Limosud Cars takes just a few minutes. Start by browsing the available fleet on the website: each listing shows the model, capacity, fuel type, and daily rate.\n\nSelect your start and end dates, then the pick-up location — Limosud Cars agency in Dakhla (Hay alqods) or the airport. Enter your contact details and, if needed, a message with your flight or hotel information.\n\nAfter submitting your request, the team checks availability and confirms your reservation. Bring a valid driving licence and ID for signing the contract. A deposit may be required depending on the vehicle and insurance options chosen.\n\nFor any questions before booking, contact limosudcars@gmail.com or 06 61 04 09 67. Support remains available 24/7 throughout your rental."
+    },
+    "assurance-caution-location-maroc": {
+      "title": "Insurance and deposit: what to know before renting",
+      "excerpt": "CDW, excess, security deposit — understand the options offered when renting with Limosud Cars in Dakhla.",
+      "content": "Vehicle rental in Morocco generally includes basic insurance covering third-party liability. At Limosud Cars, optional add-ons can reduce the excess in case of bodywork damage — important if you drive on tracks or sandy car parks.\n\nThe deposit is held when the vehicle is handed over and released after return, provided no damage or violations are found. A detailed condition report is done at pick-up and drop-off: take time to note any existing scratches.\n\nRead the contract carefully before signing: mileage, fuel, return times, and authorised driving areas. If in doubt, ask the team for clarification — transparency is part of Limosud Cars' quality commitment.\n\nFor a worry-free trip to Dakhla, plan these details when booking rather than at the airport in a rush."
+    },
+    "road-trip-cotier-dakhla": {
+      "title": "Coastal road trip south of Dakhla",
+      "excerpt": "A typical day between the Atlantic Ocean, wild beaches, and panoramic stops — best enjoyed with a rental car.",
+      "content": "The coastline south of Dakhla offers striking landscapes: turquoise sea, cliffs, white dunes, and long empty beaches. A one-day road trip is one of the best ways to enjoy it.\n\nLeave early to benefit from morning light and mild temperatures. Bring water, snacks, and a charger. A 4x4 is recommended if you leave the main roads; otherwise a comfortable SUV is enough for most coastal routes.\n\nRespect the environment: leave no litter and avoid driving on fragile vegetation. Tell someone your approximate route if you venture far from known tracks.\n\nOn return to Dakhla, refuel if needed and respect the agreed time with Limosud Cars. A well-planned rental turns a simple day into an unforgettable memory."
+    },
+    "dacia-duster-aventures-dakhla": {
+      "title": "Dacia Duster and SUVs: allies for adventures in Dakhla",
+      "excerpt": "Robust, economical, and suited to Moroccan roads, the Duster is one of the favourites in the Limosud Cars fleet.",
+      "content": "The Dacia Duster is one of the most requested vehicles at Limosud Cars for a stay in Dakhla. Its balance of capacity, price, and robustness makes it an excellent choice for families, couples, or small groups of friends.\n\nWith five seats and a generous boot, it fits suitcases and sports equipment. Its ground clearance handles compacted tracks and coastal roads with confidence while remaining comfortable on highways and in town.\n\nLimosud Cars regularly maintains its SUV fleet to ensure air conditioning, brakes, and tyres are in good condition — essential under the Atlantic Sahara sun.\n\nIf the Duster is not available on your dates, other SUVs and 4x4s in the fleet offer similar characteristics. Book ahead in high season to secure the ideal model for your Dakhla adventures."
+    }
+  },
+  "about": {
+    "metadataTitle": "About — Car rental in Dakhla",
+    "metadataDescription": "Discover Limosud Cars, a car and 4x4 rental agency in Dakhla. Airport delivery, recent fleet, transparent pricing, and 24/7 assistance.",
+    "heroAlt": "Atlantic coast and desert near Dakhla",
+    "heroBrand": "Limosud Cars",
+    "heroTitle": "Your rental partner in Dakhla",
+    "heroText": "Limosud Cars is a trusted car rental agency in Dakhla, in the heart of the Dakhla-Oued Ed-Dahab region. We provide recent vehicles, personal service, and fast delivery so you can explore lagoons, dunes, and the Atlantic coast freely.",
+    "historyLabel": "Our story",
+    "historyTitle": "A local team at the service of travellers",
+    "historyP1": "Based in Dakhla, we support tourists, kitesurfers, families, and professionals who need a reliable car from the moment they arrive. Our knowledge of the terrain — paved roads, lagoon tracks, and coastal desert conditions — helps us recommend the right vehicle for your stay.",
+    "historyP2": "Whether you are heading to a camp at PK25, a hotel on the lagoon, or downtown, we simplify booking: choose your vehicle online, pick up at the airport or agency, and get support in French, Arabic, or English as needed.",
+    "historyP3": "Limosud Cars is part of Dakhla's growing tourism scene, a destination known for steady wind, turquoise waters, and horizons where ocean meets Sahara. Renting with us means gaining independence to experience the region without relying on taxi schedules.",
+    "historyAlt": "Our story — Limosud Cars team in Dakhla",
+    "whyTitle": "Why choose Limosud Cars?",
+    "whySubtitle": "Services designed for Dakhla: proximity, responsiveness, and well-maintained vehicles for roads and tracks alike.",
+    "highlights": [
+      {
+        "title": "Varied fleet",
+        "text": "Economical compacts, SUVs, and 4x4s suited to coastal tracks and desert routes around Dakhla."
+      },
+      {
+        "title": "Airport delivery",
+        "text": "Pick-up at Dakhla Airport (VIL) or your hotel — ideal from the moment you arrive in Morocco."
+      },
+      {
+        "title": "24/7 assistance",
+        "text": "A local team reachable by phone and WhatsApp throughout your rental."
+      },
+      {
+        "title": "Simple booking",
+        "text": "Clear quotes, insurance included per package, and mileage suited to the Dakhla-Oued Ed-Dahab region."
+      }
+    ],
+    "fleetLabel": "Our fleet",
+    "fleetTitle": "Compacts, SUVs, and 4x4s for every trip",
+    "fleetP1": "For urban stays or paved-road trips, a compact or city car is often enough. For the lagoon, sandy tracks, or outings to the dunes, an SUV like the Dacia Duster or a 4x4 offers ground clearance, comfort, and space for luggage and sports gear.",
+    "fleetP2": "Each vehicle is prepared before handover: inspection, cleanliness, and explanations on insurance and driving conditions in the Dakhla-Oued Ed-Dahab region.",
+    "fleetCta": "View available vehicles",
+    "fleetAlt": "SUVs and 4x4s for Dakhla roads",
+    "exploreLabel": "Explore Dakhla",
+    "exploreTitle": "A unique destination between ocean and desert",
+    "exploreText": "Dakhla charms with its sheltered lagoon, world-famous kitesurf spots, and panoramas where sand meets the Atlantic. With a rental car, you plan your days freely: sunrise on the dune, a sport session, the local market, or a scenic drive along the bay.",
+    "destinations": [
+      "Dakhla lagoon and kitesurf spots",
+      "PK25 and waterside camps",
+      "White Dune and desert-Atlantic landscapes",
+      "Downtown, port, and hotel areas",
+      "Roads to the peninsula and Foum El Bouir"
+    ],
+    "servicesTitle": "Our services",
+    "services": [
+      {
+        "title": "Short- or long-term rental",
+        "text": "Kitesurf weekends, week-long stays, or monthly rentals for residents and professionals."
+      },
+      {
+        "title": "Airport transfer",
+        "text": "Collect your vehicle on landing and reach the lagoon, downtown, or your camp without waiting."
+      },
+      {
+        "title": "Discover the region",
+        "text": "Travel at your own pace to the White Dune, the lagoon, PK25, or the wild beaches of the peninsula."
+      }
+    ],
+    "findTitle": "Find us",
+    "findText": "Agency in Dakhla, delivery available at Dakhla International Airport (VIL) and main hotel zones. We cover the Dakhla-Oued Ed-Dahab region for tourist and business travel.",
+    "findCtaBook": "Book a vehicle",
+    "findCtaContact": "Contact us"
+  },
+  "contact": {
+    "metadataTitle": "Contact — Car rental in Dakhla",
+    "metadataDescription": "Contact Limosud Cars in Dakhla. Booking, quotes, and assistance by phone, email, or online form.",
+    "brand": "Limosud Cars",
+    "title": "Contact",
+    "intro": "Have a question about a rental, a quote, or airport delivery? Write to us or call our team in Dakhla."
+  },
+  "contactForm": {
+    "title": "Contact",
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "Your email",
+    "phonePlaceholder": "Phone",
+    "messagePlaceholder": "Your message",
+    "sending": "Sending...",
+    "send": "Send message",
+    "success": "Message sent! We will reply within 24 hours.",
+    "error": "Unable to send the message. Please try again shortly.",
+    "coordinates": "Our details",
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email",
+    "hours": "Hours",
+    "hoursValue": "Mon–Sat: 8:00 AM–7:00 PM"
+  },
+  "catalog": {
+    "metadataTitle": "Fleet — Car rental in Dakhla",
+    "metadataDescription": "Browse Limosud Cars fleet in Dakhla. Compacts, SUVs, and 4x4s available for your dates.",
+    "showingPeriod": "Showing cars for your rental period:",
+    "to": "to",
+    "searchResults": "Search results for:",
+    "noCars": "No cars found",
+    "tryFilters": "Try adjusting your filters",
+    "clearFilters": "Clear filters",
+    "showMore": "Show more cars",
+    "showingAll": "Showing all {count} cars",
+    "loadError": "Unable to load vehicles.",
+    "loadErrorHint": "Please refresh the page or try again later.",
+    "type": "Type",
+    "capacity": "Capacity",
+    "price": "Price",
+    "capacity8Plus": "8+ seats",
+    "capacityPerson": "{count} seats",
+    "maxPrice": "Max price",
+    "clearAllFilters": "Clear all filters",
+    "people": "people",
+    "perDay": "/ day",
+    "vehicleNotFound": "Vehicle not found",
+    "vehicleNotFoundDesc": "This vehicle does not exist or is no longer available.",
+    "browseFleet": "Browse fleet",
+    "carNotFound": "Car not found",
+    "browseCars": "Browse cars"
+  },
+  "vehicle": {
+    "photoComingSoon": "Photo coming soon",
+    "photosAria": "Vehicle photos",
+    "viewImage": "View image {index}",
+    "brand": "Brand",
+    "model": "Model",
+    "year": "Year",
+    "type": "Type",
+    "capacity": "Capacity",
+    "doors": "Doors",
+    "transmission": "Transmission",
+    "fuel": "Fuel",
+    "seats": "seats",
+    "perDay": "/ day",
+    "unavailableRented": "Currently rented — choose available dates when booking.",
+    "unavailableReserved": "Reserved — choose other dates when booking.",
+    "unavailableMaintenance": "Under maintenance — not available for new bookings.",
+    "unavailableDefault": "This vehicle is not available for new bookings right now.",
+    "available": "Available",
+    "rentDescription": "Rent the {name} with {fuel} fuel and {transmission} transmission.",
+    "noPhoto": "No photo"
+  },
+  "checkout": {
+    "metadataTitle": "Checkout — Limosud Cars",
+    "metadataDescription": "Complete your car rental booking with Limosud Cars in Dakhla.",
+    "step1": "Step 1 of 3",
+    "step2": "Step 2 of 3",
+    "step3": "Step 3 of 3",
+    "billingInfo": "Billing Info",
+    "name": "Name",
+    "phone": "Phone Number",
+    "rentalInfo": "Rental Info",
+    "pickup": "Pick – Up",
+    "dropoff": "Drop – Off",
+    "location": "Location",
+    "date": "Date",
+    "time": "Time",
+    "selectLocation": "Select location",
+    "confirmation": "Confirmation",
+    "termsPrefix": "I agree with our",
+    "termsLink": "terms and conditions",
+    "termsSuffix": "and cancellation policy.",
+    "submitting": "Submitting...",
+    "rentNow": "Rent Now",
+    "dataSafe": "All your data are safe",
+    "dataSafeDesc": "We use advanced security to provide you the best experience.",
+    "rentalSummary": "Rental Summary",
+    "noImage": "No image",
+    "deliveryFees": "Delivery fees",
+    "deposit": "Deposit",
+    "estimatedTotal": "Estimated Total",
+    "day": "day",
+    "days": "days",
+    "submitError": "Request failed. Please try again.",
+    "overlapError": "These dates overlap with an existing booking. Please choose available dates.",
+    "dropoffBeforePickup": "Drop-off must be after pick-up date and time.",
+    "blockedDatesHint": "Selected dates are not available for this vehicle.",
+    "datePlaceholder": "Select date",
+    "prevMonth": "Previous month",
+    "nextMonth": "Next month",
+    "bookedDatesHint": "Greyed-out dates are already booked.",
+    "validationNameMin": "Name must be at least 2 characters",
+    "validationPhoneRequired": "Phone number is required",
+    "validationPhoneInvalid": "Enter a valid phone number",
+    "validationPickupLocation": "Select a pick-up location",
+    "validationPickupDate": "Select a pick-up date",
+    "validationPickupTime": "Select a pick-up time",
+    "validationDropoffLocation": "Select a drop-off location",
+    "validationDropoffDate": "Select a drop-off date",
+    "validationDropoffTime": "Select a drop-off time",
+    "validationDropoffTimeAfter": "Drop-off time must be after pick-up",
+    "validationAgreeTerms": "You must agree to the terms and conditions"
+  },
+  "terms": {
+    "metadataTitle": "Cancellation Policy & Terms of Rental",
+    "metadataDescription": "Free cancellation policy, rental terms, and rules for Limosud Cars car rentals in Dakhla.",
+    "title": "Cancellation Policy & Terms of Rental",
+    "cancellationTitle": "Cancellation Policy",
+    "cancellationText": "If you need to cancel your reservation, please contact us by phone or WhatsApp, or by email, stating your reservation number and details. Free cancellation is available up to 48 hours before pick-up.",
+    "termsTitle": "Terms of Rental",
+    "browseVehicles": "Browse vehicles",
+    "backHome": "Back to home",
+    "termsItems": [
+      "To rent a car, the client must be at least 23 years old.",
+      "The driver must hold a valid driving licence issued at least one year before the rental start date.",
+      "The minimum rental period is two days (48 hours).",
+      "In case of early return, no refund is given for unused days.",
+      "The vehicle must be returned with the same fuel level as at pick-up.",
+      "Reservations are made for a vehicle category, not a specific model.",
+      "Unlimited mileage within the Dakhla-Oued Ed-Dahab region and CDW insurance are included unless otherwise stated.",
+      "Off-road damage, underside damage, and tyre damage are not covered by insurance."
+    ]
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "heading": "Page not found",
+    "body": "The page you're looking for doesn't exist or has been moved.",
+    "goHome": "Go to Home",
+    "browseFleet": "Browse fleet"
   }
 }

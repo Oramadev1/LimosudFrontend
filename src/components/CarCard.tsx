@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
 
 import StorageImage from "@/components/StorageImage";
 import { VehicleAvailabilityBadge } from "@/components/VehicleAvailabilityBadge";
@@ -11,6 +14,7 @@ import {
   getVehicleTransmissionLabel,
   vehicleCardImage,
 } from "@/lib/vehicle-catalog";
+import type { Locale } from "@/i18n/config";
 import type { Vehicle } from "@/types/api";
 
 import RentNowButton from "./RentNowButton";
@@ -27,6 +31,8 @@ export default function CarCard({
   index = 0,
   priority = false,
 }: CarCardProps) {
+  const t = useTranslations("catalog");
+  const locale = useLocale() as Locale;
   const image = vehicleCardImage(vehicle);
   const price = parseFloat(vehicle.daily_price);
   const availability = getVehicleAvailabilityInfo(vehicle);
@@ -76,14 +82,16 @@ export default function CarCard({
       <div className="flex items-center justify-between text-xs text-gray-400">
         <span>⛽ {getVehicleFuelLabel(vehicle)}</span>
         <span>⚙️ {getVehicleTransmissionLabel(vehicle)}</span>
-        <span>👤 {vehicle.seats} People</span>
+        <span>
+          👤 {vehicle.seats} {t("people")}
+        </span>
       </div>
 
       <div className="flex items-center justify-between">
         <div>
           <div className="text-base font-bold text-gray-900">
-            {formatCurrency(price)}
-            <span className="text-xs font-normal text-gray-400">/day</span>
+            {formatCurrency(price, locale)}
+            <span className="text-xs font-normal text-gray-400">{t("perDay")}</span>
           </div>
         </div>
         <RentNowButton slug={vehicle.slug} disabled={!availability.rentable} />

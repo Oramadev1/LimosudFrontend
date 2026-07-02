@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ShieldCheck, ChevronDown, CheckCircle2, AlertCircle } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 
 import { RentalDateField } from "@/components/RentalDateField";
 import StorageImage from "@/components/StorageImage";
@@ -13,9 +14,9 @@ import StorageImage from "@/components/StorageImage";
 import { ApiError, isValidationError } from "@/lib/api/client";
 import { checkVehicleAvailability } from "@/lib/api/public";
 import {
-  billingSchema,
-  rentalSchema,
-  confirmSchema,
+  createBillingSchema,
+  createRentalSchema,
+  createConfirmSchema,
   PENDING_CUSTOMER_NATIONALITY,
   isRentalPeriodValid,
   type BillingData,
@@ -41,6 +42,7 @@ import {
   todayYmd,
 } from "@/lib/vehicle-schedule";
 import type { ApiValidationError, Location, Vehicle } from "@/types/api";
+import type { Locale } from "@/i18n/config";
 
 function applyApiValidationErrors(
   body: ApiValidationError,
@@ -247,6 +249,12 @@ type CheckoutFormProps = {
 };
 
 export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) {
+  const t = useTranslations("checkout");
+  const catalogT = useTranslations("catalog");
+  const locale = useLocale() as Locale;
+  const billingSchema = useMemo(() => createBillingSchema(t), [t]);
+  const rentalSchema = useMemo(() => createRentalSchema(t), [t]);
+  const confirmSchema = useMemo(() => createConfirmSchema(t), [t]);
   const router = useRouter();
   const searchParams = useSearchParams();
   const imageUrl = getVehicleImageUrl(vehicle);
@@ -323,8 +331,8 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
     if (!billingOk) {
       const parsed = billingSchema.safeParse(billing.getValues());
       const message = parsed.success
-        ? "Please complete billing information."
-        : parsed.error.issues[0]?.message ?? "Please complete billing information.";
+        ? t("validationNameMin")
+        : parsed.error.issues[0]?.message ?? t("validationNameMin");
       setSubmitError(message);
       toast.error(message);
       document.getElementById("checkout-billing")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -333,8 +341,8 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
     if (!rentalOk) {
       const parsed = rentalSchema.safeParse(rental.getValues());
       const message = parsed.success
-        ? "Please complete rental dates and locations."
-        : parsed.error.issues[0]?.message ?? "Please complete rental dates and locations.";
+        ? t("validationPickupDate")
+        : parsed.error.issues[0]?.message ?? t("validationPickupDate");
       setSubmitError(message);
       toast.error(message);
       document.getElementById("checkout-rental")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -352,7 +360,7 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
         blockedPeriods,
       )
     ) {
-      const message = "This vehicle is not available for the selected dates. Please choose different dates.";
+      const message = t("blockedDatesHint");
       setSubmitError(message);
       toast.error(message);
       document.getElementById("checkout-rental")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -362,7 +370,7 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
     if (!confirmOk) {
       const message =
         confirm.formState.errors.agreeTerms?.message ??
-        "Please agree to the terms and conditions.";
+        t("validationAgreeTerms");
       setSubmitError(message);
       toast.error(message);
       document.getElementById("checkout-confirm")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -382,7 +390,7 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
         );
 
         if (!availability.available) {
-          const message = "This vehicle is not available for the selected dates. Please choose different dates.";
+          const message = t("blockedDatesHint");
           setSubmitError(message);
           toast.error(message);
           document.getElementById("checkout-rental")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -407,7 +415,7 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
         }
 
         toast.success(
-          `Reservation ${response.data.reservation_number} submitted — ${formatCurrency(response.data.total_price)}`,
+          `Reservation ${response.data.reservation_number} — ${formatCurrency(response.data.total_price, locale)}`,
           { duration: 5000 },
         );
         router.push(routes.vehicle(vehicle.slug));
@@ -427,7 +435,7 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
             document.getElementById("checkout-billing")?.scrollIntoView({ behavior: "smooth", block: "start" });
           }
         } else {
-          const message = error instanceof ApiError ? error.message : "Request failed. Please try again.";
+          const message = error instanceof ApiError ? error.message : t("submitError");
           setSubmitError(message);
           toast.error(message);
         }
@@ -442,21 +450,21 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
 
         <div id="checkout-billing">
         <SectionCard
-          step="Step 1 of 3"
-          title="Billing Info"
-          subtitle="Please enter your name and phone number"
+          step={t("step1")}
+          title={t("billingInfo")}
+          subtitle=""
           done={step1Done}
         >
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <InputField
-              label="Name"
-              placeholder="Your name"
+              label={t("name")}
+              placeholder={t("name")}
               error={billing.formState.errors.name?.message}
               registration={billing.register("name")}
             />
             <InputField
-              label="Phone Number"
-              placeholder="Phone number"
+              label={t("phone")}
+              placeholder={t("phone")}
               error={billing.formState.errors.phone?.message}
               registration={billing.register("phone")}
             />
@@ -466,9 +474,9 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
 
         <div id="checkout-rental">
         <SectionCard
-          step="Step 2 of 3"
-          title="Rental Info"
-          subtitle="Please select your rental date"
+          step={t("step2")}
+          title={t("rentalInfo")}
+          subtitle=""
           done={step2Done}
         >
           <div className="flex flex-col gap-5">
@@ -476,13 +484,13 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
               <div className="flex items-center gap-2">
                 <div className="h-3.5 w-3.5 rounded-full border-4 border-[#3563E9] bg-[#3563E9]" />
                 <span className="text-sm font-semibold text-gray-900">
-                  Pick – Up
+                  {t("pickup")}
                 </span>
               </div>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <LocationSelect
-                  label="Location"
-                  placeholder="Select location"
+                  label={t("location")}
+                  placeholder={t("selectLocation")}
                   error={rental.formState.errors.pickupCity?.message}
                   registration={rental.register("pickupCity")}
                   locations={locations}
@@ -492,7 +500,7 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
                   name="pickupDate"
                   render={({ field }) => (
                     <RentalDateField
-                      label="Date"
+                      label={t("date")}
                       value={field.value ?? ""}
                       onChange={field.onChange}
                       onBlur={field.onBlur}
@@ -505,7 +513,7 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
                 />
               </div>
               <DateTimeField
-                label="Time"
+                label={t("time")}
                 placeholder="HH:MM"
                 error={rental.formState.errors.pickupTime?.message}
                 registration={rental.register("pickupTime")}
@@ -519,13 +527,13 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
               <div className="flex items-center gap-2">
                 <div className="h-3.5 w-3.5 rounded-full border-4 border-[#54A6D4] bg-[#54A6D4]" />
                 <span className="text-sm font-semibold text-gray-900">
-                  Drop – Off
+                  {t("dropoff")}
                 </span>
               </div>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <LocationSelect
-                  label="Location"
-                  placeholder="Select location"
+                  label={t("location")}
+                  placeholder={t("selectLocation")}
                   error={rental.formState.errors.dropoffCity?.message}
                   registration={rental.register("dropoffCity")}
                   locations={locations}
@@ -535,7 +543,7 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
                   name="dropoffDate"
                   render={({ field }) => (
                     <RentalDateField
-                      label="Date"
+                      label={t("date")}
                       value={field.value ?? ""}
                       onChange={field.onChange}
                       onBlur={() => {
@@ -550,7 +558,7 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
                 />
               </div>
               <DateTimeField
-                label="Time"
+                label={t("time")}
                 placeholder="HH:MM"
                 error={rental.formState.errors.dropoffTime?.message}
                 registration={rental.register("dropoffTime", {
@@ -563,20 +571,20 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
             {!rentalPeriodValid && pickupDate && dropoffDate && pickupTime && dropoffTime ? (
               <p className="flex items-start gap-2 text-xs font-medium text-red-500">
                 <AlertCircle size={14} className="mt-0.5 shrink-0" />
-                Drop-off must be after pick-up date and time.
+                {t("dropoffBeforePickup")}
               </p>
             ) : null}
 
             {rentalPeriodValid && rentalPeriodBlocked ? (
               <p className="flex items-start gap-2 text-xs font-medium text-red-500">
                 <AlertCircle size={14} className="mt-0.5 shrink-0" />
-                These dates overlap with an existing booking. Please choose available dates.
+                {t("overlapError")}
               </p>
             ) : null}
 
             {rentalPeriodValid && days > 1 ? (
               <p className="text-xs font-semibold text-[#3563E9]">
-                {days} days × {formatCurrency(pricePerDay)}/day = {formatCurrency(pricing.rentalSubtotal)}
+                {days} {days > 1 ? t("days") : t("day")} × {formatCurrency(pricePerDay, locale)}{catalogT("perDay")} = {formatCurrency(pricing.rentalSubtotal, locale)}
               </p>
             ) : null}
           </div>
@@ -585,9 +593,9 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
 
         <div id="checkout-confirm">
         <SectionCard
-          step="Step 3 of 3"
-          title="Confirmation"
-          subtitle="We are getting to the end. Just few clicks and your rental is ready!"
+          step={t("step3")}
+          title={t("confirmation")}
+          subtitle=""
         >
           <div className="flex flex-col gap-3">
             <label className="flex cursor-pointer items-start gap-3 rounded-[8px] bg-[#F6F7F9] px-4 py-3.5">
@@ -597,15 +605,15 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
                 className="mt-0.5 h-4 w-4 shrink-0 accent-[#3563E9]"
               />
               <span className="text-sm text-gray-600">
-                I agree with our{" "}
+                {t("termsPrefix")}{" "}
                 <Link
                   href={routes.terms}
                   target="_blank"
                   className="font-medium text-[#3563E9] hover:underline"
                 >
-                  terms and conditions
+                  {t("termsLink")}
                 </Link>{" "}
-                and cancellation policy.
+                {t("termsSuffix")}
               </span>
             </label>
             <FieldError msg={confirm.formState.errors.agreeTerms?.message} />
@@ -615,16 +623,16 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
               disabled={submitting}
               className="mt-2 w-fit rounded-[4px] bg-[#3563E9] px-8 py-3.5 font-semibold text-white transition-all hover:bg-[#2a52c9] active:scale-[0.97] disabled:opacity-50"
             >
-              {submitting ? "Submitting..." : "Rent Now"}
+              {submitting ? t("submitting") : t("rentNow")}
             </button>
             <div className="mt-2 flex items-start gap-3">
               <ShieldCheck size={20} className="mt-0.5 shrink-0 text-gray-400" />
               <div>
                 <p className="text-sm font-semibold text-gray-700">
-                  All your data are safe
+                  {t("dataSafe")}
                 </p>
                 <p className="mt-0.5 text-xs text-gray-400">
-                  We are using the most advanced security to provide you the best experience.
+                  {t("dataSafeDesc")}
                 </p>
               </div>
             </div>
@@ -636,12 +644,8 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
       <div className="flex w-full shrink-0 flex-col gap-6 rounded-[10px] border border-transparent bg-white p-6 dark:bg-white lg:sticky lg:top-6 lg:w-[340px]">
         <div>
           <h2 className="text-lg font-bold text-gray-900">
-            Rental Summary
+            {t("rentalSummary")}
           </h2>
-          <p className="mt-1 text-xs text-gray-400">
-            Prices may change depending on the length of the rental and the price of your
-            rental car.
-          </p>
         </div>
 
         <div className="relative h-[200px] w-full overflow-hidden rounded-[10px] bg-gray-50">
@@ -654,7 +658,7 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center text-xs text-gray-400">
-              No image
+              {t("noImage")}
             </div>
           )}
         </div>
@@ -671,35 +675,35 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
         <div className="flex flex-col gap-3 text-sm">
           {!rentalPeriodValid && pickupDate && dropoffDate ? (
             <p className="rounded-[8px] bg-red-50 px-3 py-2 text-xs font-medium text-red-600">
-              Drop-off must be after pick-up before you can submit.
+              {t("dropoffBeforePickup")}
             </p>
           ) : null}
           {rentalPeriodValid && rentalPeriodBlocked ? (
             <p className="rounded-[8px] bg-red-50 px-3 py-2 text-xs font-medium text-red-600">
-              Selected dates are not available for this vehicle.
+              {t("blockedDatesHint")}
             </p>
           ) : null}
           <div className="flex justify-between">
             <span className="text-gray-400">
-              {Math.max(days, 1)} day{days > 1 ? "s" : ""} × {formatCurrency(pricePerDay)}/day
+              {Math.max(days, 1)} {days > 1 ? t("days") : t("day")} × {formatCurrency(pricePerDay, locale)}{catalogT("perDay")}
             </span>
             <span className="font-semibold text-gray-900">
-              {formatCurrency(pricing.rentalSubtotal)}
+              {formatCurrency(pricing.rentalSubtotal, locale)}
             </span>
           </div>
           {pricing.deliveryFee > 0 ? (
             <div className="flex justify-between">
-              <span className="text-gray-400">Delivery fees</span>
+              <span className="text-gray-400">{t("deliveryFees")}</span>
               <span className="font-semibold text-gray-900">
-                {formatCurrency(pricing.deliveryFee)}
+                {formatCurrency(pricing.deliveryFee, locale)}
               </span>
             </div>
           ) : null}
           {pricing.depositAmount > 0 ? (
             <div className="flex justify-between">
-              <span className="text-gray-400">Deposit</span>
+              <span className="text-gray-400">{t("deposit")}</span>
               <span className="font-semibold text-gray-900">
-                {formatCurrency(pricing.depositAmount)}
+                {formatCurrency(pricing.depositAmount, locale)}
               </span>
             </div>
           ) : null}
@@ -707,13 +711,10 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
 
         <div className="flex items-center justify-between">
           <div>
-            <p className="font-bold text-gray-900">Estimated Total</p>
-            <p className="mt-0.5 text-xs text-gray-400">
-              Includes rental, delivery, and deposit when locations are selected
-            </p>
+            <p className="font-bold text-gray-900">{t("estimatedTotal")}</p>
           </div>
           <span className="text-2xl font-bold text-gray-900">
-            {formatCurrency(pricing.estimatedTotal)}
+            {formatCurrency(pricing.estimatedTotal, locale)}
           </span>
         </div>
       </div>

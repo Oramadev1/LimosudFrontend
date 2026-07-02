@@ -1,6 +1,5 @@
 "use client";
 
-import { BlogSection } from "@/components/blog/BlogSection";
 import { BrandStrip } from "@/components/home/BrandStrip";
 import { FAQSection } from "@/components/home/FAQSection";
 import { HeroSection } from "@/components/home/HeroSection";
@@ -10,8 +9,10 @@ import { WhyChooseUsSection } from "@/components/home/WhyChooseUsSection";
 import { CarGridSkeleton } from "@/components/CarCardSkeleton";
 import { vehicleToMarketingCar } from "@/lib/marketing/vehicles";
 import { useAllVehiclesQuery } from "@/lib/query/hooks";
+import { useTranslations } from "next-intl";
 
-export default function HomePageClient() {
+export default function HomePageClient({ blogSection }: { blogSection?: React.ReactNode }) {
+  const t = useTranslations("home");
   const { data: vehicles = [], isPending, isError } = useAllVehiclesQuery();
 
   const rentCars = vehicles.slice(0, 6).map((vehicle) => vehicleToMarketingCar(vehicle));
@@ -30,14 +31,14 @@ export default function HomePageClient() {
         </section>
       ) : isError ? (
         <section className="bg-[#F5F5F5] py-16 text-center text-sm text-[#666]">
-          Impossible de charger les véhicules. Actualisez la page.
+          {t("loadVehiclesError")}
         </section>
       ) : (
         <ServicesSection rentCars={rentCars} />
       )}
 
       <WhyChooseUsSection />
-      <BlogSection />
+      {blogSection}
       <TestimonialsSection />
       <FAQSection />
     </div>

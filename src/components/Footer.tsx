@@ -58,7 +58,7 @@ export default async function Footer() {
                 <span>
                   {siteConfig.address}
                   <br />
-                  Dakhla, Maroc
+                  {t("countrySuffix")}
                 </span>
               </li>
               <li className="flex items-center gap-3">

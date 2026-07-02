@@ -2,48 +2,55 @@ import type { Vehicle } from "@/types/api";
 
 export type VehicleAvailabilityTone = "available" | "reserved" | "rented" | "unavailable";
 
+export type VehicleStatusLabelKey =
+  | "available"
+  | "unavailableRented"
+  | "unavailableReserved"
+  | "unavailableMaintenance"
+  | "unavailableDefault";
+
 export type VehicleAvailabilityInfo = {
-  label: string;
   rentable: boolean;
   tone: VehicleAvailabilityTone;
+  labelKey: VehicleStatusLabelKey;
 };
 
-export function getVehicleAvailabilityInfo(vehicle: Vehicle): VehicleAvailabilityInfo {
+export function getVehicleStatusLabelKey(vehicle: Vehicle): VehicleStatusLabelKey {
   const slug = vehicle.status?.slug ?? "available";
 
   switch (slug) {
     case "rented":
-      return {
-        label: "Currently rented",
-        rentable: true,
-        tone: "rented",
-      };
+      return "unavailableRented";
     case "reserved":
-      return {
-        label: "Reserved",
-        rentable: true,
-        tone: "reserved",
-      };
+      return "unavailableReserved";
     case "maintenance":
     case "repair":
-      return {
-        label: "In maintenance",
-        rentable: false,
-        tone: "unavailable",
-      };
+      return "unavailableMaintenance";
     case "out_of_service":
-      return {
-        label: "Unavailable",
-        rentable: false,
-        tone: "unavailable",
-      };
+      return "unavailableDefault";
     case "available":
     default:
-      return {
-        label: "Available",
-        rentable: true,
-        tone: "available",
-      };
+      return "available";
+  }
+}
+
+export function getVehicleAvailabilityInfo(vehicle: Vehicle): VehicleAvailabilityInfo {
+  const slug = vehicle.status?.slug ?? "available";
+  const labelKey = getVehicleStatusLabelKey(vehicle);
+
+  switch (slug) {
+    case "rented":
+      return { rentable: true, tone: "rented", labelKey };
+    case "reserved":
+      return { rentable: true, tone: "reserved", labelKey };
+    case "maintenance":
+    case "repair":
+      return { rentable: false, tone: "unavailable", labelKey };
+    case "out_of_service":
+      return { rentable: false, tone: "unavailable", labelKey };
+    case "available":
+    default:
+      return { rentable: true, tone: "available", labelKey };
   }
 }
 

@@ -1,22 +1,30 @@
-export function formatCurrency(amount: string | number): string {
-  const value = typeof amount === "string" ? parseFloat(amount) : amount;
+import type { Locale } from "@/i18n/config";
+import { intlLocale } from "@/lib/i18n/locale-tags";
 
-  return new Intl.NumberFormat("fr-MA", {
+export function formatCurrency(amount: string | number, locale: Locale | string = "fr"): string {
+  const value = typeof amount === "string" ? parseFloat(amount) : amount;
+  const tag = typeof locale === "string" && locale.includes("-") ? locale : intlLocale(locale as Locale);
+
+  return new Intl.NumberFormat(tag, {
     style: "currency",
     currency: "MAD",
     minimumFractionDigits: 2,
   }).format(value);
 }
 
-export function formatDateTime(value: string): string {
-  return new Intl.DateTimeFormat("fr-FR", {
+export function formatDateTime(value: string, locale: Locale | string = "fr"): string {
+  const tag = typeof locale === "string" && locale.includes("-") ? locale : intlLocale(locale as Locale);
+
+  return new Intl.DateTimeFormat(tag, {
     dateStyle: "medium",
     timeStyle: "short",
   }).format(new Date(value));
 }
 
-export function formatBlogDate(value: string): string {
-  return new Intl.DateTimeFormat("fr-FR", {
+export function formatBlogDate(value: string, locale: Locale | string = "fr"): string {
+  const tag = typeof locale === "string" && locale.includes("-") ? locale : intlLocale(locale as Locale);
+
+  return new Intl.DateTimeFormat(tag, {
     dateStyle: "long",
   }).format(new Date(value));
 }

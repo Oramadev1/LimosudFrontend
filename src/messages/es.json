@@ -53,7 +53,8 @@
     "terms": "Condiciones de uso",
     "navigation": "Navegación",
     "contactUs": "Contáctenos",
-    "rights": "Todos los derechos reservados."
+    "rights": "Todos los derechos reservados.",
+    "countrySuffix": "Dajla, Marruecos"
   },
   "settings": {
     "title": "Ajustes",
@@ -68,5 +69,347 @@
     "rentNow": "Alquilar",
     "unavailable": "No disponible",
     "seeMore": "Ver más"
+  },
+  "home": {
+    "fleetTitle": "Nuestra flota",
+    "rental": "Alquiler",
+    "viewAll": "Ver todo",
+    "whyChooseUs": "Por qué elegirnos",
+    "features": {
+      "reliabilityTitle": "Fiabilidad garantizada",
+      "reliabilityText": "Todos nuestros vehículos se inspeccionan y mantienen antes de cada alquiler para garantizar su seguridad.",
+      "choiceTitle": "Amplia selección de vehículos",
+      "choiceText": "Desde compactos urbanos hasta SUV, ofrecemos una flota adaptada a todas sus necesidades en Dajla.",
+      "supportTitle": "Atención al cliente 24/7",
+      "supportText": "Nuestro equipo está disponible en todo momento para acompañarle y responder a sus preguntas."
+    },
+    "testimonialsTitle": "Testimonios",
+    "loadVehiclesError": "No se pudieron cargar los vehículos. Actualice la página.",
+    "photoComingSoon": "Foto próximamente",
+    "featuredBadge": "Destacado",
+    "seats": "plazas",
+    "seeMore": "Ver más"
+  },
+  "faq": {
+    "title": "Preguntas frecuentes",
+    "items": [
+      {
+        "question": "¿Cómo puedo alquilar un vehículo con Limosud Cars?",
+        "answer": "Elija su vehículo, seleccione las fechas de alquiler y confirme su reserva en línea. Nuestro equipo se pondrá en contacto con usted en 24 horas."
+      },
+      {
+        "question": "¿Qué documentos se necesitan para el alquiler?",
+        "answer": "Se requiere un permiso de conducir válido, un documento de identidad (DNI o pasaporte) y una tarjeta bancaria a nombre del conductor principal."
+      },
+      {
+        "question": "¿Puedo cancelar o modificar mi reserva?",
+        "answer": "Sí. Las reservas pueden cancelarse gratuitamente hasta 48 horas antes de la recogida. Después, pueden aplicarse cargos."
+      },
+      {
+        "question": "¿Los vehículos están asegurados?",
+        "answer": "Todos nuestros vehículos incluyen seguro. Opciones adicionales (franquicia reducida, asistencia premium) están disponibles bajo petición."
+      },
+      {
+        "question": "¿Dónde puedo recoger el vehículo?",
+        "answer": "Ofrecemos entrega en el centro de Dajla y en el aeropuerto de Dajla. Las tarifas de entrega varían según el lugar elegido."
+      },
+      {
+        "question": "¿Hay límite de kilometraje en los alquileres?",
+        "answer": "Nuestros paquetes estándar incluyen un kilometraje diario. Las opciones de kilometraje ilimitado están disponibles bajo petición."
+      }
+    ]
+  },
+  "testimonials": {
+    "title": "Testimonios",
+    "items": [
+      {
+        "role": "Cliente fiel",
+        "quote": "¡Servicio excepcional! Alquilé un coche para un fin de semana en Dajla y la experiencia fue perfecta de principio a fin."
+      },
+      {
+        "role": "Empresario",
+        "quote": "Alquiler sencillo y transparente con Limosud Cars. El vehículo estaba impecable y el equipo muy receptivo."
+      },
+      {
+        "role": "Jefa de proyecto",
+        "quote": "Limosud Cars me ayudó a encontrar el vehículo ideal a un precio justo. ¡Lo recomiendo sin dudarlo!"
+      }
+    ]
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Consejos, rutas y novedades para preparar su alquiler en Dajla.",
+    "viewAll": "Ver todos los artículos",
+    "readArticle": "Leer artículo",
+    "backToAll": "Volver a todos los artículos",
+    "pageTitle": "Blog",
+    "pageSubtitle": "Guías prácticas, consejos de ruta e inspiración para su estancia en Dajla con Limosud Cars.",
+    "previous": "Anterior",
+    "next": "Siguiente",
+    "pageOf": "Página {page} / {lastPage}",
+    "notFound": "Artículo no encontrado"
+  },
+  "blogPosts": {
+    "location-voiture-dakhla-limosud-cars": {
+      "title": "Alquiler de coches en Dajla: ¿por qué elegir Limosud Cars?",
+      "excerpt": "Agencia local, entrega en aeropuerto, flota 4x4 y compactos, asistencia 24/7: todo lo que hace de Limosud Cars un socio de confianza en Dajla.",
+      "content": "Dajla atrace cada vez más a viajeros, kitesurfistas y profesionales. Para disfrutar plenamente de la región, un coche de alquiler suele ser indispensable. Limosud Cars es una agencia de alquiler con sede en Dajla, reconocida por su flota variada y su servicio ágil.\n\nEn Limosud Cars puede alquilar 4x4 para pistas y excursiones, así como coches compactos para la ciudad y los trayectos diarios. La reserva es sencilla: elija su vehículo y sus fechas, y el equipo confirma la disponibilidad.\n\nUna de las grandes ventajas es la entrega en el aeropuerto de Dajla o directamente en su alojamiento. A la llegada, el vehículo le espera con el contrato listo. La atención al cliente está disponible los 7 días de la semana para responder a sus preguntas antes, durante y después del alquiler.\n\nYa venga por kitesurf, turismo o un viaje de negocios, Limosud Cars ofrece tarifas transparentes y una flota bien mantenida. Contacte con la agencia al 06 61 04 09 67 o por correo a limosudcars@gmail.com para preparar su estancia."
+    },
+    "livraison-aeroport-dakhla": {
+      "title": "Entrega en el aeropuerto de Dajla: ¿cómo funciona?",
+      "excerpt": "Recoja su coche nada más aterrizar. Aquí tiene el proceso habitual de entrega en aeropuerto con Limosud Cars.",
+      "content": "Aterriza en Dajla y quiere ir directamente a su hotel, la laguna o un spot de kitesurf? La entrega en aeropuerto es la opción más práctica.\n\nAl reservar, indique su número de vuelo y la hora prevista de llegada. El equipo de Limosud Cars sigue su vuelo y adapta la entrega en caso de retraso. A la salida de la terminal, un asesor le recibe con el contrato y el vehículo preparado.\n\nAntes de salir, se realiza un rápido estado del vehículo: carrocería, interior y nivel de combustible. Recibirá los contactos de emergencia y las instrucciones de devolución. En pocos minutos, estará en camino.\n\nEste servicio evita taxis imprevistos y le ahorra tiempo en las primeras horas de su estancia. Para reservar entrega en aeropuerto, explore la flota en línea o llame al 06 55 75 09 46."
+    },
+    "4x4-ou-citadine-dakhla": {
+      "title": "4x4 o compacto: ¿qué vehículo alquilar en Dajla?",
+      "excerpt": "Lagunas, dunas, ciudad y carreteras costeras: guía rápida para elegir entre un SUV/4x4 y un coche compacto.",
+      "content": "La elección correcta depende sobre todo de su programa en Dajla. Si se queda en la ciudad y en carreteras asfaltadas, un compacto o urbano basta: menor consumo, aparcamiento fácil y tarifa diaria atractiva.\n\nEn cambio, para llegar a playas aisladas, spots de kitesurf fuera de los ejes principales o pistas desérticas, un 4x4 o SUV como un Dacia Duster es muy recomendable. Estos vehículos ofrecen mejor altura libre al suelo y más confianza en terreno mixto.\n\nLimosud Cars ofrece ambas categorías en su flota. Anticipe el número de pasajeros y el volumen del equipaje — tablas de kitesurf y maletas incluidas. En temporada alta, reserve con antelación el modelo adecuado.\n\nSi tiene dudas, el equipo de Limosud Cars puede asesorarle según la duración de su estancia y los lugares que desee visitar."
+    },
+    "explorer-lagune-kitesurf-dakhla": {
+      "title": "Explorar la laguna y los spots de kitesurf en coche",
+      "excerpt": "Dajla es una capital mundial del kitesurf. Rutas, accesos y consejos para moverse libremente con un alquiler de Limosud Cars.",
+      "content": "La bahía de Dajla y sus lagunas ofrecen condiciones de viento excepcionales gran parte del año. Para un rider, tener su propio coche lo cambia todo: elige sus sesiones según el tiempo y no depende de los traslados.\n\nDesde el centro o su alojamiento, son solo unos minutos en coche hasta las zonas más conocidas. Un 4x4 es útil si explora playas más alejadas o pistas arenosas.\n\nLleve siempre agua, protector solar y un mapa sin conexión. Respete las zonas protegidas y las comunidades locales. Al regresar, un vehículo limpio y en buen estado facilita la devolución sin cargos adicionales.\n\nLimosud Cars conoce bien las necesidades de los deportistas acuáticos: espacio en maletero, horarios flexibles y entrega rápida. Reserve su vehículo antes de llegar para disfrutar del viento desde el primer día."
+    },
+    "comment-reserver-limosud-cars": {
+      "title": "Cómo reservar su coche con Limosud Cars",
+      "excerpt": "Pasos sencillos para elegir un vehículo, comprobar las fechas y confirmar su alquiler en Dajla.",
+      "content": "Reservar un coche con Limosud Cars lleva unos minutos. Empiece por explorar la flota disponible en el sitio web: cada ficha indica el modelo, la capacidad, el tipo de combustible y la tarifa diaria.\n\nSeleccione sus fechas de inicio y fin, luego el lugar de recogida — agencia Limosud Cars en Dajla (Hay alqods) o aeropuerto. Introduzca sus datos de contacto y, si es necesario, un mensaje con su vuelo u hotel.\n\nTras enviar la solicitud, el equipo verifica la disponibilidad y confirma su reserva. Lleve un permiso de conducir válido y un documento de identidad para firmar el contrato. Puede solicitarse un depósito según el vehículo y las opciones de seguro elegidas.\n\nPara cualquier pregunta antes de reservar, contacte con limosudcars@gmail.com o al 06 61 04 09 67. La asistencia permanece disponible 24/7 durante su alquiler."
+    },
+    "assurance-caution-location-maroc": {
+      "title": "Seguro y depósito: lo que debe saber antes de alquilar",
+      "excerpt": "CDW, franquicia, depósito de garantía: comprenda las opciones ofrecidas al alquilar con Limosud Cars en Dajla.",
+      "content": "El alquiler de un vehículo en Marruecos suele incluir un seguro básico que cubre la responsabilidad civil. En Limosud Cars, opciones adicionales pueden reducir la franquicia en caso de daños en la carrocería — un punto importante si conduce por pistas o aparcamientos arenosos.\n\nEl depósito se retiene al recoger el vehículo y se libera tras la devolución, siempre que no se constaten daños ni infracciones. Se realiza un informe detallado al recoger y devolver: tómese su tiempo para señalar cualquier arañazo existente.\n\nLea atentamente el contrato antes de firmar: kilometraje, combustible, horas de devolución y zonas de circulación autorizadas. En caso de duda, pida una explicación al equipo — la transparencia forma parte del compromiso de calidad de Limosud Cars.\n\nPara un viaje tranquilo a Dajla, anticipe estos puntos al reservar en lugar de hacerlo con prisas en el aeropuerto."
+    },
+    "road-trip-cotier-dakhla": {
+      "title": "Road trip costero al sur de Dajla",
+      "excerpt": "Un día típico entre el océano Atlántico, playas salvajes y paradas panorámicas — ideal con un coche de alquiler.",
+      "content": "La costa al sur de Dajla ofrece paisajes impresionantes: mar turquesa, acantilados, dunas blancas y largas playas desiertas. Un road trip de un día es una de las mejores formas de disfrutarlos.\n\nSalga temprano para aprovechar la luz de la mañana y las temperaturas suaves. Lleve agua, snacks y un cargador. Un 4x4 es recomendable si abandona las carreteras principales; de lo contrario, un SUV cómodo basta para la mayoría de rutas costeras.\n\nRespete el entorno: no deje basura y evite circular sobre vegetación frágil. Informe a alguien de su ruta aproximada si se aventura lejos de los caminos conocidos.\n\nAl regresar a Dajla, reposte si es necesario y respete la hora acordada con Limosud Cars. Un alquiler bien planificado convierte un simple día en un recuerdo inolvidable."
+    },
+    "dacia-duster-aventures-dakhla": {
+      "title": "Dacia Duster y SUV: aliados para las aventuras en Dajla",
+      "excerpt": "Robusto, económico y adaptado a las carreteras marroquíes, el Duster es uno de los favoritos de la flota Limosud Cars.",
+      "content": "El Dacia Duster es uno de los vehículos más solicitados en Limosud Cars para una estancia en Dajla. Su relación capacidad / precio / robustez lo convierte en una excelente opción para familias, parejas o pequeños grupos de amigos.\n\nCon cinco plazas y un maletero generoso, acoge maletas y equipamiento deportivo. Su altura libre al suelo permite abordar pistas compactadas y carreteras costeras con confianza, manteniendo el confort en autopista y en ciudad.\n\nLimosud Cars mantiene regularmente su flota SUV para garantizar aire acondicionado, frenos y neumáticos en buen estado — un criterio esencial bajo el sol del Sáhara atlántico.\n\nSi el Duster no está disponible en sus fechas, otros SUV y 4x4 de la flota ofrecen características similares. Reserve con antelación en temporada alta para asegurar el modelo ideal para sus aventuras en Dajla."
+    }
+  },
+  "about": {
+    "metadataTitle": "Sobre nosotros — Alquiler de coches en Dajla",
+    "metadataDescription": "Descubra Limosud Cars, agencia de alquiler de coches y 4x4 en Dajla. Entrega en aeropuerto, flota reciente, tarifas transparentes y asistencia 24/7.",
+    "heroAlt": "Costa atlántica y desierto cerca de Dajla",
+    "heroBrand": "Limosud Cars",
+    "heroTitle": "Su socio de alquiler en Dajla",
+    "heroText": "Limosud Cars es una agencia de alquiler de coches de confianza en Dajla, en el corazón de la región Dajla-Oued Ed-Dahab. Ofrecemos vehículos recientes, servicio personalizado y entrega rápida para explorar lagunas, dunas y la costa atlántica con total libertad.",
+    "historyLabel": "Nuestra historia",
+    "historyTitle": "Un equipo local al servicio de los viajeros",
+    "historyP1": "Instalados en Dajla, acompañamos a turistas, kitesurfistas, familias y profesionales que necesitan un coche fiable desde su llegada. Nuestro conocimiento del terreno — carreteras asfaltadas, pistas lagunares y condiciones del desierto costero — nos permite recomendar el vehículo adecuado para su estancia.",
+    "historyP2": "Ya vaya a un campamento en PK25, un hotel en la laguna o el centro de la ciudad, simplificamos la reserva: elija su vehículo en línea, recójalo en el aeropuerto o en la agencia, y reciba asistencia en francés, árabe o inglés según sus necesidades.",
+    "historyP3": "Limosud Cars forma parte de la dinámica turística de Dajla, destino reconocido por su viento constante, sus aguas turquesas y sus horizontes entre océano y Sáhara. Alquilar con nosotros significa ganar autonomía para vivir la región sin depender de los horarios de taxi.",
+    "historyAlt": "Nuestra historia — equipo Limosud Cars en Dajla",
+    "whyTitle": "¿Por qué elegir Limosud Cars?",
+    "whySubtitle": "Servicios pensados para Dajla: proximidad, rapidez y vehículos mantenidos para carretera y pistas.",
+    "highlights": [
+      {
+        "title": "Flota variada",
+        "text": "Compactos económicos, SUV y 4x4 adaptados a las pistas de la costa y del desierto alrededor de Dajla."
+      },
+      {
+        "title": "Entrega en aeropuerto",
+        "text": "Recogida en el aeropuerto de Dajla (VIL) o en su hotel — ideal desde su llegada a Marruecos."
+      },
+      {
+        "title": "Asistencia 24/7",
+        "text": "Un equipo local accesible por teléfono y WhatsApp durante todo su alquiler."
+      },
+      {
+        "title": "Reserva sencilla",
+        "text": "Presupuesto claro, seguro incluido según paquete y kilometraje adaptado a la región Dajla-Oued Ed-Dahab."
+      }
+    ],
+    "fleetLabel": "Nuestra flota",
+    "fleetTitle": "Compactos, SUV y 4x4 para cada viaje",
+    "fleetP1": "Para una estancia urbana o trayectos en carretera asfaltada, un compacto o urbano suele bastar. Para la laguna, pistas arenosas o salidas a la duna, un SUV tipo Dacia Duster o un 4x4 ofrece altura libre, confort y espacio para equipaje y material deportivo.",
+    "fleetP2": "Cada vehículo se prepara antes de la entrega: revisión, limpieza y explicaciones sobre el seguro y las condiciones de circulación en la región Dajla-Oued Ed-Dahab.",
+    "fleetCta": "Ver vehículos disponibles",
+    "fleetAlt": "SUV y 4x4 para las carreteras de Dajla",
+    "exploreLabel": "Explorar Dajla",
+    "exploreTitle": "Un destino único entre océano y desierto",
+    "exploreText": "Dajla seduce con su laguna protegida, sus spots de kitesurf de fama mundial y sus panoramas donde la arena se encuentra con el Atlántico. Con un coche de alquiler, planifica sus días libremente: amanecer en la duna, sesión deportiva, mercado local o ruta panorámica a lo largo de la bahía.",
+    "destinations": [
+      "Laguna de Dajla y spots de kitesurf",
+      "PK25 y campamentos junto al agua",
+      "Duna Blanca y paisajes desierto-atlántico",
+      "Centro, puerto y zonas hoteleras",
+      "Rutas hacia la península y Foum El Bouir"
+    ],
+    "servicesTitle": "Nuestros servicios",
+    "services": [
+      {
+        "title": "Alquiler corta o larga duración",
+        "text": "Fin de semana de kitesurf, estancia de una semana o alquiler mensual para residentes y profesionales."
+      },
+      {
+        "title": "Traslado aeropuerto",
+        "text": "Recoja su vehículo al aterrizar y llegue a la laguna, el centro o su campamento sin esperas."
+      },
+      {
+        "title": "Descubrimiento de la región",
+        "text": "Viaje a su ritmo hacia la Duna Blanca, la laguna, PK25 o las playas salvajes de la península."
+      }
+    ],
+    "findTitle": "Dónde encontrarnos",
+    "findText": "Agencia en Dajla, entrega posible en el aeropuerto internacional de Dajla (VIL) y en las principales zonas hoteleras. Cubrimos la región Dajla-Oued Ed-Dahab para sus desplazamientos turísticos y profesionales.",
+    "findCtaBook": "Reservar un vehículo",
+    "findCtaContact": "Contáctenos"
+  },
+  "contact": {
+    "metadataTitle": "Contacto — Alquiler de coches en Dajla",
+    "metadataDescription": "Contacte con Limosud Cars en Dajla. Reservas, presupuestos y asistencia por teléfono, email o formulario en línea.",
+    "brand": "Limosud Cars",
+    "title": "Contacto",
+    "intro": "¿Tiene una pregunta sobre un alquiler, un presupuesto o una entrega en aeropuerto? Escríbanos o llame a nuestro equipo en Dajla."
+  },
+  "contactForm": {
+    "title": "Contacto",
+    "namePlaceholder": "Su nombre",
+    "emailPlaceholder": "Su email",
+    "phonePlaceholder": "Teléfono",
+    "messagePlaceholder": "Su mensaje",
+    "sending": "Enviando...",
+    "send": "Enviar mensaje",
+    "success": "¡Mensaje enviado! Le responderemos en 24 horas.",
+    "error": "No se pudo enviar el mensaje. Inténtelo de nuevo en un momento.",
+    "coordinates": "Nuestros datos",
+    "address": "Dirección",
+    "phone": "Teléfono",
+    "email": "Email",
+    "hours": "Horario",
+    "hoursValue": "Lun–Sáb: 8:00–19:00"
+  },
+  "catalog": {
+    "metadataTitle": "Flota — Alquiler de coches en Dajla",
+    "metadataDescription": "Explore la flota de Limosud Cars en Dajla. Compactos, SUV y 4x4 disponibles para sus fechas.",
+    "showingPeriod": "Vehículos para su período de alquiler:",
+    "to": "a",
+    "searchResults": "Resultados para:",
+    "noCars": "No se encontraron vehículos",
+    "tryFilters": "Intente ajustar sus filtros",
+    "clearFilters": "Borrar filtros",
+    "showMore": "Mostrar más vehículos",
+    "showingAll": "Mostrando los {count} vehículos",
+    "loadError": "No se pudieron cargar los vehículos.",
+    "loadErrorHint": "Actualice la página o inténtelo más tarde.",
+    "type": "Tipo",
+    "capacity": "Capacidad",
+    "price": "Precio",
+    "capacity8Plus": "8+ plazas",
+    "capacityPerson": "{count} plazas",
+    "maxPrice": "Precio máx.",
+    "clearAllFilters": "Borrar todos los filtros",
+    "people": "personas",
+    "perDay": "/ día",
+    "vehicleNotFound": "Vehículo no encontrado",
+    "vehicleNotFoundDesc": "Este vehículo no existe o ya no está disponible.",
+    "browseFleet": "Explorar flota",
+    "carNotFound": "Coche no encontrado",
+    "browseCars": "Ver vehículos"
+  },
+  "vehicle": {
+    "photoComingSoon": "Foto próximamente",
+    "photosAria": "Fotos del vehículo",
+    "viewImage": "Ver imagen {index}",
+    "brand": "Marca",
+    "model": "Modelo",
+    "year": "Año",
+    "type": "Tipo",
+    "capacity": "Capacidad",
+    "doors": "Puertas",
+    "transmission": "Transmisión",
+    "fuel": "Combustible",
+    "seats": "plazas",
+    "perDay": "/ día",
+    "unavailableRented": "Actualmente alquilado — elija fechas disponibles al reservar.",
+    "unavailableReserved": "Reservado — elija otras fechas al reservar.",
+    "unavailableMaintenance": "En mantenimiento — no disponible para nuevas reservas.",
+    "unavailableDefault": "Este vehículo no está disponible para nuevas reservas en este momento.",
+    "available": "Disponible",
+    "rentDescription": "Alquile el {name} con combustible {fuel} y transmisión {transmission}.",
+    "noPhoto": "Sin foto"
+  },
+  "checkout": {
+    "metadataTitle": "Reserva — Limosud Cars",
+    "metadataDescription": "Complete su reserva de alquiler con Limosud Cars en Dajla.",
+    "step1": "Paso 1 de 3",
+    "step2": "Paso 2 de 3",
+    "step3": "Paso 3 de 3",
+    "billingInfo": "Datos de facturación",
+    "name": "Nombre",
+    "phone": "Teléfono",
+    "rentalInfo": "Datos del alquiler",
+    "pickup": "Recogida",
+    "dropoff": "Devolución",
+    "location": "Ubicación",
+    "date": "Fecha",
+    "time": "Hora",
+    "selectLocation": "Seleccionar ubicación",
+    "confirmation": "Confirmación",
+    "termsPrefix": "Acepto nuestras",
+    "termsLink": "condiciones generales",
+    "termsSuffix": "y la política de cancelación.",
+    "submitting": "Enviando...",
+    "rentNow": "Alquilar ahora",
+    "dataSafe": "Sus datos están protegidos",
+    "dataSafeDesc": "Utilizamos medidas de seguridad avanzadas para ofrecerle la mejor experiencia.",
+    "rentalSummary": "Resumen del alquiler",
+    "noImage": "Sin imagen",
+    "deliveryFees": "Gastos de entrega",
+    "deposit": "Depósito",
+    "estimatedTotal": "Total estimado",
+    "day": "día",
+    "days": "días",
+    "submitError": "La solicitud falló. Inténtelo de nuevo.",
+    "overlapError": "Estas fechas se solapan con una reserva existente. Elija fechas disponibles.",
+    "dropoffBeforePickup": "La devolución debe ser después de la fecha y hora de recogida.",
+    "blockedDatesHint": "Las fechas seleccionadas no están disponibles para este vehículo.",
+    "datePlaceholder": "Seleccionar fecha",
+    "prevMonth": "Mes anterior",
+    "nextMonth": "Mes siguiente",
+    "bookedDatesHint": "Las fechas en gris ya están reservadas.",
+    "validationNameMin": "El nombre debe tener al menos 2 caracteres",
+    "validationPhoneRequired": "El número de teléfono es obligatorio",
+    "validationPhoneInvalid": "Introduce un número de teléfono válido",
+    "validationPickupLocation": "Selecciona un lugar de recogida",
+    "validationPickupDate": "Selecciona una fecha de recogida",
+    "validationPickupTime": "Selecciona una hora de recogida",
+    "validationDropoffLocation": "Selecciona un lugar de devolución",
+    "validationDropoffDate": "Selecciona una fecha de devolución",
+    "validationDropoffTime": "Selecciona una hora de devolución",
+    "validationDropoffTimeAfter": "La hora de devolución debe ser posterior a la recogida",
+    "validationAgreeTerms": "Debes aceptar los términos y condiciones"
+  },
+  "terms": {
+    "metadataTitle": "Política de cancelación y condiciones de alquiler",
+    "metadataDescription": "Política de cancelación gratuita, condiciones de alquiler y normas para los alquileres de Limosud Cars en Dajla.",
+    "title": "Política de cancelación y condiciones de alquiler",
+    "cancellationTitle": "Política de cancelación",
+    "cancellationText": "Si necesita cancelar su reserva, contacte con nosotros por teléfono, WhatsApp o email indicando su número de reserva y datos. La cancelación gratuita está disponible hasta 48 horas antes de la recogida.",
+    "termsTitle": "Condiciones de alquiler",
+    "browseVehicles": "Ver vehículos",
+    "backHome": "Volver al inicio",
+    "termsItems": [
+      "Para alquilar un vehículo, el cliente debe tener al menos 23 años.",
+      "El conductor debe poseer un permiso de conducir válido expedido al menos un año antes del inicio del alquiler.",
+      "El período mínimo de alquiler es de dos días (48 horas).",
+      "En caso de devolución anticipada, no se reembolsan los días no utilizados.",
+      "El vehículo debe devolverse con el mismo nivel de combustible que en la recogida.",
+      "La reserva se realiza por categoría de vehículo, no por modelo específico.",
+      "El kilometraje ilimitado dentro de la región Dajla-Oued Ed-Dahab y el seguro CDW están incluidos salvo indicación contraria.",
+      "Los daños fuera de carretera, bajo el vehículo y en los neumáticos no están cubiertos por el seguro."
+    ]
+  },
+  "notFound": {
+    "title": "Página no encontrada",
+    "heading": "Página no encontrada",
+    "body": "La página que busca no existe o ha sido movida.",
+    "goHome": "Ir al inicio",
+    "browseFleet": "Explorar flota"
   }
 }

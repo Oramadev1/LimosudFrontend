@@ -2,12 +2,15 @@ import CarDetailPageClient from "@/components/CarDetailPageClient";
 import { routes } from "@/config/routes";
 import { getVehicle } from "@/lib/api/public";
 import { createMetadata } from "@/lib/seo/metadata";
+import { getTranslations } from "next-intl/server";
 
 type VehicleDetailPageProps = {
   params: Promise<{ slug: string }>;
 };
 
 export async function generateMetadata({ params }: VehicleDetailPageProps) {
+  const t = await getTranslations("catalog");
+
   try {
     const { slug } = await params;
     const { data: vehicle } = await getVehicle(slug);
@@ -18,7 +21,7 @@ export async function generateMetadata({ params }: VehicleDetailPageProps) {
       path: routes.vehicle(vehicle.slug),
     });
   } catch {
-    return createMetadata({ title: "Vehicle not found", noIndex: true });
+    return createMetadata({ title: t("vehicleNotFound"), noIndex: true });
   }
 }
 

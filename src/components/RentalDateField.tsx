@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Calendar, ChevronLeft, ChevronRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import {
   buildMonthGrid,
@@ -12,7 +13,6 @@ import {
   type BlockedPeriod,
 } from "@/lib/vehicle-schedule";
 
-const weekdayLabels = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
 const CALENDAR_HEIGHT = 340;
 
 type RentalDateFieldProps = {
@@ -42,6 +42,7 @@ export function RentalDateField({
   error,
   name,
 }: RentalDateFieldProps) {
+  const t = useTranslations("checkout");
   const [open, setOpen] = useState(false);
   const [placement, setPlacement] = useState<CalendarPlacement>("bottom");
   const [panelStyle, setPanelStyle] = useState<{
@@ -178,7 +179,7 @@ export function RentalDateField({
               )
             }
             className="rounded-md p-1 text-gray-500 hover:bg-gray-100"
-            aria-label="Previous month"
+            aria-label={t("prevMonth")}
           >
             <ChevronLeft size={16} />
           </button>
@@ -191,16 +192,10 @@ export function RentalDateField({
               )
             }
             className="rounded-md p-1 text-gray-500 hover:bg-gray-100"
-            aria-label="Next month"
+            aria-label={t("nextMonth")}
           >
             <ChevronRight size={16} />
           </button>
-        </div>
-
-        <div className="grid grid-cols-7 gap-1 text-center text-[11px] font-medium text-gray-400">
-          {weekdayLabels.map((weekday) => (
-            <span key={weekday}>{weekday}</span>
-          ))}
         </div>
 
         <div className="mt-1 grid grid-cols-7 gap-1">
@@ -233,9 +228,7 @@ export function RentalDateField({
           })}
         </div>
 
-        <p className="mt-3 text-[11px] text-gray-400">
-          Crossed-out dates are already booked.
-        </p>
+        <p className="mt-3 text-[11px] text-gray-400">{t("bookedDatesHint")}</p>
       </div>
     ) : null;
 
@@ -260,7 +253,7 @@ export function RentalDateField({
             : "border-gray-200 text-gray-700 focus:border-[#3563E9]"
         }`}
       >
-        <span>{value || "YYYY-MM-DD"}</span>
+        <span>{value || t("datePlaceholder")}</span>
         <Calendar size={16} className="text-gray-400" aria-hidden="true" />
       </button>
 

@@ -3,10 +3,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useLocale, useTranslations } from "next-intl";
 
-import { formatMarketingPrice } from "@/lib/marketing/vehicles";
+import { formatCurrency } from "@/lib/format";
 import { routes } from "@/config/routes";
 import { VehicleImagePlaceholder } from "@/components/VehicleImagePlaceholder";
+import type { Locale } from "@/i18n/config";
 import type { MarketingCar } from "@/types/marketing";
 
 function carSubtitle(car: MarketingCar): string {
@@ -15,8 +17,10 @@ function carSubtitle(car: MarketingCar): string {
 }
 
 export function HomeCarCard({ car }: { car: MarketingCar }) {
+  const t = useTranslations("home");
+  const locale = useLocale() as Locale;
   const href = car.href ?? routes.vehicles;
-  const priceLabel = formatMarketingPrice(car);
+  const priceLabel = formatCurrency(car.price, locale);
   const subtitle = carSubtitle(car);
 
   return (
@@ -35,11 +39,11 @@ export function HomeCarCard({ car }: { car: MarketingCar }) {
             sizes="(max-width:768px) 100vw, 33vw"
           />
         ) : (
-          <VehicleImagePlaceholder label="Photo à venir" />
+          <VehicleImagePlaceholder label={t("photoComingSoon")} />
         )}
         {car.isFeatured ? (
           <span className="absolute top-3 left-3 rounded-full bg-[#E8192C] px-2.5 py-1 text-[10px] font-semibold tracking-wide text-white uppercase">
-            Vedette
+            {t("featuredBadge")}
           </span>
         ) : null}
       </div>
@@ -50,7 +54,7 @@ export function HomeCarCard({ car }: { car: MarketingCar }) {
         {subtitle ? <p className="mt-1 text-xs text-[#888]">{subtitle}</p> : null}
 
         <div className="mt-3 flex flex-wrap gap-2">
-          {[`${car.seats} places`, car.fuel, car.transmission].map((tag) => (
+          {[`${car.seats} ${t("seats")}`, car.fuel, car.transmission].map((tag) => (
             <span
               key={tag}
               className="rounded-full border border-[#E5E5E5] bg-[#F5F5F5] px-3 py-1 text-xs text-[#555]"
@@ -71,7 +75,7 @@ export function HomeCarCard({ car }: { car: MarketingCar }) {
             href={href}
             className="rounded bg-[#1C1C2E] px-4 py-2 text-xs font-semibold text-white transition hover:opacity-80"
           >
-            Voir plus
+            {t("seeMore")}
           </Link>
         </div>
       </div>

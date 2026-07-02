@@ -13,49 +13,60 @@ function rentalDatetime(date: string, time: string): Date | null {
 
 export const PENDING_CUSTOMER_NATIONALITY = "Pending";
 
-export const billingSchema = z.object({
-  name:  z.string().min(2, "Name must be at least 2 characters"),
-  phone: z.string().min(1, "Phone number is required").regex(/^\+?[\d\s\-]{7,15}$/, "Enter a valid phone number"),
-});
+type CheckoutTranslator = (key: string) => string;
 
-export const rentalSchema = z
-  .object({
-    pickupCity:     z.string().min(1, "Select a pick-up location"),
-    pickupDate:     z.string().min(1, "Select a pick-up date"),
-    pickupTime:     z.string().min(1, "Select a pick-up time"),
-    dropoffCity:    z.string().min(1, "Select a drop-off location"),
-    dropoffDate:    z.string().min(1, "Select a drop-off date"),
-    dropoffTime:    z.string().min(1, "Select a drop-off time"),
-  })
-  .superRefine((data, ctx) => {
-    const pickup = rentalDatetime(data.pickupDate, data.pickupTime);
-    const dropoff = rentalDatetime(data.dropoffDate, data.dropoffTime);
-
-    if (!pickup || !dropoff) {
-      return;
-    }
-
-    if (dropoff <= pickup) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Drop-off must be after pick-up date and time",
-        path: ["dropoffDate"],
-      });
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Drop-off time must be after pick-up",
-        path: ["dropoffTime"],
-      });
-    }
+export function createBillingSchema(t: CheckoutTranslator) {
+  return z.object({
+    name: z.string().min(2, t("validationNameMin")),
+    phone: z
+      .string()
+      .min(1, t("validationPhoneRequired"))
+      .regex(/^\+?[\d\s\-]{7,15}$/, t("validationPhoneInvalid")),
   });
+}
 
-export const confirmSchema = z.object({
-  agreeTerms: z.boolean().refine((value) => value, "You must agree to the terms and conditions"),
-});
+export function createRentalSchema(t: CheckoutTranslator) {
+  return z
+    .object({
+      pickupCity: z.string().min(1, t("validationPickupLocation")),
+      pickupDate: z.string().min(1, t("validationPickupDate")),
+      pickupTime: z.string().min(1, t("validationPickupTime")),
+      dropoffCity: z.string().min(1, t("validationDropoffLocation")),
+      dropoffDate: z.string().min(1, t("validationDropoffDate")),
+      dropoffTime: z.string().min(1, t("validationDropoffTime")),
+    })
+    .superRefine((data, ctx) => {
+      const pickup = rentalDatetime(data.pickupDate, data.pickupTime);
+      const dropoff = rentalDatetime(data.dropoffDate, data.dropoffTime);
 
-export type BillingData  = z.infer<typeof billingSchema>;
-export type RentalData   = z.infer<typeof rentalSchema>;
-export type ConfirmData  = z.infer<typeof confirmSchema>;
+      if (!pickup || !dropoff) {
+        return;
+      }
+
+      if (dropoff <= pickup) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: t("dropoffBeforePickup"),
+          path: ["dropoffDate"],
+        });
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: t("validationDropoffTimeAfter"),
+          path: ["dropoffTime"],
+        });
+      }
+    });
+}
+
+export function createConfirmSchema(t: CheckoutTranslator) {
+  return z.object({
+    agreeTerms: z.boolean().refine((value) => value, t("validationAgreeTerms")),
+  });
+}
+
+export type BillingData = z.infer<ReturnType<typeof createBillingSchema>>;
+export type RentalData = z.infer<ReturnType<typeof createRentalSchema>>;
+export type ConfirmData = z.infer<ReturnType<typeof createConfirmSchema>>;
 
 export function isRentalPeriodValid(
   pickupDate: string,
