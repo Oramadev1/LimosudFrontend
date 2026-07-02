@@ -14,7 +14,7 @@ export function BlogCard({ post }: { post: BlogPost }) {
           src={post.coverImage}
           alt={post.title}
           fill
-          className="object-contain p-3"
+          className="object-cover"
           sizes="(max-width:768px) 100vw, 33vw"
         />
       </div>

@@ -30,7 +30,7 @@ export default function BlogPostClient({ post }: { post: BlogPost }) {
             src={post.coverImage}
             alt={post.title}
             fill
-            className="object-contain p-4"
+            className="object-cover"
             sizes="800px"
             priority
           />
