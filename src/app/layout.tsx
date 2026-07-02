@@ -6,6 +6,7 @@ import { getLocale, getMessages } from "next-intl/server";
 import { QueryProvider } from "@/components/providers/QueryProvider";
 import ThemeProvider from "@/components/ThemeProvider";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { siteConfig } from "@/config/site";
 import { createMetadata } from "@/lib/seo/metadata";
 import {
   getLocalBusinessSchema,
@@ -23,6 +24,11 @@ const geistSans = Geist({
 
 export const metadata: Metadata = {
   ...createMetadata(),
+  icons: {
+    icon: siteConfig.logo,
+    shortcut: siteConfig.logo,
+    apple: siteConfig.logo,
+  },
   other: {
     google: "notranslate",
   },

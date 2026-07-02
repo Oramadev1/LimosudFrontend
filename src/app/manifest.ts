@@ -16,8 +16,8 @@ export default function manifest(): MetadataRoute.Manifest {
     categories: ["business", "travel"],
     icons: [
       {
-        src: "/icon",
-        sizes: "32x32",
+        src: siteConfig.logo,
+        sizes: "any",
         type: "image/png",
       },
     ],
