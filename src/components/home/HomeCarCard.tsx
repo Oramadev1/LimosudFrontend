@@ -12,7 +12,7 @@ import type { Locale } from "@/i18n/config";
 import type { MarketingCar } from "@/types/marketing";
 
 function carSubtitle(car: MarketingCar): string {
-  const parts = [car.brand, car.model, String(car.year)].filter(Boolean);
+  const parts = [car.brand, car.model].filter(Boolean);
   return parts.length > 0 ? parts.join(" · ") : (car.category ?? "");
 }
 

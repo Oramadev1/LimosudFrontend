@@ -13,7 +13,6 @@ export function vehicleToMarketingCar(vehicle: Vehicle): MarketingCar {
   return {
     id: vehicle.id,
     name: vehicle.name,
-    year: vehicle.year,
     image: getVehicleImageUrl(vehicle),
     brand: vehicle.brand?.name,
     model: vehicle.model,

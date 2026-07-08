@@ -9,7 +9,6 @@ import { routes } from "@/config/routes";
 import { formatCurrency } from "@/lib/format";
 import { getVehicleAvailabilityInfo } from "@/lib/vehicle-availability";
 import {
-  getVehicleCategoryLabel,
   getVehicleFuelLabel,
   getVehicleTransmissionLabel,
   vehicleCardImage,
@@ -56,7 +55,7 @@ export default function CarCard({
             {vehicle.name}
           </h3>
           <span className="text-xs text-gray-400">
-            {[vehicle.brand?.name, getVehicleCategoryLabel(vehicle)].filter(Boolean).join(" · ")}
+            {vehicle.brand?.name ?? vehicle.model}
           </span>
         </Link>
         <VehicleAvailabilityBadge vehicle={vehicle} />

@@ -1,7 +1,7 @@
 export interface LookupRef {
   id: number;
   name: string;
-  slug: string;
+  slug?: string;
   image_path?: string | null;
 }
 
@@ -18,10 +18,9 @@ export interface Vehicle {
   name: string;
   slug: string;
   model: string;
-  year: number;
-  plate_number: string;
-  mileage: number;
-  current_mileage_updated_at: string | null;
+  plate_number?: string;
+  mileage?: number;
+  current_mileage_updated_at?: string | null;
   seats: number;
   doors: number;
   daily_price: string;

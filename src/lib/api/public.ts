@@ -80,7 +80,7 @@ export function submitContactMessage(body: {
   phone?: string;
   message: string;
 }) {
-  return apiFetch<{ data: { id: number } }>("/public/contact-messages", {
+  return apiFetch<{ message: string }>("/public/contact-messages", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),

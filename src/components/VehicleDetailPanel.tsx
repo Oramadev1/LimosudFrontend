@@ -94,7 +94,7 @@ export default function VehicleDetailPanel({ vehicle }: { vehicle: Vehicle }) {
             <VehicleAvailabilityBadge vehicle={vehicle} />
           </div>
           <p className="mt-1 text-xs text-gray-400">
-            {[vehicle.brand?.name, vehicle.model, vehicle.year].filter(Boolean).join(" · ")}
+            {[vehicle.brand?.name, vehicle.model].filter(Boolean).join(" · ")}
           </p>
           {!availability.rentable ? (
             <p className="mt-2 text-sm font-medium text-red-500">
@@ -133,12 +133,6 @@ export default function VehicleDetailPanel({ vehicle }: { vehicle: Vehicle }) {
             <span className="text-gray-400">{t("model")}</span>
             <span className="font-semibold text-gray-700">
               {vehicle.model}
-            </span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-gray-400">{t("year")}</span>
-            <span className="font-semibold text-gray-700">
-              {vehicle.year}
             </span>
           </div>
           <div className="flex justify-between">

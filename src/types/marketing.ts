@@ -1,7 +1,6 @@
 export interface MarketingCar {
   id: number;
   name: string;
-  year: number;
   image: string | null;
   brand?: string;
   model?: string;
