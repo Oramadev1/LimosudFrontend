@@ -31,6 +31,7 @@
     "noLocations": "No pick-up locations are available yet. Contact the agency to book.",
     "incomplete": "Please choose locations and rental dates.",
     "invalidPeriod": "Drop-off must be after pick-up.",
+    "minRentalDays": "Minimum rental is 3 days.",
     "step": "Step 1",
     "whenWhere": "When & where?",
     "sameDropoff": "Same drop-off as pick-up"
@@ -392,6 +393,7 @@
     "validationDropoffDate": "Select a drop-off date",
     "validationDropoffTime": "Select a drop-off time",
     "validationDropoffTimeAfter": "Drop-off time must be after pick-up",
+    "validationMinRentalDays": "Minimum rental is 3 days.",
     "validationAgreeTerms": "You must agree to the terms and conditions"
   },
   "terms": {
@@ -406,7 +408,7 @@
     "termsItems": [
       "To rent a car, the client must be at least 23 years old.",
       "The driver must hold a valid driving licence issued at least one year before the rental start date.",
-      "The minimum rental period is two days (48 hours).",
+      "The minimum rental period is three days.",
       "In case of early return, no refund is given for unused days.",
       "The vehicle must be returned with the same fuel level as at pick-up.",
       "Reservations are made for a vehicle category, not a specific model.",

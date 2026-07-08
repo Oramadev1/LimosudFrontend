@@ -31,6 +31,7 @@
     "noLocations": "No hay lugares de recogida disponibles. Contacta con la agencia.",
     "incomplete": "Elige ubicaciones y fechas de alquiler.",
     "invalidPeriod": "La devolución debe ser después de la recogida.",
+    "minRentalDays": "El alquiler mínimo es de 3 días.",
     "step": "Paso 1",
     "whenWhere": "¿Cuándo y dónde?",
     "sameDropoff": "Misma ubicación de devolución"
@@ -392,6 +393,7 @@
     "validationDropoffDate": "Selecciona una fecha de devolución",
     "validationDropoffTime": "Selecciona una hora de devolución",
     "validationDropoffTimeAfter": "La hora de devolución debe ser posterior a la recogida",
+    "validationMinRentalDays": "El alquiler mínimo es de 3 días.",
     "validationAgreeTerms": "Debes aceptar los términos y condiciones"
   },
   "terms": {
@@ -406,7 +408,7 @@
     "termsItems": [
       "Para alquilar un vehículo, el cliente debe tener al menos 23 años.",
       "El conductor debe poseer un permiso de conducir válido expedido al menos un año antes del inicio del alquiler.",
-      "El período mínimo de alquiler es de dos días (48 horas).",
+      "El período mínimo de alquiler es de tres días.",
       "En caso de devolución anticipada, no se reembolsan los días no utilizados.",
       "El vehículo debe devolverse con el mismo nivel de combustible que en la recogida.",
       "La reserva se realiza por categoría de vehículo, no por modelo específico.",

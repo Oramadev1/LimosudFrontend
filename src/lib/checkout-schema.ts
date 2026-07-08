@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { MIN_RENTAL_DAYS, calculateRentalDays } from "@/lib/rental-rules";
+
 function rentalDatetime(date: string, time: string): Date | null {
   if (!date || !time) {
     return null;
@@ -53,6 +55,22 @@ export function createRentalSchema(t: CheckoutTranslator) {
           code: z.ZodIssueCode.custom,
           message: t("validationDropoffTimeAfter"),
           path: ["dropoffTime"],
+        });
+        return;
+      }
+
+      const days = calculateRentalDays(
+        data.pickupDate,
+        data.pickupTime,
+        data.dropoffDate,
+        data.dropoffTime,
+      );
+
+      if (days > 0 && days < MIN_RENTAL_DAYS) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: t("validationMinRentalDays"),
+          path: ["dropoffDate"],
         });
       }
     });

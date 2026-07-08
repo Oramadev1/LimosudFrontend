@@ -31,6 +31,7 @@
     "noLocations": "Aucun lieu de prise en charge disponible. Contactez l'agence.",
     "incomplete": "Veuillez choisir les lieux et les dates.",
     "invalidPeriod": "La restitution doit être après la prise en charge.",
+    "minRentalDays": "La location minimum est de 3 jours.",
     "step": "Étape 1",
     "whenWhere": "Quand et où ?",
     "sameDropoff": "Même lieu de restitution"
@@ -392,6 +393,7 @@
     "validationDropoffDate": "Choisissez une date de restitution",
     "validationDropoffTime": "Choisissez une heure de restitution",
     "validationDropoffTimeAfter": "L'heure de restitution doit être après la prise en charge",
+    "validationMinRentalDays": "La location minimum est de 3 jours.",
     "validationAgreeTerms": "Vous devez accepter les conditions générales"
   },
   "terms": {
@@ -406,7 +408,7 @@
     "termsItems": [
       "Pour louer un véhicule, le client doit avoir au moins 23 ans.",
       "Le conducteur doit être titulaire d'un permis de conduire valide délivré depuis au moins un an.",
-      "La durée minimale de location est de deux jours (48 heures).",
+      "La durée minimale de location est de trois jours.",
       "En cas de retour anticipé, aucun remboursement n'est accordé pour les jours non utilisés.",
       "Le véhicule doit être restitué avec le même niveau de carburant qu'à la prise en charge.",
       "La réservation porte sur une catégorie de véhicule, et non sur un modèle précis.",

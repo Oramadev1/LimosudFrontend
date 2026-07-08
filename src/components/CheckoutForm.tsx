@@ -25,9 +25,9 @@ import {
 } from "@/lib/checkout-schema";
 import {
   combineDatetime,
-  daysBetween,
   formatCurrency,
 } from "@/lib/format";
+import { calculateRentalDays, MIN_RENTAL_DAYS } from "@/lib/rental-rules";
 import { getVehicleImageUrl } from "@/lib/images";
 import { routes } from "@/config/routes";
 import { estimateRentalTotal, pricePerDayForRental } from "@/lib/rental-pricing";
@@ -313,11 +313,19 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
       dropoffTime,
       blockedPeriods,
     );
-  const days = rentalPeriodValid && !rentalPeriodBlocked ? daysBetween(pickupDate, dropoffDate) : 0;
+  const days = rentalPeriodValid && !rentalPeriodBlocked
+    ? calculateRentalDays(pickupDate, pickupTime, dropoffDate, dropoffTime)
+    : 0;
+  const meetsMinRentalDays = days >= MIN_RENTAL_DAYS;
   const pickupLocation = locations.find((location) => String(location.id) === pickupCity);
   const dropoffLocation = locations.find((location) => String(location.id) === dropoffCity);
-  const pricePerDay = pricePerDayForRental(vehicle, Math.max(days, 1));
-  const pricing = estimateRentalTotal(vehicle, Math.max(days, 1), pickupLocation, dropoffLocation);
+  const pricePerDay = pricePerDayForRental(vehicle, meetsMinRentalDays ? days : MIN_RENTAL_DAYS);
+  const pricing = estimateRentalTotal(
+    vehicle,
+    meetsMinRentalDays ? days : MIN_RENTAL_DAYS,
+    pickupLocation,
+    dropoffLocation,
+  );
 
   async function handleSubmit() {
     setSubmitError(null);
@@ -582,7 +590,14 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
               </p>
             ) : null}
 
-            {rentalPeriodValid && days > 1 ? (
+            {rentalPeriodValid && days > 0 && !meetsMinRentalDays ? (
+              <p className="flex items-start gap-2 text-xs font-medium text-red-500">
+                <AlertCircle size={14} className="mt-0.5 shrink-0" />
+                {t("validationMinRentalDays")}
+              </p>
+            ) : null}
+
+            {rentalPeriodValid && meetsMinRentalDays ? (
               <p className="text-xs font-semibold text-[#3563E9]">
                 {days} {days > 1 ? t("days") : t("day")} × {formatCurrency(pricePerDay, locale)}{catalogT("perDay")} = {formatCurrency(pricing.rentalSubtotal, locale)}
               </p>
@@ -620,7 +635,7 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
             <button
               type="button"
               onClick={handleSubmit}
-              disabled={submitting}
+              disabled={submitting || !meetsMinRentalDays || rentalPeriodBlocked || !rentalPeriodValid}
               className="mt-2 w-fit rounded-[4px] bg-[#3563E9] px-8 py-3.5 font-semibold text-white transition-all hover:bg-[#2a52c9] active:scale-[0.97] disabled:opacity-50"
             >
               {submitting ? t("submitting") : t("rentNow")}
@@ -683,14 +698,21 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
               {t("blockedDatesHint")}
             </p>
           ) : null}
+          {rentalPeriodValid && days > 0 && !meetsMinRentalDays ? (
+            <p className="rounded-[8px] bg-red-50 px-3 py-2 text-xs font-medium text-red-600">
+              {t("validationMinRentalDays")}
+            </p>
+          ) : null}
+          {meetsMinRentalDays ? (
           <div className="flex justify-between">
             <span className="text-gray-400">
-              {Math.max(days, 1)} {days > 1 ? t("days") : t("day")} × {formatCurrency(pricePerDay, locale)}{catalogT("perDay")}
+              {days} {days > 1 ? t("days") : t("day")} × {formatCurrency(pricePerDay, locale)}{catalogT("perDay")}
             </span>
             <span className="font-semibold text-gray-900">
               {formatCurrency(pricing.rentalSubtotal, locale)}
             </span>
           </div>
+          ) : null}
           {pricing.deliveryFee > 0 ? (
             <div className="flex justify-between">
               <span className="text-gray-400">{t("deliveryFees")}</span>

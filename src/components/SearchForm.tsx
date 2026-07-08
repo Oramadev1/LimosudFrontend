@@ -16,6 +16,7 @@ import {
   toDatetimeLocal,
   type RentalSearchValues,
 } from "@/lib/rental-search";
+import { calculateRentalDays, meetsMinimumRentalDays, MIN_RENTAL_DAYS } from "@/lib/rental-rules";
 import { useSubmitLock } from "@/lib/use-submit-lock";
 import type { Location } from "@/types/api";
 
@@ -132,6 +133,16 @@ export default function SearchForm({
 
       if (!isRentalSearchPeriodValid(values)) {
         setError(t("invalidPeriod"));
+        return;
+      }
+
+      if (!meetsMinimumRentalDays(
+        values.pickupDate,
+        values.pickupTime,
+        values.dropoffDate,
+        values.dropoffTime,
+      )) {
+        setError(t("minRentalDays"));
         return;
       }
 
