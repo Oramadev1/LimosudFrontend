@@ -45,7 +45,13 @@ function buildLegacyRedirects(): Redirect[] {
 
   for (const [legacyPath, destination] of Object.entries(LEGACY_PATH_MAP)) {
     for (const source of pathVariants(legacyPath)) {
-      pushRedirect(redirects, source, destination);
+      const normalizedSource = source.replace(/\/$/, "") || "/";
+      const normalizedDestination = destination.replace(/\/$/, "") || "/";
+
+      // Never redirect a path to itself — that causes ERR_TOO_MANY_REDIRECTS.
+      if (normalizedSource !== normalizedDestination) {
+        pushRedirect(redirects, source, destination);
+      }
 
       for (const locale of LOCALE_PREFIXES) {
         pushRedirect(redirects, `/${locale}${source}`, destination);
