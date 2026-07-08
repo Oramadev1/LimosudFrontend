@@ -43,6 +43,7 @@ export async function generateMetadata() {
     locale: intlLocale(locale),
     keywords: [
       "Limosud Cars",
+      "avis sur Limosud Cars Dakhla",
       "location voiture Dakhla",
       "car rental Dakhla",
       "4x4 Dakhla",

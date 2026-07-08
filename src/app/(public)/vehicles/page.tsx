@@ -15,6 +15,7 @@ export async function generateMetadata() {
     title: t("metadataTitle"),
     description: t("metadataDescription"),
     path: routes.vehicles,
+    keywords: t.raw("metadataKeywords") as string[],
     locale: intlLocale(locale),
   });
 }

@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
+import { legacyRedirects } from "./src/config/legacy-redirects";
+
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const laravelApiUrl =
@@ -22,7 +24,7 @@ const nextConfig: NextConfig = {
   compress: true,
   allowedDevOrigins: [lanHost, `http://${lanHost}:3000`],
   async redirects() {
-    return [];
+    return legacyRedirects;
   },
   turbopack: {
     root: import.meta.dirname,

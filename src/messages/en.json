@@ -73,13 +73,18 @@
   },
   "home": {
     "metadataTitle": "Car Rental Dakhla — Premium Fleet | Limosud Cars",
-    "metadataDescription": "Rent a car in Dakhla with Limosud Cars. Premium fleet, airport delivery, transparent pricing, and 24/7 support for tourists and professionals.",
+    "metadataDescription": "Rent a car in Dakhla with Limosud Cars. Compacts, SUVs and 4x4 — airport delivery, transparent pricing, and 24/7 support.",
     "metadataKeywords": [
       "car rental Dakhla",
       "rent a car Dakhla",
+      "rent a car a Dakhla",
+      "dakhla car rental",
+      "car rental Dakhla airport",
+      "dakhla rent a car",
+      "rent car Dakhla",
       "Limosud Cars",
-      "airport car rental Dakhla",
-      "4x4 rental Morocco"
+      "limosudcars",
+      "mietwagen Dakhla"
     ],
     "fleetTitle": "Our fleet",
     "rental": "Rental",
@@ -202,8 +207,8 @@
     }
   },
   "about": {
-    "metadataTitle": "About — Car rental in Dakhla",
-    "metadataDescription": "Discover Limosud Cars, a car and 4x4 rental agency in Dakhla. Airport delivery, recent fleet, transparent pricing, and 24/7 assistance.",
+    "metadataTitle": "About — Limosud Cars Dakhla Reviews",
+    "metadataDescription": "Discover Limosud Cars, a car rental agency in Dakhla. Customer reviews, recent fleet, airport delivery, and 24/7 assistance.",
     "heroAlt": "Atlantic coast and desert near Dakhla",
     "heroBrand": "Limosud Cars",
     "heroTitle": "Your rental partner in Dakhla",
@@ -271,8 +276,8 @@
     "findCtaContact": "Contact us"
   },
   "contact": {
-    "metadataTitle": "Contact — Car rental in Dakhla",
-    "metadataDescription": "Contact Limosud Cars in Dakhla. Booking, quotes, and assistance by phone, email, or online form.",
+    "metadataTitle": "Contact — Car Rental Dakhla Airport",
+    "metadataDescription": "Contact Limosud Cars in Dakhla. Booking, airport delivery, quotes, and assistance by phone, email, or online form.",
     "brand": "Limosud Cars",
     "title": "Contact",
     "intro": "Have a question about a rental, a quote, or airport delivery? Write to us or call our team in Dakhla."
@@ -295,8 +300,16 @@
     "hoursValue": "Mon–Sat: 8:00 AM–7:00 PM"
   },
   "catalog": {
-    "metadataTitle": "Fleet — Car rental in Dakhla",
-    "metadataDescription": "Browse Limosud Cars fleet in Dakhla. Compacts, SUVs, and 4x4s available for your dates.",
+    "metadataTitle": "Fleet — Car Rental Dakhla | Limosud Cars",
+    "metadataDescription": "Browse Limosud Cars fleet in Dakhla. Rent compacts, SUVs, and 4x4s — book online for airport or city pickup.",
+    "metadataKeywords": [
+      "car rental Dakhla",
+      "rent a car Dakhla",
+      "dakhla car rental",
+      "car rental Dakhla airport",
+      "rent car Dakhla",
+      "Limosud Cars"
+    ],
     "showingPeriod": "Showing cars for your rental period:",
     "to": "to",
     "searchResults": "Search results for:",

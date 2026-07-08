@@ -73,13 +73,18 @@
   },
   "home": {
     "metadataTitle": "Location voiture Dakhla — Flotte premium | Limosud Cars",
-    "metadataDescription": "Louez une voiture à Dakhla avec Limosud Cars. Flotte premium, livraison aéroport, tarifs transparents et assistance 24h/24 pour touristes et professionnels.",
+    "metadataDescription": "Location de voiture à Dakhla avec Limosud Cars. Louez citadine, SUV ou 4x4 — livraison aéroport, tarifs transparents et assistance 24h/24.",
     "metadataKeywords": [
       "location voiture Dakhla",
+      "location de voiture Dakhla",
+      "location voiture a Dakhla",
       "louer une voiture Dakhla",
-      "Limosud Cars",
       "location voiture aéroport Dakhla",
-      "location 4x4 Maroc"
+      "location voiture Dakhla prix",
+      "Limosud Cars",
+      "limosudcars",
+      "location 4x4 Dakhla",
+      "كراء السيارات الداخلة"
     ],
     "fleetTitle": "Notre flotte",
     "rental": "Location",
@@ -202,8 +207,8 @@
     }
   },
   "about": {
-    "metadataTitle": "À propos — Location de voitures à Dakhla",
-    "metadataDescription": "Découvrez Limosud Cars, agence de location de voitures et 4x4 à Dakhla. Livraison aéroport, flotte récente, tarifs transparents et assistance 24h/24.",
+    "metadataTitle": "À propos — Avis Limosud Cars Dakhla",
+    "metadataDescription": "Découvrez Limosud Cars, agence de location de voitures à Dakhla. Avis clients, flotte récente, livraison aéroport et assistance 24h/24.",
     "heroAlt": "Côte atlantique et désert près de Dakhla",
     "heroBrand": "Limosud Cars",
     "heroTitle": "Votre partenaire location à Dakhla",
@@ -271,8 +276,8 @@
     "findCtaContact": "Nous contacter"
   },
   "contact": {
-    "metadataTitle": "Contact — Location de voitures à Dakhla",
-    "metadataDescription": "Contactez Limosud Cars à Dakhla. Réservation, devis et assistance par téléphone, email ou formulaire en ligne.",
+    "metadataTitle": "Contact — Location voiture Dakhla aéroport",
+    "metadataDescription": "Contactez Limosud Cars à Dakhla. Réservation, livraison aéroport, devis et assistance par téléphone, email ou formulaire.",
     "brand": "Limosud Cars",
     "title": "Contact",
     "intro": "Une question sur une location, un devis ou une livraison à l'aéroport ? Écrivez-nous ou appelez notre équipe à Dakhla."
@@ -295,8 +300,16 @@
     "hoursValue": "Lun–Sam : 8h00–19h00"
   },
   "catalog": {
-    "metadataTitle": "Flotte — Location de voitures à Dakhla",
-    "metadataDescription": "Parcourez la flotte Limosud Cars à Dakhla. Citadines, SUV et 4x4 disponibles pour vos dates.",
+    "metadataTitle": "Flotte — Location voiture Dakhla | Limosud Cars",
+    "metadataDescription": "Parcourez la flotte Limosud Cars à Dakhla. Location de voiture, SUV et 4x4 — réservez en ligne pour l'aéroport ou la ville.",
+    "metadataKeywords": [
+      "location voiture Dakhla",
+      "location de voiture Dakhla",
+      "rent a car Dakhla",
+      "dakhla car rental",
+      "location voiture Dakhla maroc",
+      "Limosud Cars"
+    ],
     "showingPeriod": "Véhicules pour votre période de location :",
     "to": "au",
     "searchResults": "Résultats pour :",

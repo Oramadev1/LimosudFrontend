@@ -73,13 +73,15 @@
   },
   "home": {
     "metadataTitle": "Alquiler de coches en Dajla — Flota premium | Limosud Cars",
-    "metadataDescription": "Alquila un coche en Dajla con Limosud Cars. Flota premium, entrega en aeropuerto, precios transparentes y asistencia 24/7 para turistas y profesionales.",
+    "metadataDescription": "Alquiler de coche en Dajla con Limosud Cars. Compactos, SUV y 4x4 — entrega en aeropuerto, precios transparentes y asistencia 24/7.",
     "metadataKeywords": [
+      "alquiler coche Dajla",
       "alquiler de coches Dajla",
       "rent a car Dajla",
-      "Limosud Cars",
       "alquiler coche aeropuerto Dajla",
-      "alquiler 4x4 Marruecos"
+      "Limosud Cars",
+      "limosudcars",
+      "car rental Dakhla"
     ],
     "fleetTitle": "Nuestra flota",
     "rental": "Alquiler",
@@ -295,8 +297,15 @@
     "hoursValue": "Lun–Sáb: 8:00–19:00"
   },
   "catalog": {
-    "metadataTitle": "Flota — Alquiler de coches en Dajla",
-    "metadataDescription": "Explore la flota de Limosud Cars en Dajla. Compactos, SUV y 4x4 disponibles para sus fechas.",
+    "metadataTitle": "Flota — Alquiler de coches en Dajla | Limosud Cars",
+    "metadataDescription": "Explore la flota Limosud Cars en Dajla. Alquiler de coches, SUV y 4x4 — reserve en línea para aeropuerto o ciudad.",
+    "metadataKeywords": [
+      "alquiler coche Dajla",
+      "alquiler de coches Dajla",
+      "rent a car Dakhla",
+      "car rental Dakhla",
+      "Limosud Cars"
+    ],
     "showingPeriod": "Vehículos para su período de alquiler:",
     "to": "a",
     "searchResults": "Resultados para:",
