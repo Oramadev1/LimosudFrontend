@@ -396,6 +396,8 @@
     "prevMonth": "Previous month",
     "nextMonth": "Next month",
     "bookedDatesHint": "Greyed-out dates are already booked.",
+    "unavailableDatesHint": "Crossed-out dates are already booked. Light grey dates are in the past.",
+    "completeRentalDatesHint": "Select pick-up and drop-off dates and times to check availability.",
     "validationNameMin": "Name must be at least 2 characters",
     "validationPhoneRequired": "Phone number is required",
     "validationPhoneInvalid": "Enter a valid phone number",

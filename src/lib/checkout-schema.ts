@@ -96,8 +96,17 @@ export function isRentalPeriodValid(
   const dropoff = rentalDatetime(dropoffDate, dropoffTime);
 
   if (!pickup || !dropoff) {
-    return true;
+    return false;
   }
 
   return dropoff > pickup;
+}
+
+export function isRentalPeriodComplete(
+  pickupDate: string,
+  pickupTime: string,
+  dropoffDate: string,
+  dropoffTime: string,
+): boolean {
+  return Boolean(pickupDate && pickupTime && dropoffDate && dropoffTime);
 }

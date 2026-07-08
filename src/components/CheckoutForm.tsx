@@ -18,6 +18,7 @@ import {
   createRentalSchema,
   createConfirmSchema,
   PENDING_CUSTOMER_NATIONALITY,
+  isRentalPeriodComplete,
   isRentalPeriodValid,
   type BillingData,
   type RentalData,
@@ -303,8 +304,15 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
   const dropoffTime = rental.watch("dropoffTime") ?? "";
   const pickupCity = rental.watch("pickupCity") ?? "";
   const dropoffCity = rental.watch("dropoffCity") ?? "";
+  const rentalPeriodComplete = isRentalPeriodComplete(
+    pickupDate,
+    pickupTime,
+    dropoffDate,
+    dropoffTime,
+  );
   const rentalPeriodValid = isRentalPeriodValid(pickupDate, pickupTime, dropoffDate, dropoffTime);
   const rentalPeriodBlocked =
+    rentalPeriodComplete &&
     rentalPeriodValid &&
     rentalRangeOverlapsBlocked(
       pickupDate,
@@ -313,9 +321,10 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
       dropoffTime,
       blockedPeriods,
     );
-  const days = rentalPeriodValid && !rentalPeriodBlocked
-    ? calculateRentalDays(pickupDate, pickupTime, dropoffDate, dropoffTime)
-    : 0;
+  const days =
+    rentalPeriodComplete && rentalPeriodValid && !rentalPeriodBlocked
+      ? calculateRentalDays(pickupDate, pickupTime, dropoffDate, dropoffTime)
+      : 0;
   const meetsMinRentalDays = days >= MIN_RENTAL_DAYS;
   const pickupLocation = locations.find((location) => String(location.id) === pickupCity);
   const dropoffLocation = locations.find((location) => String(location.id) === dropoffCity);
@@ -558,6 +567,7 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
                         field.onBlur();
                         rental.trigger().then((valid) => setStep2Done(valid));
                       }}
+                      blockedPeriods={blockedPeriods}
                       minDate={pickupDate || todayYmd()}
                       error={rental.formState.errors.dropoffDate?.message}
                       name={field.name}
@@ -576,28 +586,35 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
               />
             </div>
 
-            {!rentalPeriodValid && pickupDate && dropoffDate && pickupTime && dropoffTime ? (
+            {!rentalPeriodComplete && pickupDate && dropoffDate ? (
+              <p className="flex items-start gap-2 text-xs font-medium text-amber-600">
+                <AlertCircle size={14} className="mt-0.5 shrink-0" />
+                {t("completeRentalDatesHint")}
+              </p>
+            ) : null}
+
+            {rentalPeriodComplete && !rentalPeriodValid ? (
               <p className="flex items-start gap-2 text-xs font-medium text-red-500">
                 <AlertCircle size={14} className="mt-0.5 shrink-0" />
                 {t("dropoffBeforePickup")}
               </p>
             ) : null}
 
-            {rentalPeriodValid && rentalPeriodBlocked ? (
+            {rentalPeriodComplete && rentalPeriodValid && rentalPeriodBlocked ? (
               <p className="flex items-start gap-2 text-xs font-medium text-red-500">
                 <AlertCircle size={14} className="mt-0.5 shrink-0" />
                 {t("overlapError")}
               </p>
             ) : null}
 
-            {rentalPeriodValid && days > 0 && !meetsMinRentalDays ? (
+            {rentalPeriodComplete && rentalPeriodValid && days > 0 && !meetsMinRentalDays ? (
               <p className="flex items-start gap-2 text-xs font-medium text-red-500">
                 <AlertCircle size={14} className="mt-0.5 shrink-0" />
                 {t("validationMinRentalDays")}
               </p>
             ) : null}
 
-            {rentalPeriodValid && meetsMinRentalDays ? (
+            {rentalPeriodComplete && rentalPeriodValid && meetsMinRentalDays ? (
               <p className="text-xs font-semibold text-[#3563E9]">
                 {days} {days > 1 ? t("days") : t("day")} × {formatCurrency(pricePerDay, locale)}{catalogT("perDay")} = {formatCurrency(pricing.rentalSubtotal, locale)}
               </p>
@@ -688,17 +705,22 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
         <div className="border-t border-gray-100" />
 
         <div className="flex flex-col gap-3 text-sm">
-          {!rentalPeriodValid && pickupDate && dropoffDate ? (
+          {!rentalPeriodComplete && pickupDate && dropoffDate ? (
+            <p className="rounded-[8px] bg-amber-50 px-3 py-2 text-xs font-medium text-amber-700">
+              {t("completeRentalDatesHint")}
+            </p>
+          ) : null}
+          {rentalPeriodComplete && !rentalPeriodValid ? (
             <p className="rounded-[8px] bg-red-50 px-3 py-2 text-xs font-medium text-red-600">
               {t("dropoffBeforePickup")}
             </p>
           ) : null}
-          {rentalPeriodValid && rentalPeriodBlocked ? (
+          {rentalPeriodComplete && rentalPeriodValid && rentalPeriodBlocked ? (
             <p className="rounded-[8px] bg-red-50 px-3 py-2 text-xs font-medium text-red-600">
-              {t("blockedDatesHint")}
+              {t("overlapError")}
             </p>
           ) : null}
-          {rentalPeriodValid && days > 0 && !meetsMinRentalDays ? (
+          {rentalPeriodComplete && rentalPeriodValid && days > 0 && !meetsMinRentalDays ? (
             <p className="rounded-[8px] bg-red-50 px-3 py-2 text-xs font-medium text-red-600">
               {t("validationMinRentalDays")}
             </p>
