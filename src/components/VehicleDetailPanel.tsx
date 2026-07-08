@@ -93,9 +93,6 @@ export default function VehicleDetailPanel({ vehicle }: { vehicle: Vehicle }) {
             </h1>
             <VehicleAvailabilityBadge vehicle={vehicle} />
           </div>
-          <p className="mt-1 text-xs text-gray-400">
-            {[vehicle.brand?.name, vehicle.model].filter(Boolean).join(" · ")}
-          </p>
           {!availability.rentable ? (
             <p className="mt-2 text-sm font-medium text-red-500">
               {t(availability.labelKey)}

@@ -11,17 +11,11 @@ import { VehicleImagePlaceholder } from "@/components/VehicleImagePlaceholder";
 import type { Locale } from "@/i18n/config";
 import type { MarketingCar } from "@/types/marketing";
 
-function carSubtitle(car: MarketingCar): string {
-  const parts = [car.brand, car.model].filter(Boolean);
-  return parts.length > 0 ? parts.join(" · ") : (car.category ?? "");
-}
-
 export function HomeCarCard({ car }: { car: MarketingCar }) {
   const t = useTranslations("home");
   const locale = useLocale() as Locale;
   const href = car.href ?? routes.vehicles;
   const priceLabel = formatCurrency(car.price, locale);
-  const subtitle = carSubtitle(car);
 
   return (
     <motion.div
@@ -50,8 +44,6 @@ export function HomeCarCard({ car }: { car: MarketingCar }) {
 
       <div className="p-4">
         <h3 className="text-sm font-semibold text-[#1A1A1A]">{car.name}</h3>
-
-        {subtitle ? <p className="mt-1 text-xs text-[#888]">{subtitle}</p> : null}
 
         <div className="mt-3 flex flex-wrap gap-2">
           {[`${car.seats} ${t("seats")}`, car.fuel, car.transmission].map((tag) => (

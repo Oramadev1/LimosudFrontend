@@ -54,9 +54,6 @@ export default function CarCard({
           <h3 className="truncate text-base font-bold text-gray-900">
             {vehicle.name}
           </h3>
-          <span className="text-xs text-gray-400">
-            {vehicle.brand?.name ?? vehicle.model}
-          </span>
         </Link>
         <VehicleAvailabilityBadge vehicle={vehicle} />
       </div>
