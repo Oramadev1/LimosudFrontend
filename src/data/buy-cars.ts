@@ -4,7 +4,6 @@ export const buyCars: MarketingCar[] = [
   {
     id: 4,
     name: "Jaguar XE L P250",
-    year: 2019,
     image: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=800",
     brand: "Jaguar",
     model: "XE L P250",
@@ -18,7 +17,6 @@ export const buyCars: MarketingCar[] = [
   {
     id: 5,
     name: "Mazda CX-5",
-    year: 2019,
     image: "https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=800",
     brand: "Mazda",
     model: "CX-5",
@@ -32,7 +30,6 @@ export const buyCars: MarketingCar[] = [
   {
     id: 6,
     name: "Hyundai Elantra",
-    year: 2020,
     image: "https://images.unsplash.com/photo-1606016159991-dfe4f2746ad5?w=800",
     brand: "Hyundai",
     model: "Elantra",
