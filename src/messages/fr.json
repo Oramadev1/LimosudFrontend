@@ -396,8 +396,6 @@
     "prevMonth": "Mois précédent",
     "nextMonth": "Mois suivant",
     "bookedDatesHint": "Les dates grisées sont déjà réservées.",
-    "unavailableDatesHint": "Les dates barrées sont déjà réservées. Les dates gris clair sont passées.",
-    "completeRentalDatesHint": "Sélectionnez les dates et heures de prise en charge et de retour pour vérifier la disponibilité.",
     "validationNameMin": "Le nom doit contenir au moins 2 caractères",
     "validationPhoneRequired": "Le numéro de téléphone est requis",
     "validationPhoneInvalid": "Entrez un numéro de téléphone valide",

@@ -205,9 +205,7 @@ export function RentalDateField({
             }
 
             const dateYmd = toDateYmd(date);
-            const past = isBeforeMin(dateYmd, minDate);
-            const blocked = isCalendarDayBlocked(dateYmd, blockedPeriods);
-            const disabled = past || blocked;
+            const disabled = isDisabled(date);
             const selected = value === dateYmd;
 
             return (
@@ -218,9 +216,7 @@ export function RentalDateField({
                 onClick={() => selectDate(date)}
                 className={`h-8 rounded-md text-sm transition ${
                   disabled
-                    ? blocked
-                      ? "cursor-not-allowed text-gray-300 line-through"
-                      : "cursor-not-allowed text-gray-300"
+                    ? "cursor-not-allowed text-gray-300 line-through"
                     : selected
                       ? "bg-[#3563E9] font-semibold text-white"
                       : "text-gray-700 hover:bg-[#3563E9]/10"
@@ -232,7 +228,7 @@ export function RentalDateField({
           })}
         </div>
 
-        <p className="mt-3 text-[11px] text-gray-400">{t("unavailableDatesHint")}</p>
+        <p className="mt-3 text-[11px] text-gray-400">{t("bookedDatesHint")}</p>
       </div>
     ) : null;
 
