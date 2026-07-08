@@ -62,7 +62,7 @@ export default function Navbar() {
 
   const shellClass = overlayOnHero
     ? "border-white/25 bg-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.12)] backdrop-blur-xl"
-    : "border-black/[0.06] bg-white/90 shadow-[0_4px_24px_rgba(0,0,0,0.06)] backdrop-blur-xl";
+    : "border-black/[0.06] bg-white shadow-[0_4px_24px_rgba(0,0,0,0.06)]";
 
   const linkBase = overlayOnHero
     ? "text-white/90 hover:bg-white/15 hover:text-white"
@@ -78,7 +78,7 @@ export default function Navbar() {
         className={`z-50 ${
           isHome
             ? `fixed inset-x-0 top-0 ${overlayOnHero ? "pt-4" : "pt-3"}`
-            : "sticky top-0 pt-3"
+            : "sticky top-0 bg-[#F5F5F5] pt-3 pb-1"
         }`}
       >
         <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
