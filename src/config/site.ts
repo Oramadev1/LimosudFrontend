@@ -3,6 +3,8 @@ export const siteConfig = {
   shortName: "Limosud",
   brand: "LIMOSUD CARS",
   logo: "/logo.png",
+  /** Square logo with background — favicon, browser tab, Google search icon only */
+  brandIcon: "/IMG_7271.JPG.jpeg",
   heroBanner: "/heroandnavbarimge.jpeg",
   description:
     "Louez une voiture à Dakhla avec Limosud Cars. Flotte premium, livraison aéroport, tarifs transparents et assistance 24h/24.",
