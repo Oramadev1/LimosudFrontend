@@ -18,8 +18,13 @@ export const siteConfig = {
   keywords: [
     "location voiture Dakhla",
     "location de voiture Dakhla",
+    "dakhla location voiture",
+    "dakhla location",
+    "agence location voiture Dakhla",
     "louer une voiture Dakhla",
     "location voiture aéroport Dakhla",
+    "location voiture Dakhla prix",
+    "location 4x4 Dakhla",
     "Limosud Cars",
     "limosudcars",
     "car rental Dakhla",

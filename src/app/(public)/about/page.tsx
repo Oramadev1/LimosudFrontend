@@ -41,14 +41,7 @@ export async function generateMetadata() {
     description: t("metadataDescription"),
     path: routes.about,
     locale: intlLocale(locale),
-    keywords: [
-      "Limosud Cars",
-      "avis sur Limosud Cars Dakhla",
-      "location voiture Dakhla",
-      "car rental Dakhla",
-      "4x4 Dakhla",
-      "aéroport Dakhla",
-    ],
+    keywords: t.raw("metadataKeywords") as string[],
   });
 }
 

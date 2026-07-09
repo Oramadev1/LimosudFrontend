@@ -72,13 +72,16 @@
     "seeMore": "See more"
   },
   "home": {
-    "metadataTitle": "Car Rental Dakhla — Premium Fleet | Limosud Cars",
-    "metadataDescription": "Rent a car in Dakhla with Limosud Cars. Compacts, SUVs and 4x4 — airport delivery, transparent pricing, and 24/7 support.",
+    "metadataTitle": "Car Rental Dakhla — Agency & Premium Fleet | Limosud Cars",
+    "metadataDescription": "Car rental agency in Dakhla. Rent compacts, SUVs, and 4x4s with Limosud Cars — airport delivery, transparent pricing, and 24/7 support.",
     "metadataKeywords": [
       "car rental Dakhla",
       "rent a car Dakhla",
       "rent a car a Dakhla",
       "dakhla car rental",
+      "dakhla location",
+      "dakhla location voiture",
+      "car rental agency Dakhla",
       "car rental Dakhla airport",
       "dakhla rent a car",
       "rent car Dakhla",
@@ -207,8 +210,19 @@
     }
   },
   "about": {
-    "metadataTitle": "About — Limosud Cars Dakhla Reviews",
+    "metadataTitle": "Car Rental Agency Dakhla — About | Limosud Cars",
     "metadataDescription": "Discover Limosud Cars, a car rental agency in Dakhla. Customer reviews, recent fleet, airport delivery, and 24/7 assistance.",
+    "metadataKeywords": [
+      "car rental agency Dakhla",
+      "Limosud Cars Dakhla reviews",
+      "car rental Dakhla",
+      "rent a car Dakhla",
+      "dakhla car rental",
+      "dakhla location",
+      "4x4 Dakhla",
+      "Dakhla airport",
+      "Limosud Cars"
+    ],
     "heroAlt": "Atlantic coast and desert near Dakhla",
     "heroBrand": "Limosud Cars",
     "heroTitle": "Your rental partner in Dakhla",
@@ -306,8 +320,11 @@
       "car rental Dakhla",
       "rent a car Dakhla",
       "dakhla car rental",
+      "car rental agency Dakhla",
+      "dakhla location voiture",
       "car rental Dakhla airport",
       "rent car Dakhla",
+      "4x4 Dakhla",
       "Limosud Cars"
     ],
     "showingPeriod": "Showing cars for your rental period:",

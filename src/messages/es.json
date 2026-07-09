@@ -72,16 +72,18 @@
     "seeMore": "Ver más"
   },
   "home": {
-    "metadataTitle": "Alquiler de coches en Dajla — Flota premium | Limosud Cars",
-    "metadataDescription": "Alquiler de coche en Dajla con Limosud Cars. Compactos, SUV y 4x4 — entrega en aeropuerto, precios transparentes y asistencia 24/7.",
+    "metadataTitle": "Alquiler de coches en Dajla — Agencia y flota premium | Limosud Cars",
+    "metadataDescription": "Agencia de alquiler de coches en Dajla. Compactos, SUV y 4x4 con Limosud Cars — entrega en aeropuerto, precios transparentes y asistencia 24/7.",
     "metadataKeywords": [
       "alquiler coche Dajla",
       "alquiler de coches Dajla",
       "rent a car Dajla",
       "alquiler coche aeropuerto Dajla",
+      "agencia alquiler coche Dajla",
+      "dakhla location",
+      "car rental Dakhla",
       "Limosud Cars",
-      "limosudcars",
-      "car rental Dakhla"
+      "limosudcars"
     ],
     "fleetTitle": "Nuestra flota",
     "rental": "Alquiler",
@@ -204,8 +206,19 @@
     }
   },
   "about": {
-    "metadataTitle": "Sobre nosotros — Alquiler de coches en Dajla",
+    "metadataTitle": "Agencia alquiler coche Dajla — Sobre nosotros | Limosud Cars",
     "metadataDescription": "Descubra Limosud Cars, agencia de alquiler de coches y 4x4 en Dajla. Entrega en aeropuerto, flota reciente, tarifas transparentes y asistencia 24/7.",
+    "metadataKeywords": [
+      "agencia alquiler coche Dajla",
+      "alquiler coche Dajla",
+      "alquiler de coches Dajla",
+      "rent a car Dakhla",
+      "car rental Dakhla",
+      "dakhla location",
+      "4x4 Dajla",
+      "aeropuerto Dajla",
+      "Limosud Cars"
+    ],
     "heroAlt": "Costa atlántica y desierto cerca de Dajla",
     "heroBrand": "Limosud Cars",
     "heroTitle": "Su socio de alquiler en Dajla",
@@ -302,8 +315,10 @@
     "metadataKeywords": [
       "alquiler coche Dajla",
       "alquiler de coches Dajla",
+      "agencia alquiler coche Dajla",
       "rent a car Dakhla",
       "car rental Dakhla",
+      "alquiler 4x4 Dajla",
       "Limosud Cars"
     ],
     "showingPeriod": "Vehículos para su período de alquiler:",
