@@ -26,7 +26,7 @@ Chez Limosud Cars, vous pouvez louer des 4x4 pour les pistes et les excursions, 
 
 L'un des grands avantages reste la livraison à l'aéroport de Dakhla ou directement à votre hébergement. À l'arrivée, le véhicule vous attend avec le contrat prêt. L'assistance client est disponible 7j/7 pour répondre à vos questions avant, pendant et après la location.
 
-Que vous veniez pour le kitesurf, le tourisme ou un déplacement professionnel, Limosud Cars propose des tarifs transparents et une flotte entretenue. Contactez l'agence au 06 61 04 09 67 ou par e-mail à limosudcars@gmail.com pour préparer votre séjour.`,
+Que vous veniez pour le kitesurf, le tourisme ou un déplacement professionnel, Limosud Cars propose des tarifs transparents et une flotte entretenue. Contactez l'agence au 06 61 04 09 67 ou par e-mail à contact@limosudcars.com pour préparer votre séjour.`,
   },
   {
     id: 2,
@@ -90,7 +90,7 @@ Sélectionnez vos dates de début et de fin, puis le lieu de prise en charge —
 
 Après envoi de la demande, l'équipe vérifie la disponibilité et vous confirme la réservation. Munissez-vous d'un permis de conduire valide et d'une pièce d'identité pour la signature du contrat. Une caution peut être demandée selon le véhicule et les options d'assurance choisies.
 
-Pour toute question avant de réserver, contactez limosudcars@gmail.com ou le 06 61 04 09 67. L'assistance reste disponible 24h/24 pendant votre location.`,
+Pour toute question avant de réserver, contactez contact@limosudcars.com ou le 06 61 04 09 67. L'assistance reste disponible 24h/24 pendant votre location.`,
   },
   {
     id: 6,

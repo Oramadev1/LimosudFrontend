@@ -33,7 +33,7 @@ export const siteConfig = {
     "كراء السيارات الداخلة",
   ],
   twitterHandle: "",
-  contactEmail: "Limosudcars@gmail.com",
+  contactEmail: "contact@limosudcars.com",
   phone: "06 61 04 09 67",
   secondaryPhone: "06 55 75 09 46",
   address: "Hay alqods N10 - Dakhla",
