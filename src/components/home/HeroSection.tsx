@@ -56,7 +56,7 @@ export function HeroSection() {
       <div className="relative min-h-[560px] w-full sm:min-h-[620px] lg:min-h-[680px]">
         <Image
           src={siteConfig.heroBanner}
-          alt="Limosud Cars"
+          alt="Location de voitures à Dakhla — Limosud Cars"
           fill
           priority
           className="object-cover object-center opacity-95"

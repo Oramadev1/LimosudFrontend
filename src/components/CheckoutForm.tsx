@@ -23,6 +23,7 @@ import {
   type RentalData,
   type ConfirmData,
 } from "@/lib/checkout-schema";
+import { INPUT_LIMITS } from "@/lib/input-limits";
 import {
   combineDatetime,
   formatCurrency,
@@ -122,12 +123,14 @@ function InputField({
   error,
   registration,
   type = "text",
+  maxLength,
 }: {
   label: string;
   placeholder: string;
   error?: string;
   registration: object;
   type?: string;
+  maxLength?: number;
 }) {
   const id = label.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
@@ -143,6 +146,7 @@ function InputField({
         id={id}
         type={type}
         placeholder={placeholder}
+        maxLength={maxLength}
         {...registration}
         className={`w-full rounded-[8px] border bg-[#F6F7F9] px-4 py-3 text-sm text-gray-700 outline-none transition-colors placeholder:text-gray-300 ${
           error
@@ -479,12 +483,14 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
               placeholder={t("name")}
               error={billing.formState.errors.name?.message}
               registration={billing.register("name")}
+              maxLength={INPUT_LIMITS.name}
             />
             <InputField
               label={t("phone")}
               placeholder={t("phone")}
               error={billing.formState.errors.phone?.message}
               registration={billing.register("phone")}
+              maxLength={INPUT_LIMITS.phone}
             />
             <InputField
               label={t("email")}
@@ -492,6 +498,7 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
               type="email"
               error={billing.formState.errors.email?.message}
               registration={billing.register("email")}
+              maxLength={INPUT_LIMITS.email}
             />
           </div>
         </SectionCard>

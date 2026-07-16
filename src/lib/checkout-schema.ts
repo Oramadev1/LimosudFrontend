@@ -1,5 +1,10 @@
 import { z } from "zod";
 
+import {
+  INPUT_LIMITS,
+  PERSON_NAME_PATTERN,
+  PHONE_PATTERN,
+} from "@/lib/input-limits";
 import { MIN_RENTAL_DAYS, calculateRentalDays } from "@/lib/rental-rules";
 
 function rentalDatetime(date: string, time: string): Date | null {
@@ -19,14 +24,23 @@ type CheckoutTranslator = (key: string) => string;
 
 export function createBillingSchema(t: CheckoutTranslator) {
   return z.object({
-    name: z.string().min(2, t("validationNameMin")),
+    name: z
+      .string()
+      .trim()
+      .min(2, t("validationNameMin"))
+      .max(INPUT_LIMITS.name, t("validationNameMax"))
+      .regex(PERSON_NAME_PATTERN, t("validationNameInvalid")),
     phone: z
       .string()
+      .trim()
       .min(1, t("validationPhoneRequired"))
-      .regex(/^\+?[\d\s\-]{7,15}$/, t("validationPhoneInvalid")),
+      .max(INPUT_LIMITS.phone, t("validationPhoneMax"))
+      .regex(PHONE_PATTERN, t("validationPhoneInvalid")),
     email: z
       .string()
+      .trim()
       .min(1, t("validationEmailRequired"))
+      .max(INPUT_LIMITS.email, t("validationEmailMax"))
       .email(t("validationEmailInvalid")),
   });
 }

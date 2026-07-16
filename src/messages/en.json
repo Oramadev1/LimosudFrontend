@@ -11,9 +11,9 @@
     "language": "Language"
   },
   "hero": {
-    "titleLine1": "Rent trusted",
-    "titleAccent": "cars",
-    "description": "Renting a car is easy and fast with Limosud Cars. Premium fleet in Dakhla.",
+    "titleLine1": "Car rental in Dakhla",
+    "titleAccent": "with Limosud Cars",
+    "description": "Local agency in Dakhla: compacts, SUVs and 4x4s, airport delivery, transparent rates and 24/7 support.",
     "statsBrands": "Car brands",
     "statsClients": "Clients"
   },
@@ -37,7 +37,7 @@
     "sameDropoff": "Same drop-off as pick-up"
   },
   "footer": {
-    "description": "Renting a car is easy and fast with Limosud Cars. Premium fleet in Dakhla.",
+    "description": "Car rental in Dakhla with Limosud Cars — recent fleet, airport delivery and 24/7 support.",
     "fleet": "Fleet",
     "services": "Services",
     "company": "Company",
@@ -72,8 +72,8 @@
     "seeMore": "See more"
   },
   "home": {
-    "metadataTitle": "Car Rental Dakhla — Agency & Premium Fleet | Limosud Cars",
-    "metadataDescription": "Car rental agency in Dakhla. Rent compacts, SUVs, and 4x4s with Limosud Cars — airport delivery, transparent pricing, and 24/7 support.",
+    "metadataTitle": "Car rental in Dakhla with Limosud Cars",
+    "metadataDescription": "Limosud Cars offers a range of modern cars in Dakhla for travel and daily trips. Compacts, SUVs and 4x4s, airport delivery, clear pricing and 24/7 support.",
     "metadataKeywords": [
       "car rental Dakhla",
       "rent a car Dakhla",
@@ -89,17 +89,17 @@
       "limosudcars",
       "mietwagen Dakhla"
     ],
-    "fleetTitle": "Our fleet",
+    "fleetTitle": "Car rental fleet in Dakhla",
     "rental": "Rental",
     "viewAll": "View all",
-    "whyChooseUs": "Why choose us",
+    "whyChooseUs": "Why rent in Dakhla with us",
     "features": {
       "reliabilityTitle": "Guaranteed reliability",
-      "reliabilityText": "Every vehicle is inspected and maintained before each rental to keep you safe on the road.",
+      "reliabilityText": "Every vehicle is inspected and maintained before each rental to keep you safe on the road in Dakhla.",
       "choiceTitle": "Wide vehicle selection",
-      "choiceText": "From compact city cars to SUVs, our fleet covers every need in Dakhla.",
+      "choiceText": "From city cars to SUVs and 4x4s, a fleet built for town, airport, and trips around Dakhla.",
       "supportTitle": "24/7 customer support",
-      "supportText": "Our team is available around the clock to assist you and answer your questions."
+      "supportText": "Our local team in Dakhla is available around the clock before and during your rental."
     },
     "testimonialsTitle": "Testimonials",
     "loadVehiclesError": "Unable to load vehicles. Please refresh the page.",
@@ -311,7 +311,17 @@
     "phone": "Phone",
     "email": "Email",
     "hours": "Hours",
-    "hoursValue": "Mon–Sat: 8:00 AM–7:00 PM"
+    "hoursValue": "Mon–Sat: 8:00 AM–7:00 PM",
+    "validationNameMin": "Name must be at least 2 characters",
+    "validationNameMax": "Name is too long",
+    "validationNameInvalid": "Name contains invalid characters",
+    "validationEmailRequired": "Email is required",
+    "validationEmailInvalid": "Enter a valid email address",
+    "validationEmailMax": "Email is too long",
+    "validationPhoneInvalid": "Enter a valid phone number",
+    "validationPhoneMax": "Phone number is too long",
+    "validationMessageMin": "Message must be at least 10 characters",
+    "validationMessageMax": "Message is too long"
   },
   "catalog": {
     "metadataTitle": "Fleet — Car Rental Dakhla | Limosud Cars",
@@ -417,10 +427,14 @@
     "nextMonth": "Next month",
     "bookedDatesHint": "Greyed-out dates are already booked.",
     "validationNameMin": "Name must be at least 2 characters",
+    "validationNameMax": "Name is too long",
+    "validationNameInvalid": "Name contains invalid characters",
     "validationPhoneRequired": "Phone number is required",
     "validationPhoneInvalid": "Enter a valid phone number",
+    "validationPhoneMax": "Phone number is too long",
     "validationEmailRequired": "Email is required",
     "validationEmailInvalid": "Enter a valid email address",
+    "validationEmailMax": "Email is too long",
     "validationPickupLocation": "Select a pick-up location",
     "validationPickupDate": "Select a pick-up date",
     "validationPickupTime": "Select a pick-up time",

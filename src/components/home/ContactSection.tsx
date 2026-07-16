@@ -1,31 +1,80 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useMemo, useState } from "react";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 import { submitContactMessage } from "@/lib/api/public";
 import { ApiError } from "@/lib/api/client";
 import { siteConfig } from "@/config/site";
+import { createContactSchema } from "@/lib/contact-schema";
+import { INPUT_LIMITS } from "@/lib/input-limits";
+import {
+  sanitizeEmail,
+  sanitizeMultilineText,
+  sanitizePlainText,
+} from "@/lib/sanitize";
+
+type FieldErrors = Partial<Record<"name" | "email" | "phone" | "message", string>>;
 
 export function ContactSection({ showHeading = true }: { showHeading?: boolean }) {
   const t = useTranslations("contactForm");
+  const schema = useMemo(() => createContactSchema(t), [t]);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
   const [submitting, setSubmitting] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
+
+  function clearFieldError(field: keyof FieldErrors) {
+    setFieldErrors((current) => {
+      if (!current[field]) {
+        return current;
+      }
+
+      const next = { ...current };
+      delete next[field];
+      return next;
+    });
+  }
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     setError(null);
+    setFieldErrors({});
+
+    const payload = {
+      name: sanitizePlainText(form.name, INPUT_LIMITS.name),
+      email: sanitizeEmail(form.email, INPUT_LIMITS.email),
+      phone: sanitizePlainText(form.phone, INPUT_LIMITS.phone),
+      message: sanitizeMultilineText(form.message, INPUT_LIMITS.message),
+    };
+
+    const parsed = schema.safeParse(payload);
+    if (!parsed.success) {
+      const nextErrors: FieldErrors = {};
+      for (const issue of parsed.error.issues) {
+        const field = issue.path[0];
+        if (
+          typeof field === "string" &&
+          (field === "name" || field === "email" || field === "phone" || field === "message") &&
+          !nextErrors[field]
+        ) {
+          nextErrors[field] = issue.message;
+        }
+      }
+      setFieldErrors(nextErrors);
+      return;
+    }
+
     setSubmitting(true);
 
     try {
       await submitContactMessage({
-        name: form.name,
-        email: form.email,
-        phone: form.phone || undefined,
-        message: form.message,
+        name: parsed.data.name,
+        email: parsed.data.email,
+        phone: parsed.data.phone || undefined,
+        message: parsed.data.message,
       });
       setSent(true);
       setForm({ name: "", email: "", phone: "", message: "" });
@@ -46,7 +95,7 @@ export function ContactSection({ showHeading = true }: { showHeading?: boolean }
         ) : null}
 
         <div className={`grid grid-cols-1 items-start gap-12 lg:grid-cols-2 ${showHeading ? "" : "pt-2"}`}>
-          <form className="space-y-4" onSubmit={handleSubmit}>
+          <form className="space-y-4" onSubmit={handleSubmit} noValidate>
             {sent ? (
               <p className="rounded-lg border border-green-100 bg-green-50 px-4 py-3 text-sm text-green-700">
                 {t("success")}
@@ -60,37 +109,73 @@ export function ContactSection({ showHeading = true }: { showHeading?: boolean }
             ) : null}
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <input
-                required
-                value={form.name}
-                onChange={(e) => setForm((c) => ({ ...c, name: e.target.value }))}
-                placeholder={t("namePlaceholder")}
-                className="w-full rounded-lg border border-[#E5E5E5] px-4 py-3 text-sm text-[#333] outline-none transition focus:border-[#E8192C]"
-              />
-              <input
-                required
-                type="email"
-                value={form.email}
-                onChange={(e) => setForm((c) => ({ ...c, email: e.target.value }))}
-                placeholder={t("emailPlaceholder")}
-                className="w-full rounded-lg border border-[#E5E5E5] px-4 py-3 text-sm text-[#333] outline-none transition focus:border-[#E8192C]"
-              />
+              <div>
+                <input
+                  required
+                  value={form.name}
+                  maxLength={INPUT_LIMITS.name}
+                  onChange={(e) => {
+                    setForm((c) => ({ ...c, name: e.target.value }));
+                    clearFieldError("name");
+                  }}
+                  placeholder={t("namePlaceholder")}
+                  className="w-full rounded-lg border border-[#E5E5E5] px-4 py-3 text-sm text-[#333] outline-none transition focus:border-[#E8192C]"
+                />
+                {fieldErrors.name ? (
+                  <p className="mt-1 text-xs text-red-600">{fieldErrors.name}</p>
+                ) : null}
+              </div>
+              <div>
+                <input
+                  required
+                  type="email"
+                  value={form.email}
+                  maxLength={INPUT_LIMITS.email}
+                  onChange={(e) => {
+                    setForm((c) => ({ ...c, email: e.target.value }));
+                    clearFieldError("email");
+                  }}
+                  placeholder={t("emailPlaceholder")}
+                  className="w-full rounded-lg border border-[#E5E5E5] px-4 py-3 text-sm text-[#333] outline-none transition focus:border-[#E8192C]"
+                />
+                {fieldErrors.email ? (
+                  <p className="mt-1 text-xs text-red-600">{fieldErrors.email}</p>
+                ) : null}
+              </div>
             </div>
-            <input
-              type="tel"
-              value={form.phone}
-              onChange={(e) => setForm((c) => ({ ...c, phone: e.target.value }))}
-              placeholder={t("phonePlaceholder")}
-              className="w-full rounded-lg border border-[#E5E5E5] px-4 py-3 text-sm text-[#333] outline-none transition focus:border-[#E8192C]"
-            />
-            <textarea
-              required
-              rows={5}
-              value={form.message}
-              onChange={(e) => setForm((c) => ({ ...c, message: e.target.value }))}
-              placeholder={t("messagePlaceholder")}
-              className="w-full rounded-lg border border-[#E5E5E5] px-4 py-3 text-sm text-[#333] outline-none transition focus:border-[#E8192C]"
-            />
+            <div>
+              <input
+                type="tel"
+                value={form.phone}
+                maxLength={INPUT_LIMITS.phone}
+                onChange={(e) => {
+                  setForm((c) => ({ ...c, phone: e.target.value }));
+                  clearFieldError("phone");
+                }}
+                placeholder={t("phonePlaceholder")}
+                className="w-full rounded-lg border border-[#E5E5E5] px-4 py-3 text-sm text-[#333] outline-none transition focus:border-[#E8192C]"
+              />
+              {fieldErrors.phone ? (
+                <p className="mt-1 text-xs text-red-600">{fieldErrors.phone}</p>
+              ) : null}
+            </div>
+            <div>
+              <textarea
+                required
+                rows={5}
+                value={form.message}
+                maxLength={INPUT_LIMITS.message}
+                onChange={(e) => {
+                  setForm((c) => ({ ...c, message: e.target.value }));
+                  clearFieldError("message");
+                }}
+                placeholder={t("messagePlaceholder")}
+                className="w-full rounded-lg border border-[#E5E5E5] px-4 py-3 text-sm text-[#333] outline-none transition focus:border-[#E8192C]"
+              />
+              {fieldErrors.message ? (
+                <p className="mt-1 text-xs text-red-600">{fieldErrors.message}</p>
+              ) : null}
+            </div>
             <button
               type="submit"
               disabled={submitting}

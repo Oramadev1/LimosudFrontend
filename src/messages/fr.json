@@ -11,9 +11,9 @@
     "language": "Langue"
   },
   "hero": {
-    "titleLine1": "Louez des voitures",
-    "titleAccent": "de confiance",
-    "description": "Louer une voiture est simple et rapide avec Limosud Cars. Flotte premium à Dakhla.",
+    "titleLine1": "Location de voitures à Dakhla",
+    "titleAccent": "avec Limosud Cars",
+    "description": "Agence locale à Dakhla : citadines, SUV et 4x4, livraison aéroport, tarifs transparents et assistance 24h/24.",
     "statsBrands": "Marques",
     "statsClients": "Clients"
   },
@@ -37,7 +37,7 @@
     "sameDropoff": "Même lieu de restitution"
   },
   "footer": {
-    "description": "Louer une voiture est simple et rapide avec Limosud Cars. Flotte premium à Dakhla.",
+    "description": "Location de voitures à Dakhla avec Limosud Cars — flotte récente, livraison aéroport et assistance 24h/24.",
     "fleet": "Flotte",
     "services": "Services",
     "company": "Entreprise",
@@ -72,8 +72,8 @@
     "seeMore": "Voir plus"
   },
   "home": {
-    "metadataTitle": "Location voiture Dakhla — Agence & flotte premium | Limosud Cars",
-    "metadataDescription": "Agence de location de voiture à Dakhla. Louez citadine, SUV ou 4x4 avec Limosud Cars — livraison aéroport, tarifs transparents et assistance 24h/24.",
+    "metadataTitle": "Location de voitures à Dakhla avec Limosud Cars",
+    "metadataDescription": "Limosud Cars propose une gamme de voitures modernes à Dakhla pour vos trajets et voyages. Citadines, SUV et 4x4, livraison aéroport, tarifs clairs et assistance 24h/24.",
     "metadataKeywords": [
       "location voiture Dakhla",
       "location de voiture Dakhla",
@@ -89,17 +89,17 @@
       "limosudcars",
       "كراء السيارات الداخلة"
     ],
-    "fleetTitle": "Notre flotte",
+    "fleetTitle": "Flotte de location à Dakhla",
     "rental": "Location",
     "viewAll": "Voir tout",
-    "whyChooseUs": "Pourquoi nous choisir",
+    "whyChooseUs": "Pourquoi louer à Dakhla avec nous",
     "features": {
       "reliabilityTitle": "Fiabilité garantie",
-      "reliabilityText": "Tous nos véhicules sont inspectés et entretenus avant chaque location pour garantir votre sécurité.",
+      "reliabilityText": "Tous nos véhicules sont inspectés et entretenus avant chaque location pour garantir votre sécurité à Dakhla.",
       "choiceTitle": "Large choix de véhicules",
-      "choiceText": "Des citadines aux SUV, nous proposons une flotte adaptée à tous vos besoins à Dakhla.",
+      "choiceText": "Des citadines aux SUV et 4x4, une flotte adaptée à la ville, à l'aéroport et aux excursions à Dakhla.",
       "supportTitle": "Service client 24/7",
-      "supportText": "Notre équipe est disponible à toute heure pour vous accompagner et répondre à vos questions."
+      "supportText": "Notre équipe locale à Dakhla est disponible à toute heure pour vous accompagner avant et pendant la location."
     },
     "testimonialsTitle": "Témoignages",
     "loadVehiclesError": "Impossible de charger les véhicules. Actualisez la page.",
@@ -311,7 +311,17 @@
     "phone": "Téléphone",
     "email": "Email",
     "hours": "Horaires",
-    "hoursValue": "Lun–Sam : 8h00–19h00"
+    "hoursValue": "Lun–Sam : 8h00–19h00",
+    "validationNameMin": "Le nom doit contenir au moins 2 caractères",
+    "validationNameMax": "Le nom est trop long",
+    "validationNameInvalid": "Le nom contient des caractères non valides",
+    "validationEmailRequired": "L'adresse e-mail est requise",
+    "validationEmailInvalid": "Entrez une adresse e-mail valide",
+    "validationEmailMax": "L'adresse e-mail est trop longue",
+    "validationPhoneInvalid": "Entrez un numéro de téléphone valide",
+    "validationPhoneMax": "Le numéro de téléphone est trop long",
+    "validationMessageMin": "Le message doit contenir au moins 10 caractères",
+    "validationMessageMax": "Le message est trop long"
   },
   "catalog": {
     "metadataTitle": "Flotte — Location voiture Dakhla | Limosud Cars",
@@ -418,10 +428,14 @@
     "nextMonth": "Mois suivant",
     "bookedDatesHint": "Les dates grisées sont déjà réservées.",
     "validationNameMin": "Le nom doit contenir au moins 2 caractères",
+    "validationNameMax": "Le nom est trop long",
+    "validationNameInvalid": "Le nom contient des caractères non valides",
     "validationPhoneRequired": "Le numéro de téléphone est requis",
     "validationPhoneInvalid": "Entrez un numéro de téléphone valide",
+    "validationPhoneMax": "Le numéro de téléphone est trop long",
     "validationEmailRequired": "L'adresse e-mail est requise",
     "validationEmailInvalid": "Entrez une adresse e-mail valide",
+    "validationEmailMax": "L'adresse e-mail est trop longue",
     "validationPickupLocation": "Choisissez un lieu de prise en charge",
     "validationPickupDate": "Choisissez une date de prise en charge",
     "validationPickupTime": "Choisissez une heure de prise en charge",

@@ -7,13 +7,13 @@ export const siteConfig = {
   brandIcon: "/IMG_7271.JPG.jpeg",
   heroBanner: "/heroandnavbarimge.jpeg",
   description:
-    "Louez une voiture à Dakhla avec Limosud Cars. Flotte premium, livraison aéroport, tarifs transparents et assistance 24h/24.",
+    "Location de voitures à Dakhla avec Limosud Cars. Flotte moderne, livraison aéroport, tarifs transparents et assistance 24h/24.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   apiUrl: process.env.NEXT_PUBLIC_API_URL ?? "https://api.limosudcars.com/api",
   adminUrl: process.env.NEXT_PUBLIC_ADMIN_URL ?? "http://localhost:3001/login",
   locale: "fr_FR",
   language: "fr",
-  defaultTitle: "Limosud Cars — Louez des voitures de confiance",
+  defaultTitle: "Location de voitures à Dakhla avec Limosud Cars",
   titleTemplate: "%s | Limosud Cars",
   keywords: [
     "location voiture Dakhla",

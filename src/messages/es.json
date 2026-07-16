@@ -11,9 +11,9 @@
     "language": "Idioma"
   },
   "hero": {
-    "titleLine1": "Alquila coches",
-    "titleAccent": "de confianza",
-    "description": "Alquilar un coche es fácil y rápido con Limosud Cars. Flota premium en Dajla.",
+    "titleLine1": "Alquiler de coches en Dajla",
+    "titleAccent": "con Limosud Cars",
+    "description": "Agencia local en Dajla: compactos, SUV y 4x4, entrega en aeropuerto, tarifas claras y asistencia 24/7.",
     "statsBrands": "Marcas",
     "statsClients": "Clientes"
   },
@@ -37,7 +37,7 @@
     "sameDropoff": "Misma ubicación de devolución"
   },
   "footer": {
-    "description": "Alquilar un coche es fácil y rápido con Limosud Cars. Flota premium en Dajla.",
+    "description": "Alquiler de coches en Dajla con Limosud Cars — flota reciente, entrega en aeropuerto y asistencia 24/7.",
     "fleet": "Flota",
     "services": "Servicios",
     "company": "Empresa",
@@ -72,8 +72,8 @@
     "seeMore": "Ver más"
   },
   "home": {
-    "metadataTitle": "Alquiler de coches en Dajla — Agencia y flota premium | Limosud Cars",
-    "metadataDescription": "Agencia de alquiler de coches en Dajla. Compactos, SUV y 4x4 con Limosud Cars — entrega en aeropuerto, precios transparentes y asistencia 24/7.",
+    "metadataTitle": "Alquiler de coches en Dajla con Limosud Cars",
+    "metadataDescription": "Limosud Cars ofrece una gama de coches modernos en Dajla para sus viajes. Compactos, SUV y 4x4, entrega en aeropuerto, tarifas claras y asistencia 24/7.",
     "metadataKeywords": [
       "alquiler coche Dajla",
       "alquiler de coches Dajla",
@@ -85,17 +85,17 @@
       "Limosud Cars",
       "limosudcars"
     ],
-    "fleetTitle": "Nuestra flota",
+    "fleetTitle": "Flota de alquiler en Dajla",
     "rental": "Alquiler",
     "viewAll": "Ver todo",
-    "whyChooseUs": "Por qué elegirnos",
+    "whyChooseUs": "Por qué alquilar en Dajla con nosotros",
     "features": {
       "reliabilityTitle": "Fiabilidad garantizada",
-      "reliabilityText": "Todos nuestros vehículos se inspeccionan y mantienen antes de cada alquiler para garantizar su seguridad.",
+      "reliabilityText": "Todos nuestros vehículos se inspeccionan y mantienen antes de cada alquiler para garantizar su seguridad en Dajla.",
       "choiceTitle": "Amplia selección de vehículos",
-      "choiceText": "Desde compactos urbanos hasta SUV, ofrecemos una flota adaptada a todas sus necesidades en Dajla.",
+      "choiceText": "Desde urbanos hasta SUV y 4x4, una flota pensada para la ciudad, el aeropuerto y las excursiones en Dajla.",
       "supportTitle": "Atención al cliente 24/7",
-      "supportText": "Nuestro equipo está disponible en todo momento para acompañarle y responder a sus preguntas."
+      "supportText": "Nuestro equipo local en Dajla está disponible en todo momento antes y durante el alquiler."
     },
     "testimonialsTitle": "Testimonios",
     "loadVehiclesError": "No se pudieron cargar los vehículos. Actualice la página.",
@@ -307,7 +307,17 @@
     "phone": "Teléfono",
     "email": "Email",
     "hours": "Horario",
-    "hoursValue": "Lun–Sáb: 8:00–19:00"
+    "hoursValue": "Lun–Sáb: 8:00–19:00",
+    "validationNameMin": "El nombre debe tener al menos 2 caracteres",
+    "validationNameMax": "El nombre es demasiado largo",
+    "validationNameInvalid": "El nombre contiene caracteres no válidos",
+    "validationEmailRequired": "El correo electrónico es obligatorio",
+    "validationEmailInvalid": "Introduce un correo electrónico válido",
+    "validationEmailMax": "El correo electrónico es demasiado largo",
+    "validationPhoneInvalid": "Introduce un número de teléfono válido",
+    "validationPhoneMax": "El número de teléfono es demasiado largo",
+    "validationMessageMin": "El mensaje debe tener al menos 10 caracteres",
+    "validationMessageMax": "El mensaje es demasiado largo"
   },
   "catalog": {
     "metadataTitle": "Flota — Alquiler de coches en Dajla | Limosud Cars",
@@ -411,10 +421,14 @@
     "nextMonth": "Mes siguiente",
     "bookedDatesHint": "Las fechas en gris ya están reservadas.",
     "validationNameMin": "El nombre debe tener al menos 2 caracteres",
+    "validationNameMax": "El nombre es demasiado largo",
+    "validationNameInvalid": "El nombre contiene caracteres no válidos",
     "validationPhoneRequired": "El número de teléfono es obligatorio",
     "validationPhoneInvalid": "Introduce un número de teléfono válido",
+    "validationPhoneMax": "El número de teléfono es demasiado largo",
     "validationEmailRequired": "El correo electrónico es obligatorio",
     "validationEmailInvalid": "Introduce un correo electrónico válido",
+    "validationEmailMax": "El correo electrónico es demasiado largo",
     "validationPickupLocation": "Selecciona un lugar de recogida",
     "validationPickupDate": "Selecciona una fecha de recogida",
     "validationPickupTime": "Selecciona una hora de recogida",

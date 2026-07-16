@@ -43,7 +43,7 @@ export default function OpenGraphImage() {
 
         <div style={{ display: "flex", flexDirection: "column", gap: "18px", maxWidth: "900px" }}>
           <div style={{ fontSize: "64px", fontWeight: 800, lineHeight: 1.05 }}>
-            Premium car rental in Dakhla
+            Location de voitures à Dakhla
           </div>
           <div style={{ fontSize: "30px", color: "#e2e8f0", lineHeight: 1.35 }}>
             {siteConfig.description}
