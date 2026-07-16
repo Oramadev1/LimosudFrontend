@@ -2,10 +2,11 @@ import type { MetadataRoute } from "next";
 
 import { routes } from "@/config/routes";
 import { getAllBlogPosts } from "@/lib/blogs";
-import { getAllVehicles } from "@/lib/api/public";
+import { resolveApiUrl } from "@/lib/api/base-url";
 import { absoluteUrl } from "@/lib/seo/urls";
 
-export const revalidate = 3600;
+/** Refresh often so newly added cars appear in Google's sitemap quickly. */
+export const revalidate = 300;
 
 function staticRoutes(lastModified: Date): MetadataRoute.Sitemap {
   return [
@@ -48,6 +49,52 @@ function staticRoutes(lastModified: Date): MetadataRoute.Sitemap {
   ];
 }
 
+type PublicVehiclesPage = {
+  data?: Array<{ slug?: string | null }>;
+  meta?: { last_page?: number };
+};
+
+async function fetchVehiclesPage(page: number): Promise<PublicVehiclesPage> {
+  const url = resolveApiUrl(`/public/vehicles?page=${page}`);
+  const response = await fetch(url, {
+    headers: { Accept: "application/json" },
+    next: { revalidate: 300 },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Vehicles API returned ${response.status}`);
+  }
+
+  return (await response.json()) as PublicVehiclesPage;
+}
+
+async function getVehicleSitemapRoutes(
+  lastModified: Date,
+): Promise<MetadataRoute.Sitemap> {
+  try {
+    const firstPage = await fetchVehiclesPage(1);
+    const vehicles = [...(firstPage.data ?? [])];
+    const lastPage = firstPage.meta?.last_page ?? 1;
+
+    for (let page = 2; page <= lastPage; page += 1) {
+      const nextPage = await fetchVehiclesPage(page);
+      vehicles.push(...(nextPage.data ?? []));
+    }
+
+    return vehicles
+      .map((vehicle) => vehicle.slug?.trim())
+      .filter((slug): slug is string => Boolean(slug))
+      .map((slug) => ({
+        url: absoluteUrl(routes.vehicle(slug)),
+        lastModified,
+        changeFrequency: "weekly" as const,
+        priority: 0.8,
+      }));
+  } catch {
+    return [];
+  }
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const lastModified = new Date();
   const blogRoutes: MetadataRoute.Sitemap = getAllBlogPosts().map((post) => ({
@@ -57,21 +104,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  let vehicleRoutes: MetadataRoute.Sitemap = [];
-
-  try {
-    const vehicles = await getAllVehicles();
-    vehicleRoutes = vehicles
-      .filter((vehicle) => Boolean(vehicle.slug))
-      .map((vehicle) => ({
-        url: absoluteUrl(routes.vehicle(vehicle.slug)),
-        lastModified,
-        changeFrequency: "weekly",
-        priority: 0.8,
-      }));
-  } catch {
-    // Keep static + blog URLs when the API is temporarily unavailable.
-  }
+  const vehicleRoutes = await getVehicleSitemapRoutes(lastModified);
 
   return [...staticRoutes(lastModified), ...blogRoutes, ...vehicleRoutes];
 }
