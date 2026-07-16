@@ -14,7 +14,7 @@ import FilterSidebar, {
 import SearchForm from "@/components/SearchForm";
 import { CarGridSkeleton } from "@/components/CarCardSkeleton";
 import { routes } from "@/config/routes";
-import { formatDateTime, combineDatetime } from "@/lib/format";
+import { combineDatetime, formatDateTime } from "@/lib/format";
 import { rentalSearchFromQuery } from "@/lib/rental-search";
 import {
   getMaxVehiclePrice,
@@ -24,39 +24,45 @@ import { useAllVehiclesQuery } from "@/lib/query/hooks";
 import type { Vehicle } from "@/types/api";
 import type { Locale } from "@/i18n/config";
 
-function RentalSummary() {
-  const t = useTranslations("catalog");
-  const locale = useLocale() as Locale;
+function useRentalPeriodFromUrl(): { startDatetime: string; endDatetime: string } | null {
   const searchParams = useSearchParams();
   const rental = rentalSearchFromQuery(searchParams);
 
-  const summary = useMemo(() => {
+  return useMemo(() => {
     if (!rental.pickupDate || !rental.pickupTime || !rental.dropoffDate || !rental.dropoffTime) {
       return null;
     }
 
-    const start = combineDatetime(rental.pickupDate, rental.pickupTime);
-    const end = combineDatetime(rental.dropoffDate, rental.dropoffTime);
+    const startDatetime = combineDatetime(rental.pickupDate, rental.pickupTime);
+    const endDatetime = combineDatetime(rental.dropoffDate, rental.dropoffTime);
 
-    if (!start || !end) {
+    if (!startDatetime || !endDatetime) {
       return null;
     }
 
-    return {
-      start: formatDateTime(start.replace(" ", "T"), locale),
-      end: formatDateTime(end.replace(" ", "T"), locale),
-    };
-  }, [locale, rental.dropoffDate, rental.dropoffTime, rental.pickupDate, rental.pickupTime]);
+    return { startDatetime, endDatetime };
+  }, [rental.dropoffDate, rental.dropoffTime, rental.pickupDate, rental.pickupTime]);
+}
 
-  if (!summary) {
+function RentalSummary() {
+  const t = useTranslations("catalog");
+  const locale = useLocale() as Locale;
+  const period = useRentalPeriodFromUrl();
+
+  if (!period) {
     return null;
   }
 
   return (
     <p className="rounded-lg border border-blue-100 bg-blue-50 px-4 py-3 text-sm text-blue-900">
       {t("showingPeriod")}{" "}
-      <span className="font-semibold">{summary.start}</span> {t("to")}{" "}
-      <span className="font-semibold">{summary.end}</span>
+      <span className="font-semibold">
+        {formatDateTime(period.startDatetime.replace(" ", "T"), locale)}
+      </span>{" "}
+      {t("to")}{" "}
+      <span className="font-semibold">
+        {formatDateTime(period.endDatetime.replace(" ", "T"), locale)}
+      </span>
     </p>
   );
 }
@@ -84,6 +90,7 @@ function CarsContent({ vehicles }: { vehicles: Vehicle[] }) {
   const router = useRouter();
   const maxPrice = getMaxVehiclePrice(vehicles);
   const searchParams = useSearchParams();
+  const period = useRentalPeriodFromUrl();
   const q = searchParams.get("q")?.trim() ?? "";
   const minSeats = parseMinSeats(searchParams.get("seats"));
   const maxPriceFromUrl = parseMaxPrice(searchParams.get("max_price"));
@@ -105,7 +112,7 @@ function CarsContent({ vehicles }: { vehicles: Vehicle[] }) {
 
   useEffect(() => {
     setVisibleCount(9);
-  }, [filters, q]);
+  }, [filters, q, period?.startDatetime, period?.endDatetime]);
 
   function clearFilters() {
     router.replace(routes.vehicles);
@@ -146,9 +153,11 @@ function CarsContent({ vehicles }: { vehicles: Vehicle[] }) {
           <div className="animate-fade-in-up flex flex-col items-center justify-center gap-4 py-24 text-center">
             <span className="text-5xl">🚗</span>
             <p className="text-lg font-semibold text-gray-700 dark:text-gray-200">
-              {t("noCars")}
+              {period ? t("noCarsForDates") : t("noCars")}
             </p>
-            <p className="text-sm text-gray-400">{t("tryFilters")}</p>
+            <p className="text-sm text-gray-400">
+              {period ? t("tryOtherDates") : t("tryFilters")}
+            </p>
             <button
               type="button"
               onClick={clearFilters}
@@ -192,13 +201,26 @@ function CarsContent({ vehicles }: { vehicles: Vehicle[] }) {
   );
 }
 
-export default function CarsCatalog({
-  initialVehicles = [],
+function CarsCatalogLoader({
+  initialVehicles,
+  initialPeriod = null,
 }: {
-  initialVehicles?: Vehicle[];
+  initialVehicles: Vehicle[];
+  initialPeriod?: { startDatetime: string; endDatetime: string } | null;
 }) {
   const t = useTranslations("catalog");
-  const { data: vehicles = [], isPending, isError } = useAllVehiclesQuery(initialVehicles);
+  const period = useRentalPeriodFromUrl();
+  const periodMatches =
+    (period == null && initialPeriod == null) ||
+    (period != null &&
+      initialPeriod != null &&
+      period.startDatetime === initialPeriod.startDatetime &&
+      period.endDatetime === initialPeriod.endDatetime);
+
+  const { data: vehicles = [], isPending, isError } = useAllVehiclesQuery(
+    periodMatches ? initialVehicles : undefined,
+    period,
+  );
 
   if (isPending && !initialVehicles.length) {
     return (
@@ -223,6 +245,16 @@ export default function CarsCatalog({
     );
   }
 
+  return <CarsContent vehicles={vehicles} />;
+}
+
+export default function CarsCatalog({
+  initialVehicles = [],
+  initialPeriod = null,
+}: {
+  initialVehicles?: Vehicle[];
+  initialPeriod?: { startDatetime: string; endDatetime: string } | null;
+}) {
   return (
     <Suspense
       fallback={
@@ -236,7 +268,7 @@ export default function CarsCatalog({
         </div>
       }
     >
-      <CarsContent vehicles={vehicles} />
+      <CarsCatalogLoader initialVehicles={initialVehicles} initialPeriod={initialPeriod} />
     </Suspense>
   );
 }

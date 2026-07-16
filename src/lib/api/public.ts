@@ -16,16 +16,28 @@ export function getLocations() {
   return apiFetch<{ data: Location[] }>("/public/locations");
 }
 
-export function getVehicles(page = 1) {
-  return apiFetch<Paginated<Vehicle>>(`/public/vehicles?page=${page}`);
+export function getVehicles(
+  page = 1,
+  period?: { startDatetime: string; endDatetime: string },
+) {
+  const params = new URLSearchParams({ page: String(page) });
+
+  if (period?.startDatetime && period?.endDatetime) {
+    params.set("start_datetime", period.startDatetime);
+    params.set("end_datetime", period.endDatetime);
+  }
+
+  return apiFetch<Paginated<Vehicle>>(`/public/vehicles?${params.toString()}`);
 }
 
-export async function getAllVehicles(): Promise<Vehicle[]> {
-  const firstPage = await getVehicles(1);
+export async function getAllVehicles(
+  period?: { startDatetime: string; endDatetime: string },
+): Promise<Vehicle[]> {
+  const firstPage = await getVehicles(1, period);
   const vehicles = [...firstPage.data];
 
   for (let page = 2; page <= firstPage.meta.last_page; page += 1) {
-    const nextPage = await getVehicles(page);
+    const nextPage = await getVehicles(page, period);
     vehicles.push(...nextPage.data);
   }
 

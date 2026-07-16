@@ -27,6 +27,7 @@ export interface Vehicle {
   deposit_amount: string;
   description: string | null;
   is_featured: boolean;
+  homepage_rank?: number | null;
   is_active: boolean;
   brand?: LookupRef;
   category?: LookupRef;

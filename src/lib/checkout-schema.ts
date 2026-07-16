@@ -24,6 +24,10 @@ export function createBillingSchema(t: CheckoutTranslator) {
       .string()
       .min(1, t("validationPhoneRequired"))
       .regex(/^\+?[\d\s\-]{7,15}$/, t("validationPhoneInvalid")),
+    email: z
+      .string()
+      .min(1, t("validationEmailRequired"))
+      .email(t("validationEmailInvalid")),
   });
 }
 

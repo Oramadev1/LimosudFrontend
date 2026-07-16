@@ -2,7 +2,10 @@ export type BlockedPeriod = {
   start_datetime: string;
   end_datetime: string;
   status?: string | null;
-  reservation_number?: string;
+  reservation_number?: string | null;
+  type?: "reservation" | "hold";
+  hold_id?: number | null;
+  customer_name?: string | null;
 };
 
 export type VehicleSchedule = {

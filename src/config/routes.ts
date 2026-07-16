@@ -9,4 +9,5 @@ export const routes = {
   terms: "/terms",
   book: (slug: string, query = "") =>
     query ? `/book/${slug}?${query}` : `/book/${slug}`,
+  bookSuccess: "/book/success",
 } as const;

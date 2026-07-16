@@ -15,10 +15,13 @@ import {
 import { queryKeys } from "@/lib/query/keys";
 import type { CreateReservationPayload, Vehicle } from "@/types/api";
 
-export function useAllVehiclesQuery(initialData?: Vehicle[]) {
+export function useAllVehiclesQuery(
+  initialData?: Vehicle[],
+  period?: { startDatetime: string; endDatetime: string } | null,
+) {
   return useQuery({
-    queryKey: queryKeys.vehicles,
-    queryFn: getAllVehicles,
+    queryKey: queryKeys.vehicles(period),
+    queryFn: () => getAllVehicles(period ?? undefined),
     ...(initialData?.length
       ? {
           initialData,

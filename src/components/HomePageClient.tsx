@@ -21,7 +21,13 @@ export default function HomePageClient({
   const t = useTranslations("home");
   const { data: vehicles = [], isPending, isError } = useAllVehiclesQuery(initialVehicles);
 
-  const rentCars = vehicles.slice(0, 6).map((vehicle) => vehicleToMarketingCar(vehicle));
+  const ranked = vehicles
+    .filter((vehicle) => vehicle.homepage_rank != null && vehicle.homepage_rank >= 1 && vehicle.homepage_rank <= 6)
+    .sort((a, b) => (a.homepage_rank ?? 99) - (b.homepage_rank ?? 99));
+
+  const homeFleet = (ranked.length > 0 ? ranked.slice(0, 6) : vehicles.slice(0, 6)).map((vehicle) =>
+    vehicleToMarketingCar(vehicle),
+  );
 
   return (
     <div className="min-w-0 bg-[#F5F5F5]">
@@ -40,7 +46,7 @@ export default function HomePageClient({
           {t("loadVehiclesError")}
         </section>
       ) : (
-        <ServicesSection rentCars={rentCars} />
+        <ServicesSection rentCars={homeFleet} />
       )}
 
       <WhyChooseUsSection />

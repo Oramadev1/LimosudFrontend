@@ -14,6 +14,7 @@ import {
   isRentalSearchPeriodValid,
   rentalSearchFromQuery,
   toDatetimeLocal,
+  toDatetimeLocalFromDate,
   type RentalSearchValues,
 } from "@/lib/rental-search";
 import { calculateRentalDays, meetsMinimumRentalDays, MIN_RENTAL_DAYS } from "@/lib/rental-rules";
@@ -82,13 +83,16 @@ export default function SearchForm({
     toDatetimeLocal(initialValues.dropoffDate, initialValues.dropoffTime),
   );
   const [error, setError] = useState<string | null>(null);
+  const [isClient, setIsClient] = useState(false);
+  const [minPickupDatetime, setMinPickupDatetime] = useState("");
   const { runOnce, busy } = useSubmitLock();
 
   useEffect(() => {
-    if (!locations.length) {
-      return;
-    }
+    setIsClient(true);
+    setMinPickupDatetime(toDatetimeLocalFromDate(new Date()));
+  }, []);
 
+  useEffect(() => {
     const merged = mergeSearchValues(locations, rentalSearchFromQuery(searchParams));
     setPickupLocationId(merged.pickupLocationId);
     setDropoffLocationId(merged.dropoffLocationId);
@@ -102,12 +106,6 @@ export default function SearchForm({
       setDropoffLocationId(pickupLocationId);
     }
   }, [sameLocation, pickupLocationId]);
-
-  const minPickupDatetime = useMemo(() => {
-    const now = new Date();
-    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-    return now.toISOString().slice(0, 16);
-  }, []);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -299,9 +297,10 @@ export default function SearchForm({
               <input
                 type="datetime-local"
                 value={pickupDatetime}
-                min={minPickupDatetime}
+                min={isClient && minPickupDatetime ? minPickupDatetime : undefined}
                 onChange={(event) => setPickupDatetime(event.target.value)}
                 className={`${fieldClass} pl-9`}
+                suppressHydrationWarning
                 required
               />
             </div>
@@ -318,9 +317,12 @@ export default function SearchForm({
               <input
                 type="datetime-local"
                 value={dropoffDatetime}
-                min={pickupDatetime || minPickupDatetime}
+                min={
+                  isClient ? pickupDatetime || minPickupDatetime || undefined : undefined
+                }
                 onChange={(event) => setDropoffDatetime(event.target.value)}
                 className={`${fieldClass} pl-9`}
+                suppressHydrationWarning
                 required
               />
             </div>

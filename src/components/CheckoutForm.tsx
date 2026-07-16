@@ -52,6 +52,7 @@ function applyApiValidationErrors(
   const fieldMap: Record<string, { form: "billing" | "rental"; field: string }> = {
     "customer.full_name": { form: "billing", field: "name" },
     "customer.phone": { form: "billing", field: "phone" },
+    "customer.email": { form: "billing", field: "email" },
     pickup_location_id: { form: "rental", field: "pickupCity" },
     dropoff_location_id: { form: "rental", field: "dropoffCity" },
     start_datetime: { form: "rental", field: "pickupDate" },
@@ -410,6 +411,7 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
             full_name: billingData.name,
             nationality: PENDING_CUSTOMER_NATIONALITY,
             phone: billingData.phone,
+            email: billingData.email,
           },
           vehicle_id: vehicle.id,
           pickup_location_id: Number(rentalData.pickupCity),
@@ -422,11 +424,19 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
           return;
         }
 
-        toast.success(
-          `Reservation ${response.data.reservation_number} — ${formatCurrency(response.data.total_price, locale)}`,
-          { duration: 5000 },
-        );
-        router.push(routes.vehicle(vehicle.slug));
+        const reservation = response.data;
+        const params = new URLSearchParams({
+          reservation_number: reservation.reservation_number,
+          vehicle_name: reservation.vehicle?.name ?? vehicle.name,
+          start_datetime: reservation.start_datetime,
+          end_datetime: reservation.end_datetime,
+          total_price: String(reservation.total_price),
+          total_days: String(reservation.total_days),
+          customer_name: reservation.customer?.full_name ?? billingData.name,
+          phone: reservation.customer?.phone ?? billingData.phone,
+          email: reservation.customer?.email ?? billingData.email,
+        });
+        router.push(`${routes.bookSuccess}?${params.toString()}`);
       } catch (error) {
         const validationBody = error instanceof ApiError ? error.body : error;
 
@@ -475,6 +485,13 @@ export default function CheckoutForm({ vehicle, locations }: CheckoutFormProps) 
               placeholder={t("phone")}
               error={billing.formState.errors.phone?.message}
               registration={billing.register("phone")}
+            />
+            <InputField
+              label={t("email")}
+              placeholder={t("email")}
+              type="email"
+              error={billing.formState.errors.email?.message}
+              registration={billing.register("email")}
             />
           </div>
         </SectionCard>

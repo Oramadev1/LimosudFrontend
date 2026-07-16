@@ -43,6 +43,10 @@ export function toDatetimeLocal(date: string, time: string): string {
   return `${date}T${time.slice(0, 5)}`;
 }
 
+export function toDatetimeLocalFromDate(date: Date): string {
+  return toDatetimeLocal(formatInputDate(date), `${pad(date.getHours())}:${pad(date.getMinutes())}`);
+}
+
 export function fromDatetimeLocal(value: string): { date: string; time: string } {
   if (!value) {
     return { date: "", time: "" };
