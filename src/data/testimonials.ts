@@ -1,31 +1,35 @@
 import type { Testimonial } from "@/types/marketing";
 
+function avatarForName(name: string): string {
+  return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=3563E9&color=fff&size=80`;
+}
+
 export const testimonials: Testimonial[] = [
   {
     id: 1,
-    name: "Sophie Martin",
-    role: "Cliente fidèle",
-    avatar: "https://i.pravatar.cc/80?img=1",
+    name: "Villa Karima prestige",
+    role: "Google review",
+    avatar: avatarForName("Villa Karima"),
     rating: 5,
     quote:
-      "Service exceptionnel ! J'ai loué une voiture pour un weekend à Dakhla et l'expérience était parfaite du début à la fin.",
+      "Great experience with LIMOSudcars in Dakhla! Friendly staff, clean car, and smooth service from start to finish. Highly recommended!",
   },
   {
     id: 2,
-    name: "Karim Benali",
-    role: "Entrepreneur",
-    avatar: "https://i.pravatar.cc/80?img=3",
+    name: "Fouzia El Moussaoui",
+    role: "Google review",
+    avatar: avatarForName("Fouzia El Moussaoui"),
     rating: 5,
     quote:
-      "Location simple et transparente avec Limosud Cars. Le véhicule était impeccable et l'équipe très réactive.",
+      "Great service, car was brought to the hotel and returned at the Airport. The car was very good and clean. Thank you very much.",
   },
   {
     id: 3,
-    name: "Lucie Dubois",
-    role: "Chargée de projet",
-    avatar: "https://i.pravatar.cc/80?img=5",
+    name: "Achraf HDR",
+    role: "Google review",
+    avatar: avatarForName("Achraf HDR"),
     rating: 5,
     quote:
-      "Limosud Cars m'a permis de trouver le véhicule idéal à un prix juste. Je recommande sans hésiter !",
+      "Excellent service and very professional staff. The car was clean, well maintained, and the rental process was quick and easy. I highly recommend LIMOSUD CARS for anyone looking for reliable car rental.",
   },
 ];

@@ -40,6 +40,11 @@ const nextConfig: NextConfig = {
       storageRemotePattern,
       {
         protocol: "https",
+        hostname: "ui-avatars.com",
+        pathname: "/api/**",
+      },
+      {
+        protocol: "https",
         hostname: "i.pravatar.cc",
         pathname: "/**",
       },
